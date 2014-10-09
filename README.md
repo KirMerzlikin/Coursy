@@ -1,2 +1,2 @@
-Coursy
+Coursey
 ======
