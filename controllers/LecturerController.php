@@ -40,6 +40,17 @@ class LecturerController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+     public function actionAdmin()
+    {
+        $searchModel = new LecturerSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('admin', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Displays a single Lecturer model.
