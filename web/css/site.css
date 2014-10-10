@@ -95,7 +95,14 @@ a.desc:after {
     margin-right:auto;
 }
 
-
+.menu-bot { 
+    float: right; 
+    border: 1px solid #333; 
+    width: 910px; 
+    padding: 5px; 
+    margin: 10px 5px 20px 5px; 
+    
+   }
 
 
 
@@ -158,3 +165,6 @@ a.desc:after {
     border-bottom: 1px groove #333; /* Линия между ссылками */
    }
 
+   .but-class {
+    margin-left: 100px;
+   }

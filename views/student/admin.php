@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
  <div class="menu">  <?php echo $this->render('_menuleft'); ?> </div>
+
  
 
 
@@ -64,5 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+<br /> <br />
 </div>
 
+<div class="menu-bot">  <?php echo $this->render('menu_bottom'); ?> </div>
