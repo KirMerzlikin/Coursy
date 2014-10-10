@@ -93,4 +93,20 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    public function actionRecovery()
+    {
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post())){
+            return $model->recovery();
+        } else {
+            return $this->render('login', [
+                'model' => $model,
+            ]);
+        }
+    }
 }

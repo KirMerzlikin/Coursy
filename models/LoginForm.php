@@ -69,6 +69,11 @@ class LoginForm extends Model
         }
     }
 
+    public function recovery()
+    {
+        
+    }
+
     /**
      * Finds user by [[username]]
      *
