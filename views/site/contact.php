@@ -53,5 +53,5 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <?php endif; ?>
+    <?php endif;?>
 </div>
