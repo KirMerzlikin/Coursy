@@ -102,7 +102,13 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())){
-            return $model->recovery();
+            if($model->recovery())
+            {
+                $this->render('success');
+            }
+            else{
+                $this->render('fail');
+            }
         } else {
             return $this->render('login', [
                 'model' => $model,

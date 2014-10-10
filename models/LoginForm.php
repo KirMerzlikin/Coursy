@@ -4,6 +4,9 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use app\models\Student;
+use app\models\Lecturer;
+use yii\db\ActiveQuery;
 
 /**
  * LoginForm is the model behind the login form.
@@ -71,10 +74,27 @@ class LoginForm extends Model
         }
     }
 
-
+    //to-do set from mail
     public function recovery()
     {
-
+        $user = $this->getUser();
+        if($user != null)
+        {
+            $newPass = $this->generatePassword();
+            $user -> passHash = md5($newPass);
+            $subject = "New password for servise Coursey.it-team.in.ua.";
+            $body = "There was request for new  password  for your account. Here it is: $newPass. \n This is aoutomatic made letter. Don't replay.";
+            if(Yii::$app->mailer->compose()
+                    ->setTo($this->email)
+                    ->setSubject($subject)
+                    ->setTextBody($body)
+                    ->send())
+            {
+                $user -> save();
+                return true;
+            }
+        }
+        return false;
     }
 
     public function generatePassword()
