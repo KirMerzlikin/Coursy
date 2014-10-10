@@ -18,7 +18,7 @@ use Yii;
  * @property Course[] $courses
  * @property Department $idDepartment0
  */
-class Lecturer extends \yii\db\ActiveRecord
+class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * @inheritdoc
@@ -70,5 +70,15 @@ class Lecturer extends \yii\db\ActiveRecord
     public function getIdDepartment0()
     {
         return $this->hasOne(Department::className(), ['id' => 'idDepartment']);
+    }
+
+    public static function findByEmail($email)
+    {
+        return Lecturer::find()->where(['email' => $email])->one();
+    }
+
+    public function validatePassword($password)
+    {
+        return $this->getAttribute('passHash') == 123456;
     }
 }
