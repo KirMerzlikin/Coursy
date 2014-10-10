@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 /* @var $model app\models\LoginForm */
 
-$this->title = 'Пожалуйста, авторизуйтесь';
+$this->title = 'Авторизация';
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -15,18 +15,17 @@ $this->title = 'Пожалуйста, авторизуйтесь';
         'id' => 'login-form',
         'options' => ['class' => 'form-horizontal'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+            'template' => "<div class=\"col-lg-12\">{input}{error}</div>\n"
         ],
     ]); ?>
 
-    <?= $form->field($model, 'email') ?>
+    <?= $form->field($model, 'email')->textInput(['placeholder'=>'Ваш email'])?>
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'Ваш пароль']) ?>
 
     <div class="form-group">
-        <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+        <div class="col-lg-12">
+            <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block btn-lg', 'name' => 'login-button']) ?>
         </div>
     </div>
 

@@ -20,7 +20,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
         ],
         '101' => [
             'id' => '101',
-            'username' => 'demo',
+            'username' => 'demo@email.com',
             'password' => 'demo',
             'authKey' => 'test101key',
             'accessToken' => '101-token',
