@@ -37,6 +37,8 @@ class LoginForm extends Model
         ];
     }
 
+
+
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -69,11 +71,18 @@ class LoginForm extends Model
         }
     }
 
+
     public function recovery()
     {
-        
+
     }
 
+    public function generatePassword()
+    {
+        $length = 8;
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        return substr( str_shuffle( $chars ), 0, $length );
+    }
     /**
      * Finds user by [[username]]
      *
