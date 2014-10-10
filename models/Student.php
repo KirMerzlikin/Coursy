@@ -21,7 +21,7 @@ use Yii;
  * @property Question[] $idQuestions
  * @property Subscription[] $subscriptions
  */
-class Student extends \yii\db\ActiveRecord
+class Student extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * @inheritdoc
@@ -104,5 +104,47 @@ class Student extends \yii\db\ActiveRecord
     public function getSubscriptions()
     {
         return $this->hasMany(Subscription::className(), ['idStudent' => 'id']);
+    }
+
+    public static function findByEmail($email)
+    {
+        return Student::find()->where(['email' => $email])->one();
+    }
+
+    public function validatePassword($password)
+    {
+       return $this->getAttribute('passHash') == 123456;
+    }
+
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return Student::find()->where(['passHash' => $token])->one();;
+    }
+
+    public function getId()
+    {
+        return $this->getAttribute('id');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAuthKey()
+    {
+        return $this->getAttribute('email');
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAttribute('email') == $authKey;
+    }
+
+     public static function findIdentity($id)
+    {
+        return Student::find()->where(['id' => $id])->one();
     }
 }

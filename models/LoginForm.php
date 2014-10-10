@@ -13,7 +13,7 @@ class LoginForm extends Model
     public $email;
     public $password;
 
-    private $_user = false;
+    private $_user = null;
 
     /**
      * @return array the validation rules.
@@ -81,8 +81,11 @@ class LoginForm extends Model
      */
     public function getUser()
     {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->email);
+        if ($this->_user == null) {
+            $this->_user = Student::findByEmail($this->email);
+        }
+        if($this->_user == null){
+            $this->_user = Lecturer::findByEmail($this->email);
         }
 
         return $this->_user;
