@@ -81,23 +81,23 @@ class LoginForm extends Model
         if($user != null)
         {
             $newPass = $this->generatePassword();
-            $user -> passHash = md5($newPass);
-            $subject = "New password for servise Coursey.it-team.in.ua.";
-            $body = "There was request for new  password  for your account. Here it is: $newPass. \n This is aoutomatic made letter. Don't replay.";
+            $user->passHash = md5($newPass);
+            $subject = "New password for service Coursey.it-team.in.ua.";
+            $body = "There was request for new  password  for your account. Here it is: $newPass.\n This is automatic made letter. Don't replay.";
             if(Yii::$app->mailer->compose()
                     ->setTo($this->email)
                     ->setSubject($subject)
                     ->setTextBody($body)
                     ->send())
             {
-                $user -> save();
+                $user->save();
                 return true;
             }
         }
         return false;
     }
 
-    public function generatePassword()
+    private function generatePassword()
     {
         $length = 8;
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -110,13 +110,6 @@ class LoginForm extends Model
      */
     public function getUser()
     {
-        if ($this->_user == null) {
-            $this->_user = Student::findByEmail($this->email);
-        }
-        if($this->_user == null){
-            $this->_user = Lecturer::findByEmail($this->email);
-        }
-
-        return $this->_user;
+        return User::findByEmail($this->email);
     }
 }

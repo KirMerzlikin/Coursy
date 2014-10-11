@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "student".
@@ -21,7 +22,7 @@ use Yii;
  * @property Question[] $idQuestions
  * @property Subscription[] $subscriptions
  */
-class Student extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
+class Student extends \yii\db\ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -108,23 +109,25 @@ class Student extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function findByEmail($email)
     {
-        return Student::find()->where(['email' => $email])->one();
+        $student = Student::find()->where(['email' => $email])->one();
+        return $student;
     }
 
     public function validatePassword($password)
     {
-       return $this->getAttribute('passHash') == 123456;
+       return $this->passHash == md5($password);
     }
 
 
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return Student::find()->where(['passHash' => $token])->one();;
+        $student = Student::find()->where(['passHash' => $token])->one();
+        return $student; 
     }
 
     public function getId()
     {
-        return $this->getAttribute('id');
+        return $this->id;
     }
 
     /**
@@ -132,7 +135,7 @@ class Student extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->getAttribute('email');
+        return $this->email;
     }
 
     /**
@@ -140,11 +143,12 @@ class Student extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->getAttribute('email') == $authKey;
+        return $this->email === $authKey;
     }
 
      public static function findIdentity($id)
     {
-        return Student::find()->where(['id' => $id])->one();
+        $student = Student::find()->where(['id' => $id])->one();
+        return $student;
     }
 }

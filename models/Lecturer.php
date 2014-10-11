@@ -74,11 +74,46 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
 
     public static function findByEmail($email)
     {
-        return Lecturer::find()->where(['email' => $email])->one();
+        $lecturer = Lecturer::find()->where(['email' => $email])->one();
+        return $lecturer; 
     }
 
     public function validatePassword($password)
     {
-        return $this->getAttribute('passHash') == 123456;
+        return $this->getAttribute('passHash') == md5($password);
+    }
+
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        $lecturer = Lecturer::find()->where(['passHash' => $token])->one();
+        return $lecturer; 
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAuthKey()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->email === $authKey;
+    }
+
+     public static function findIdentity($id)
+    {
+        $lecturer = Lecturer::find()->where(['id' => $id])->one();
+        return $lecturer;
     }
 }
