@@ -8,9 +8,6 @@ $config = [
     'bootstrap' => ['gii'],
     'modules' => [
         'gii' => 'yii\gii\Module',
-        'admin' => [
-            'class' => 'app\modules\admin\Module',
-        ],
     ],
     'components' => [
         'request' => [

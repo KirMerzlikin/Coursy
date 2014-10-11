@@ -41,16 +41,6 @@ class DepartmentController extends Controller
         ]);
     }
     
-     public function actionAdmin()
-    {
-        $searchModel = new DepartmentSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('admin', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     /**
      * Displays a single Department model.

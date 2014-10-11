@@ -40,17 +40,6 @@ class GroupController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
-      public function actionAdmin()
-    {
-        $searchModel = new GroupSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('admin', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     /**
      * Displays a single Group model.

@@ -5,19 +5,19 @@ use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\GroupSearch */
+/* @var $searchModel app\models\StudentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$this->registerCssFile('/css/site.css');
 
-$this->title = 'Groups';
+$this->title = 'Students';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="group-index">
 
-    <div class="menu">  <?php echo $this->render('/student/_menuleft'); ?> </div>
- 
+
+<div class="menu">  <?php echo $this->render('_menuleft'); ?> </div>
  
 <div class="content">
-<?php  echo $this->render('/student/_menu'); ?> 
+<?php  echo $this->render('_menu'); ?> 
 <br /> <br />
 </div>
 
@@ -47,13 +47,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
        // 'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+          //  ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'name',
+            'email:email',
+            'passHash',
+            'idGroup',
+            // 'active',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
+<br /> <br />
 </div>
+
+<div class="menu-bot">  <?php echo $this->render('menu_bottom'); ?> </div>

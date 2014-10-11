@@ -12,11 +12,11 @@ $this->title = 'Departments';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="department-index">
-<div class="menu">  <?php echo $this->render('/student/_menuleft'); ?> </div>
+<div class="menu">  <?php echo $this->render('_menuleft'); ?> </div>
  
  
 <div class="content">
-<?php  echo $this->render('/student/_menu'); ?> 
+<?php  echo $this->render('_menu'); ?> 
 <br /> <br />
 </div>
 
