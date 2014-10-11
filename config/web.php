@@ -8,9 +8,6 @@ $config = [
     'bootstrap' => ['gii'],
     'modules' => [
         'gii' => 'yii\gii\Module',
-        'admin' => [
-            'class' => 'app\modules\admin\Module',
-        ],
     ],
     'components' => [
         'request' => [
@@ -38,7 +35,7 @@ $config = [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error', 'warning', 'info'],
                 ],
             ],
         ],

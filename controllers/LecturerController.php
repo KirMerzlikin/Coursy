@@ -40,6 +40,7 @@ class LecturerController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+        
 
     /**
      * Displays a single Lecturer model.

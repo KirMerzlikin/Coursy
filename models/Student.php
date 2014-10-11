@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "student".
@@ -21,7 +22,7 @@ use Yii;
  * @property Question[] $idQuestions
  * @property Subscription[] $subscriptions
  */
-class Student extends \yii\db\ActiveRecord
+class Student extends \yii\db\ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -104,5 +105,50 @@ class Student extends \yii\db\ActiveRecord
     public function getSubscriptions()
     {
         return $this->hasMany(Subscription::className(), ['idStudent' => 'id']);
+    }
+
+    public static function findByEmail($email)
+    {
+        $student = Student::find()->where(['email' => $email])->one();
+        return $student;
+    }
+
+    public function validatePassword($password)
+    {
+       return $this->passHash == md5($password);
+    }
+
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        $student = Student::find()->where(['passHash' => $token])->one();
+        return $student; 
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAuthKey()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->email === $authKey;
+    }
+
+     public static function findIdentity($id)
+    {
+        $student = Student::find()->where(['id' => $id])->one();
+        return $student;
     }
 }

@@ -39,7 +39,8 @@ class StudentController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }
+    }    
+     
 
     /**
      * Displays a single Student model.

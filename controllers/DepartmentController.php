@@ -40,6 +40,7 @@ class DepartmentController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
 
     /**
      * Displays a single Department model.

@@ -4,6 +4,9 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use app\models\Student;
+use app\models\Lecturer;
+use yii\db\ActiveQuery;
 
 /**
  * LoginForm is the model behind the login form.
@@ -13,7 +16,7 @@ class LoginForm extends Model
     public $email;
     public $password;
 
-    private $_user = false;
+    private $_user = null;
 
     /**
      * @return array the validation rules.
@@ -36,6 +39,8 @@ class LoginForm extends Model
             'password' => 'Пароль'
         ];
     }
+
+
 
     /**
      * Validates the password.
@@ -69,11 +74,35 @@ class LoginForm extends Model
         }
     }
 
+    //to-do set from mail
     public function recovery()
     {
-        
+        $user = $this->getUser();
+        if($user != null)
+        {
+            $newPass = $this->generatePassword();
+            $user->passHash = md5($newPass);
+            $subject = "New password for service Coursey.it-team.in.ua.";
+            $body = "There was request for new  password  for your account. Here it is: $newPass.\n This is automatic made letter. Don't replay.";
+            if(Yii::$app->mailer->compose()
+                    ->setTo($this->email)
+                    ->setSubject($subject)
+                    ->setTextBody($body)
+                    ->send())
+            {
+                $user->save();
+                return true;
+            }
+        }
+        return false;
     }
 
+    private function generatePassword()
+    {
+        $length = 8;
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        return substr( str_shuffle( $chars ), 0, $length );
+    }
     /**
      * Finds user by [[username]]
      *
@@ -81,10 +110,6 @@ class LoginForm extends Model
      */
     public function getUser()
     {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->email);
-        }
-
-        return $this->_user;
+        return User::findByEmail($this->email);
     }
 }

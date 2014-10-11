@@ -61,7 +61,8 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            Yii::info('SiteController --> '.Yii::$app->user->identity->email . Yii::$app->user->identity->passHash);
+            return $this->/*render('index');*/redirect('../site/about');
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -121,7 +122,13 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())){
-            return $model->recovery();
+            if($model->recovery())
+            {
+                $this->render('success');
+            }
+            else{
+                $this->render('fail');
+            }
         } else {
             return $this->render('login', [
                 'model' => $model,
