@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\StudentSearch;
 
 class SiteController extends Controller
 {
@@ -60,8 +61,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Yii::info('SiteController --> '.Yii::$app->user->identity->email . Yii::$app->user->identity->passHash);
-            return $this->/*render('index');*/redirect('../site/about');
+            return $this->redirect('../site/about');
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -80,9 +80,7 @@ class SiteController extends Controller
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
+             return $this->refresh();
         } else {
             return $this->render('contact', [
                 'model' => $model,

@@ -19,7 +19,7 @@ class StudentSearch extends Student
     {
         return [
             [['id', 'idGroup', 'active'], 'integer'],
-            [['name', 'email', 'passHash'], 'safe'],
+            [['name', 'email', 'passHash', 'active'], 'safe'],
         ];
     }
 
@@ -50,6 +50,7 @@ class StudentSearch extends Student
         if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
+
 
         $query->andFilterWhere([
             'id' => $this->id,

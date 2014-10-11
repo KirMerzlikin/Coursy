@@ -45,8 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
       //  'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'name',
 
@@ -55,4 +53,5 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 <br /> <br />
 </div>
-<div class="menu-bot">  <?php echo $this->render('/student/menu_bottom'); ?> </div>
+<div class="menu-bot">  <?php echo $this->render('menu_bottom', ['stSearchModel' => $stSearchModel,
+                                                                 'lcSearchModel' => $lcSearchModel,]); ?> </div>
