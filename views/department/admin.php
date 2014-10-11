@@ -53,5 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
+<br /> <br />
 </div>
+<div class="menu-bot">  <?php echo $this->render('/student/menu_bottom'); ?> </div>
