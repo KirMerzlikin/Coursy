@@ -83,7 +83,7 @@ class LecturerController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Yii::$app->user->returnUrl);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -101,7 +101,7 @@ class LecturerController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect('../admin/lecturer');
     }
 
     /**

@@ -63,7 +63,7 @@ class GroupController extends Controller
         $model = new Group();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect('../admin/group');
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -82,7 +82,7 @@ class GroupController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect('../admin/group');
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -100,7 +100,7 @@ class GroupController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect('../admin/group');
     }
 
     /**
