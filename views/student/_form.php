@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Group;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Student */
@@ -18,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'passHash')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'idGroup')->textInput() ?>
+    <?= $form->field($model, 'idGroup')->dropDownList(ArrayHelper::map(Group::find()->all(), 'id', 'name'))->label('Group') ?>
 
     <?= $form->field($model, 'active')->textInput() ?>
 
