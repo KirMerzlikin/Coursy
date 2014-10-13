@@ -27,7 +27,6 @@ class LoginForm extends Model
             // username and password are both required
             [['email', 'password'], 'required', 'message' => 'Пожалуйста, заполните это поле'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
@@ -103,13 +102,16 @@ class LoginForm extends Model
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         return substr( str_shuffle( $chars ), 0, $length );
     }
+
+
     /**
-     * Finds user by [[username]]
+     * Finds user by [[email]]
      *
      * @return User|null
      */
     public function getUser()
     {
-        return User::findByEmail($this->email);
+        $user = User::findByEmail($this->email); 
+        return $user->active ? $user : null;
     }
 }
