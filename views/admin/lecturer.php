@@ -8,11 +8,11 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LecturerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->registerCssFile('../css/site.css');
 $this->title = 'Lecturers';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="lecturer-index">
+
 <div class="menu">  <?php echo $this->render('_menuleft'); ?> </div>
  
  

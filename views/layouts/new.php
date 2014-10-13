@@ -16,7 +16,7 @@ AppAsset::register($this);
 	<head>
 		<meta charset="utf-8" />
 		<title>Coursey | Coming Soon to a Browser Near You</title>		
-		<link rel="stylesheet" type="text/css" href="/web/css/site_new.css" />
+		<link rel="stylesheet" type="text/css" href="../css/site_new.css" />
 		
 		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js'></script>
 		<script type="text/javascript">
@@ -39,7 +39,7 @@ AppAsset::register($this);
 
 <?php $this->beginBody() ?>
 		<div class="wrapper">
-				<div width="500px"><img src="/web/images/logo.png" alt="Coursey" title="Coursey"/></div>
+				<div width="500px"><img src="../images/logo.png" alt="Coursey" title="Coursey"/></div>
 				<?= $content ?>
 
 </div>

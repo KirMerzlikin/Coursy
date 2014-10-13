@@ -78,7 +78,7 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return $lecturer; 
     }
 
-    public function validatePassword($password)
+    public function checkPassword($password)
     {
         return $this->getAttribute('passHash') == md5($password);
     }

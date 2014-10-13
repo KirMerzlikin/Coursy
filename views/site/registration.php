@@ -29,13 +29,13 @@ $this->title = 'Регистрация';
                 <tr><td><p>Пароль:</p></td><td><?= $form->field($model, 'password')->passwordInput()?></td></tr>
                 <tr><td><p>Повторите пароль:</p></td><td><?= $form->field($model, 'confirmation')->passwordInput()?></td></tr>
                 <tr><td><p>Кем Вы хотите быть?</p></td><td></td></tr>
-                <tr><td></td><td><input type="radio" name="RegistrationForm[role]" required='required' value="lecturer" onclick="show('lecturer', 'student')"/> лектор 
-                <input type="radio" name="RegistrationForm[role]" value="student" onclick="show('student', 'lecturer')"/> студент</td></tr>
+                <tr><td></td><td><input id="lecturer_role" type="radio" name="RegistrationForm[role]" required='required' value="lecturer" onclick="show('lecturer', 'student')"/> лектор 
+                <input id="student_role" type="radio" name="RegistrationForm[role]" value="student" onclick="show('student', 'lecturer')"/> студент</td></tr>
                 </table>
                 <div id="lecturer" style="display:none;">
                 <table>
                 <tr><td><p>Ученая степень:</p></td><td><?= $form->field($model, 'degree')->textInput()?></td></tr>
-                <tr><td><p>Кафедра:</p></td><td><select name="RegistrationForm[department]" class="sel">
+                <tr><td><p>Кафедра:</p></td><td><select name="RegistrationForm[department]" id="lecturer_department" class="sel">
                     <?php foreach(Department::find()->all() as $department) {?>
                     <option selected="selected" value="<?=$department->id?>"><?=$department->name;?></option>
                     <?php } ?>
@@ -49,7 +49,7 @@ $this->title = 'Регистрация';
                     <option selected="selected" value="<?=$department->id?>"><?=$department->name;?></option>
                     <?php } ?>
                 </select></td></tr>-->
-                <tr><td><p>Группа:</p></td><td><select name="RegistrationForm[group]" class="sel">
+                <tr><td><p>Группа:</p></td><td><select name="RegistrationForm[group]" id="student_group" class="sel">
                     <?php foreach(Group::find()->all() as $group) {?>
                     <option selected="selected" value="<?=$group->id?>"><?=$group->name;?></option>
                     <?php } ?>
@@ -62,3 +62,10 @@ $this->title = 'Регистрация';
                 </div>  </center>
                         
         </div>
+        <script>
+        $(document).ready(function(){
+            $('#<?=$model->role?>_role').click();
+            $('#lecturer_department').val('<?=$model->department?>');
+            $('#student_group').val('<?=$model->group?>');
+        });
+        </script>

@@ -27,6 +27,11 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
+
+
+    public $password;
+    public $confirmation;
+
     public static function tableName()
     {
         return 'student';
@@ -40,7 +45,8 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['name', 'email', 'passHash', 'idGroup', 'active'], 'required'],
             [['idGroup', 'active'], 'integer'],
-            [['name', 'email', 'passHash'], 'string', 'max' => 255]
+            [['name', 'email', 'passHash'], 'string', 'max' => 255],
+            ['password', 'validatePassword'],
         ];
     }
 
@@ -57,6 +63,18 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
             'idGroup' => 'Id Group',
             'active' => 'Active',
         ];
+    }
+
+    public function validatePassword()
+    {
+        if ($this->confirmation!=$this->password)
+            $this->addError('confirmation','Подтверждение пароля не совпадает с паролем.');
+    }
+
+    public function updateSt()
+    {
+        $this->passHash = md5($this->password);
+        return $this->save();
     }
 
     /**
@@ -113,7 +131,7 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
         return $student;
     }
 
-    public function validatePassword($password)
+    public function checkPassword($password)
     {
        return $this->passHash == md5($password);
     }

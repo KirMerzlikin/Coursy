@@ -81,14 +81,33 @@ class StudentController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            echo Yii::$app->user->returnUrl;
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {            
             return $this->redirect(Yii::$app->user->returnUrl);
         } else {
             
             return $this->render('update', [
                 'model' => $model,
             ]);
+        }
+    }
+
+    public function actionUpdateSt($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            //$model->group = $_POST['RegistrationForm[group]'];
+            $info = $_POST['Student'];
+            $model->password = $info['password'];
+            $model->confirmation = $info['confirmation'];
+            if($model->validate())
+            {
+                $model->updateSt();
+                return $this->redirect(Yii::$app->user->returnUrl);
+            } else{
+                return $this->render('update_st', ['model'=>$model,]);
+            }
+        } else {
+            return $this->render('update_st', ['model'=>$model,]);
         }
     }
 
