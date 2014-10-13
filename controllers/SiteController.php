@@ -56,6 +56,7 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
+        $this->layout='new';
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -118,18 +119,18 @@ class SiteController extends Controller
 
     public function actionRecovery()
     {
-        if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
+        $this->layout='new';
+        //if (!\Yii::$app->user->isGuest) {
+        //    return $this->goHome();
+        //}
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post())){
             if($model->recovery())
             {
-                $this->render('success');
+                return $this->render('success_recovery');
             }
             else{
-                $this->render('fail');
+                return $this->render('fail_recovery');
             }
         } else {
             return $this->render('login', [

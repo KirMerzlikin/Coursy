@@ -26,7 +26,7 @@ $this->title = 'Авторизация';
     <div class="form-group">
         <div class="col-lg-12">
             <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block btn-lg', 'name' => 'login-button']) ?>
-            <?= Html::label('Забыли пароль?', 0, ['style' => "text-decoration:underline; color: #0000EE; cursor: pointer;", 'onclick' =>"unhide()"]) ?>
+            <?= Html::label('Забыли пароль?', 0, ['style' => "text-decoration:underline;  cursor: pointer;", 'onclick' =>"unhide()", 'class'=>'reg-message']) ?>
         </div>
     </div>      
 
@@ -42,7 +42,7 @@ $this->title = 'Авторизация';
         ],
     ]); ?>
     <div id="hidden-div" style="visibility:hidden;">
-        <?= Html::label('Введите свой email для получения нового пароля!', 0, []) ?>
+        <?= Html::label('Введите свой email для получения нового пароля!', 0, ['class'=>'reg-message']) ?>
         <?= $form->field($model, 'email') ?>
 
         <div class="form-group">
