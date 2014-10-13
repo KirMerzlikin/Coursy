@@ -71,6 +71,20 @@ class StudentController extends Controller
             ]);
         }
     }
+    
+    
+    public function actionProfile()
+    {
+        $model = new Student();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('profile', [
+                'model' => $model,
+            ]);
+        }
+    }
 
     /**
      * Updates an existing Student model.
