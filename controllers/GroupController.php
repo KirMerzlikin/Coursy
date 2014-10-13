@@ -82,7 +82,7 @@ class GroupController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('../admin/group');
+            $this->redirect(Yii::$app->user->returnUrl);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -100,7 +100,7 @@ class GroupController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect('../admin/group');
+        $this->redirect(Yii::$app->user->returnUrl);
     }
 
     /**

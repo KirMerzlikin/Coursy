@@ -52,7 +52,7 @@ class Admin extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $admin;
     }
 
-    public function validatePassword($password)
+    public function checkPassword($password)
     {
        return $this->passHash == md5($password);
     }
