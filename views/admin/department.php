@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DepartmentSearch */
@@ -23,24 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="content">
 <?php $form = ActiveForm::begin([
         'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
-    <?php // echo $form->field($model, 'idDepartment') ?>
-
-    <?php // echo $form->field($model, 'degree') ?>
-    
+        'method' => 'post',
+    ]); ?>  
 
     <div class="form-group">
         <?= Html::textInput('Add', null) ?>
-        <?= Html::button('Add', ['class' => 'btn btn-default']) ?>
-        <?= Html::button('Delete', ['class' => 'btn btn-default']) ?>
-        <?= Html::button('Update', ['class' => 'btn btn-default']) ?>
-    
+        <?= Html::a('Add',['department/create'] ,['class' => 'btn btn-default']) ?>        
+    </div>
 
     <?php ActiveForm::end(); ?>
    
-
-   </div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
       //  'filterModel' => $searchModel,
@@ -48,7 +41,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'urlCreator' => function($action, $model, $key, $index)
+            {
+                $params = is_array($key) ? $key : ['id' => (string) $key];
+                $params[0] = '/department' . '/' . $action;
+
+            return Url::toRoute($params);
+            }],
         ],
     ]); ?>
 <br /> <br />

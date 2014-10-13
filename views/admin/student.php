@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\Url;
+Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -24,25 +25,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="content">
 <?php $form = ActiveForm::begin([
         'action' => ['index'],
-        'method' => 'get',
+        'method' => 'post',
     ]); ?>
-    <?php // echo $form->field($model, 'idDepartment') ?>
-
-    <?php // echo $form->field($model, 'degree') ?>
     
 
     <div class="form-group">
         <?= Html::textInput('Add', null) ?>
-        <?= Html::button('Add', ['class' => 'btn btn-default']) ?>
-        <?= Html::button('Delete', ['class' => 'btn btn-default']) ?>
-        <?= Html::button('Update', ['class' => 'btn btn-default']) ?>
-    
-
+        <!--<?= Html::a('Add',['student/create'] ,['class' => 'btn btn-default']) ?>-->   
+    </div>
     <?php ActiveForm::end(); ?>
    
-
-   </div>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
        // 'filterModel' => $searchModel,
@@ -54,7 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'idGroup',
             // 'active',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'urlCreator' => function($action, $model, $key, $index)
+            {
+                $params = is_array($key) ? $key : ['id' => (string) $key];
+                $params[0] = '/student' . '/' . $action;
+
+            return Url::toRoute($params);
+            }],
         ],
     ]); ?>
 <br /> <br />
