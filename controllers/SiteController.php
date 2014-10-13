@@ -84,6 +84,10 @@ class SiteController extends Controller
             return $this->goHome();
         }
         $model = new RegistrationForm();
+        $info = $_POST['RegistrationForm'];
+        $model->department = $info['department'];
+        $model->degree = $info['degree'];
+        $model->group = $info['group'];
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             //$model->group = $_POST['RegistrationForm[group]'];
             if($model->register())

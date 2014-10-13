@@ -84,9 +84,9 @@ class RegistrationForm extends Model
             $lecturer->name = $this->second_name." ".$this->name;
             $lecturer->email = $this->email;
             $lecturer->passHash = md5($this->password);
-            $info = $_POST['RegistrationForm'];
-            $lecturer->idDepartment = $info['department'];
-            $lecturer->degree = $info['degree'];
+            //$info = $_POST['RegistrationForm'];
+            $lecturer->idDepartment = $this->department;//$info['department'];
+            $lecturer->degree = $this->degree;//$info['degree'];
             $lecturer->active = 0;
             return $lecturer->save();
         }
@@ -97,8 +97,8 @@ class RegistrationForm extends Model
             $student->name = $this->second_name." ".$this->name;
             $student->email = $this->email;
             $student->passHash = md5($this->password);
-            $info = $_POST['RegistrationForm'];
-            $student->idGroup = $info['group'];
+            //$info = $_POST['RegistrationForm'];
+            $student->idGroup = $this->group;//$info['group'];
             $student->active = 0;
             return $student->save();
         }

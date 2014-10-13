@@ -108,25 +108,27 @@ class AdminController extends Controller
         }
     }
 
-    public function actionAccept()
+    public function actionHandleResponse()
     {
-        $user = User::findByEmail($_POST['email']);
-        $user->active = 1;
-        $user->save();
-        Yii::info('INFOINFOINFOINFOINFOINFOINFO' . $_POST['email']);
-        $this->sendMail(true, $_POST['email']);
+        $email = $_POST['email'];
+        $response = $_POST['response'];
+        $reason = $_POST['reason'];
+
+        $this->sendMail($email, $response == 'true' ? true : false, $reason);
+
+        if($response == 'true')
+        {
+            $user = User::findByEmail($email);
+            $user->active = 1;
+            $user->save();
+        }
     }
 
-    public function actionRefuse()
+    private function sendMail($email, $result, $reason)
     {
-        Yii::info('INFOINFOINFOINFOINFOINFOINFO' . $_POST['email']);
-        $this->sendMail(false, $_POST['email']);
-    }
-
-    public function sendMail($result, $email)
-    {
-        $subject = ($result ? "Accepting" : "Rejecting") . "registration.";
-        $body = "Registration was " . ($result ? "accepted" : "rejected") . ". Don't replay.";
+        $subject = imap_utf8($result ? "Подтверждение" : "Отклонение") . "регистрации.";
+        $body = "Ваша заявка на регистрацию на сайте Coursey была " 
+            . ($result ? "подтверждена" : "отклонена. \nПричина:" . $reason) . ". Don't reply.";
         Yii::$app->mailer->compose()
                 ->setTo($email)
                 ->setSubject($subject)
