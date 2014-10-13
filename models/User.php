@@ -12,8 +12,10 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        $user = Student::findIdentity($id);
-        if (!$user)
+        $user = Admin::findIdentity($id);
+        if(!$user)
+            $user = Student::findIdentity($id);
+        else if (!$user)
             $user = Lecturer::findIdentity($id);
 
         return $user;
@@ -24,8 +26,10 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        $user = Student::findIdentityByAccessToken($token, $type = null);
-        if (!$user)
+        $user = Admin::findIdentityByAccessToken($token, $type = null);
+        if(!$user)
+            $user = Student::findIdentityByAccessToken($token, $type = null);
+        else if (!$user)
             $user = Lecturer::findIdentityByAccessToken($token, $type = null);
 
         return $user;
@@ -39,8 +43,10 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findByEmail($email)
     {
-        $user = Student::findByEmail($email);
-        if (!$user)
+        $user = Admin::findByEmail($email);
+        if(!$user)
+            $user = Student::findByEmail($email);
+        else if (!$user)
             $user = Lecturer::findByEmail($email);;
 
 

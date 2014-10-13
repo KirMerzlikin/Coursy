@@ -74,7 +74,7 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
 
     public static function findByEmail($email)
     {
-        $lecturer = Lecturer::find()->where(['email' => $email])->one();
+        $lecturer = Lecturer::find()->where(['email' => $email])->where(['active' => 1])->one();
         return $lecturer; 
     }
 

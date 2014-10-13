@@ -2,67 +2,71 @@
 
 namespace app\models;
 
-class Admin extends \yii\base\Object implements \yii\web\IdentityInterface
+use Yii;
+
+/**
+ * This is the model class for table "admin".
+ *
+ * @property integer $id
+ * @property string $email
+ * @property string $passHash
+ * @property string $name
+ */
+class Admin extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    public $email;
-    public $passHash;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'email' => 'admin@admin.com',
-            'passHash' => '123456',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ]
-    ];
-
     /**
      * @inheritdoc
      */
-    public static function findIdentity($email)
+    public static function tableName()
     {
-        return isset(self::$users[$email]) ? new static(self::$users[$email]) : null;
+        return 'admin';
     }
 
     /**
      * @inheritdoc
      */
+    public function rules()
+    {
+        return [
+            [['email', 'passHash', 'name'], 'required'],
+            [['email', 'passHash', 'name'], 'string', 'max' => 255]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'email' => 'Email',
+            'passHash' => 'Pass Hash',
+            'name' => 'Name',
+        ];
+    }
+
+    public static function findByEmail($email)
+    {
+        $admin = Admin::find()->where(['email' => $email])->one();
+        return $admin;
+    }
+
+    public function validatePassword($password)
+    {
+       return $this->passHash == md5($password);
+    }
+
+
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        $admin = Admin::find()->where(['passHash' => $token])->one();
+        return $admin; 
     }
 
-    /**
-     * Finds user by email
-     *
-     * @param  string      $email
-     * @return static|null
-     */
-    public static function findByUsername($email)
+    public function getId()
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['email'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getEmail()
-    {
-        return $this->email;
+        return $this->id;
     }
 
     /**
@@ -70,7 +74,7 @@ class Admin extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return $this->email;
     }
 
     /**
@@ -78,17 +82,12 @@ class Admin extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return $this->email === $authKey;
     }
 
-    /**
-     * Validates passHash
-     *
-     * @param  string  $passHash password to validate
-     * @return boolean if passHash provided is valid for current user
-     */
-    public function validatePassword($passHash)
+     public static function findIdentity($id)
     {
-        return $this->passHash === $passHash;
+        $admin = Admin::find()->where(['id' => $id])->one();
+        return $admin;
     }
 }
