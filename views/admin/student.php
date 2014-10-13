@@ -8,7 +8,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\StudentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->registerCssFile('/css/site.css');
+$this->registerCssFile('../css/site.css');
 
 $this->title = 'Students';
 $this->params['breadcrumbs'][] = $this->title;

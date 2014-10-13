@@ -8,11 +8,10 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DepartmentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->registerCssFile('../css/site.css');
 $this->title = 'Departments';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="department-index">
 <div class="menu">  <?php echo $this->render('_menuleft'); ?> </div>
  
  
@@ -31,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::textInput('Add', null) ?>
         <?= Html::a('Add',['department/create'] ,['class' => 'btn btn-default']) ?>        
     </div>
-
     <?php ActiveForm::end(); ?>
    
     <?= GridView::widget([

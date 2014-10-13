@@ -29,6 +29,7 @@ class AdminController extends Controller
     
     public function actionStudent()
     {
+        $this->layout = "new";
         $searchModel = new StudentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -44,6 +45,7 @@ class AdminController extends Controller
 
     public function actionLecturer()
     {
+        $this->layout = "new";
         $searchModel = new LecturerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -59,6 +61,7 @@ class AdminController extends Controller
 
     public function actionDepartment()
     {
+        $this->layout = "new";
         $searchModel = new DepartmentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -75,6 +78,7 @@ class AdminController extends Controller
 
     public function actionGroup()
     {
+        $this->layout = "new";
         $searchModel = new GroupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -91,6 +95,7 @@ class AdminController extends Controller
 
     public function actionContact()
     {
+        $this->layout = "new";
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');

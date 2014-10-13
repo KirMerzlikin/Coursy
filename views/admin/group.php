@@ -8,13 +8,11 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\GroupSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->registerCssFile('../css/site.css');
 $this->title = 'Groups';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="group-index">
-
-    <div class="menu">  <?php echo $this->render('_menuleft'); ?> </div>
+<div class="menu">  <?php echo $this->render('_menuleft'); ?> </div>
  
  
 <div class="content">
