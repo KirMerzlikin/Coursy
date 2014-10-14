@@ -44,9 +44,9 @@ $lcProvider =  $lcSearchModel->search(['LecturerSearch' => ['active' => '0']]);
                 "из группы " . $student->getIdGroup0()->one()->name .
                   Html::tag('span',
                   Html::button('Подтвердить',
-                    ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'' . $student->email . '\', true)']) .
+                    ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'student_'.$student->id.'\',\'' . $student->email . '\', true)']) .
                   Html::button('Отклонить',
-                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'' . $student->name . '\', \'' . $student->email .'\')']), 
+                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'student_'.$student->id.'\',\'' . $student->name . '\', \'' . $student->email .'\')']), 
                   ['class' => 'pull-right']),
                 ['class' => 'list-group-item']);
               }
@@ -67,9 +67,9 @@ $lcProvider =  $lcSearchModel->search(['LecturerSearch' => ['active' => '0']]);
                 "кафедры " . $lecturer->getIdDepartment0()->one()->name .
                   Html::tag('span',
                   Html::button('Подтвердить',
-                    ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'' . $lecturer->email . '\', true)']) .
+                    ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'lecturer_'.$lecturer->id.'\',\'' . $lecturer->email . '\', true)']) .
                   Html::button('Отклонить',
-                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'' . $lecturer->name . '\', \'' . $lecturer->email .'\')']), 
+                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'lecturer_'.$lecturer->id.'\',\'' . $lecturer->name . '\',\'' . $lecturer->email . '\')']), 
                   ['class' => 'pull-right']),
                 ['class' => 'list-group-item']);
               }
@@ -99,7 +99,7 @@ echo Html::endTag('div');
 </div>
 
  <script>
- function sendResponse(email, response, reason)
+ function sendResponse(id, email, response, reason)
  {
     if($.trim(reason).length == 0) 
       reason = 'Не указана';
@@ -107,7 +107,11 @@ echo Html::endTag('div');
       type     :'POST',
       cache    : false,
       url  : '../admin/handle-response',
-      data: {'email':email, 'response':response, 'reason':reason}
+      data: {'email':email, 'response':response, 'reason':reason},
+      statusCode: {
+        500: function(data){alert('Error!\n'+data.responseText);},
+        200: function(){$('#'+id).hide('slow');}
+      }
     });
  }
  function openModal(name, email)

@@ -26,6 +26,71 @@ class AdminController extends Controller
             ],
         ];
     }
+
+     public function validateAccess()
+    {
+        if(Yii::$app->user->isGuest)
+        {
+            return $this->redirect('../site/login');
+        }
+        else if (Yii::$app->user->identity->tableName() != 'admin')
+        {
+            return $this->redirect('../site/about');   
+        }
+        
+    }
+
+    public function actionRequests()
+    {
+        $this->validateAccess();
+        $stSearchModel = new StudentSearch();
+        $lcSearchModel = new LecturerSearch();
+
+        return $this->render('requests', [
+            'stSearchModel' => $stSearchModel,
+            'lcSearchModel' => $lcSearchModel,
+        ]);
+    }
+
+    public function actionDatabase()
+    {
+        $this->validateAccess();
+
+        $stSearchModel = new StudentSearch();
+        $stDataProvider = $stSearchModel->search(['StudentSearch' => ['active' => '1']]);
+        $stDataProvider->setPagination(['pageSize' => 10]);
+
+        $lcSearchModel = new LecturerSearch();
+        $lcDataProvider = $lcSearchModel->search(['LecturerSearch' => ['active' => '1']]);
+        $lcDataProvider->setPagination(['pageSize' => 10]);
+
+        $grSearchModel = new GroupSearch();
+        $grDataProvider = $grSearchModel->search([]);
+        $grDataProvider->setPagination(['pageSize' => 10]);
+
+        $depSearchModel = new DepartmentSearch();
+        $depDataProvider = $depSearchModel->search([]);
+        $depDataProvider->setPagination(['pageSize' => 10]);
+
+        $admSearchModel = new AdminSearch();
+        $admDataProvider = $admSearchModel->search([]);
+        $admDataProvider->setPagination(['pageSize' => 10]);
+
+         return $this->render('database', [
+            'stSearchModel' => $stSearchModel,
+            'stDataProvider' => $stDataProvider,
+            'lcSearchModel' => $lcSearchModel,
+            'lcDataProvider' => $lcDataProvider,
+            'grSearchModel' => $grSearchModel,
+            'grDataProvider' => $grDataProvider,
+            'depSearchModel' => $depSearchModel,
+            'depDataProvider' => $depDataProvider,
+            'admSearchModel' => $admSearchModel,
+            'admDataProvider' => $admDataProvider,
+        ]);
+
+    }
+
     
     public function actionStudent()
     {
