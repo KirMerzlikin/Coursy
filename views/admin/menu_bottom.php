@@ -24,11 +24,11 @@ use yii\bootstrap\Tabs;
                 "из группы " . $student->getIdGroup0()->one()->name .
                   Html::tag('span',
                   Html::button('Подтвердить',
-                    ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'' . $student->email . '\', true)']) .
+                    ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'student_'.$student->id.'\',\'' . $student->email . '\', true)']) .
                   Html::button('Отклонить',
-                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'' . $student->name . '\', \'' . $student->email .'\')']), 
+                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'student_'.$student->id.'\',\'' . $student->name . '\', \'' . $student->email .'\')']), 
                   ['class' => 'pull-right']),
-                ['class' => 'list-group-item']);
+                ['class' => 'list-group-item','id'=>'student_'.$student->id]);
               }
             ]),
 
@@ -47,11 +47,11 @@ use yii\bootstrap\Tabs;
                 "кафедры " . $lecturer->getIdDepartment0()->one()->name .
                   Html::tag('span',
                   Html::button('Подтвердить',
-                    ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'' . $lecturer->email . '\', true)']) .
+                    ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'lecturer_'.$lecturer->id.'\',\'' . $lecturer->email . '\', true)']) .
                   Html::button('Отклонить',
-                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'sendResponse(\'' . $lecturer->email . '\', false)']), 
+                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'lecturer_'.$lecturer->id.'\',\'' . $lecturer->name . '\',\'' . $lecturer->email . '\')']), 
                   ['class' => 'pull-right']),
-                ['class' => 'list-group-item']);
+                ['class' => 'list-group-item', 'id'=>'lecturer_'.$lecturer->id]);
               }
             ]),
         ],
@@ -77,7 +77,7 @@ use yii\bootstrap\Tabs;
 </div>
 
  <script>
- function sendResponse(email, response, reason)
+ function sendResponse(id, email, response, reason)
  {
     if($.trim(reason).length == 0) 
       reason = 'Не указана';
@@ -85,10 +85,14 @@ use yii\bootstrap\Tabs;
       type     :'POST',
       cache    : false,
       url  : '../admin/handle-response',
-      data: {'email':email, 'response':response, 'reason':reason}
+      data: {'email':email, 'response':response, 'reason':reason},
+      statusCode: {
+        500: function(data){alert('Error!\n'+data.responseText);},
+        200: function(){$('#'+id).hide('slow');}
+      }
     });
  }
- function openModal(name, email)
+ function openModal(id, name, email)
  {
     $('#modalLabel').text('Кому: ' + name + " (" + email + ")");
     $('#reason').val('');
@@ -96,7 +100,7 @@ use yii\bootstrap\Tabs;
     $('#sendResponseButton').click(function()
     {
       var reason = $('#reason').text();
-      sendResponse(email, false, reason);
+      sendResponse(id, email, false, reason);
       $('#myModal').modal('hide');
     });
 
