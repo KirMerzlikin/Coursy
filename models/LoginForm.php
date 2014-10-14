@@ -112,7 +112,7 @@ class LoginForm extends Model
     public function getUser()
     {
         $user = User::findByEmail($this->email);
-        if($user != null && $user->active == 1)
+        if($user != null && ($user->tableName() == 'admin' || $user->active == 1))
             return $user;
         else
             return null;

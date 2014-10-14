@@ -11,6 +11,7 @@ use app\models\StudentSearch;
 use app\models\LecturerSearch;
 use app\models\DepartmentSearch;
 use app\models\GroupSearch;
+use app\models\AdminSearch;
 use app\models\User;
 
 class AdminController extends Controller
@@ -91,81 +92,9 @@ class AdminController extends Controller
 
     }
 
-    
-    public function actionStudent()
+    public function actionIndex()
     {
-        $searchModel = new StudentSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $lcSearchModel = new LecturerSearch();
-
-        return $this->render('student', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'stSearchModel' => $searchModel,
-            'lcSearchModel' => $lcSearchModel,
-        ]);
-    }
-
-    public function actionLecturer()
-    {
-        $searchModel = new LecturerSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $stSearchModel = new StudentSearch();
-
-        return $this->render('lecturer', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'stSearchModel' => $stSearchModel,
-            'lcSearchModel' => $searchModel,
-        ]);
-    }
-
-    public function actionDepartment()
-    {
-        $searchModel = new DepartmentSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $stSearchModel = new StudentSearch();
-        $lcSearchModel = new LecturerSearch();
-
-        return $this->render('department', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'stSearchModel' => $stSearchModel,
-            'lcSearchModel' => $lcSearchModel,
-        ]);
-    }
-
-    public function actionGroup()
-    {
-        $searchModel = new GroupSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $stSearchModel = new StudentSearch();
-        $lcSearchModel = new LecturerSearch();
-
-        return $this->render('group', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'stSearchModel' => $stSearchModel,
-            'lcSearchModel' => $lcSearchModel,
-        ]);
-    }
-
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
-        }
+        return $this->actionDatabase();
     }
 
     public function actionHandleResponse()
