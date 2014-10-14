@@ -69,7 +69,7 @@ $lcProvider =  $lcSearchModel->search(['LecturerSearch' => ['active' => '0']]);
                   Html::button('Подтвердить',
                     ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'' . $lecturer->email . '\', true)']) .
                   Html::button('Отклонить',
-                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'sendResponse(\'' . $lecturer->email . '\', false)']), 
+                    ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'' . $lecturer->name . '\', \'' . $lecturer->email .'\')']), 
                   ['class' => 'pull-right']),
                 ['class' => 'list-group-item']);
               }

@@ -63,7 +63,9 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('../site/about');
+            if(Yii::$app->user->identity->tableName() == 'admin')
+                return $this->redirect('../admin');
+            else return $this->redirect('../site/about');
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -85,10 +87,13 @@ class SiteController extends Controller
             return $this->goHome();
         }
         $model = new RegistrationForm();
-        $info = $_POST['RegistrationForm'];
-        $model->department = $info['department'];
-        $model->degree = $info['degree'];
-        $model->group = $info['group'];
+        if(array_key_exists('Registration', $_POST))
+        {
+            $info = $_POST['RegistrationForm'];
+            $model->department = $info['department'];
+            $model->degree = $info['degree'];
+            $model->group = $info['group'];
+        }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             //$model->group = $_POST['RegistrationForm[group]'];
             if($model->register())

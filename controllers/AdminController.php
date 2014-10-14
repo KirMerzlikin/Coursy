@@ -192,6 +192,10 @@ class AdminController extends Controller
             $user->active = 1;
             $user->save();
         }
+        else
+        {
+            
+        }
     }
 
     private function sendMail($email, $result, $reason)
