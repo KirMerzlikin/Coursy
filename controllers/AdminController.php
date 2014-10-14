@@ -121,9 +121,9 @@ class AdminController extends Controller
 
     private function sendMail($email, $result, $reason)
     {
-        $subject = ($result ? "Подтверждение" : "Отклонение") . "регистрации.";
-        $body = "<p>Ваша заявка на регистрацию на сайте Coursey была " 
-            . ($result ? "подтверждена" : "отклонена.</p><p>Причина:" . $reason) . ".</p><p>Не отвечайте на это письмо.</p>";
+        $subject = ($result ? "Подтверждение" : "Отклонение") . " регистрации. Coursey.it-team.in.ua";
+        $body = "Ваша заявка на регистрацию на сайте Coursey была " 
+            . ($result ? "подтверждена" : "отклонена.\nПричина:" . $reason) . ".Не отвечайте на это письмо.";
         Yii::$app->mailer->compose()
                 ->setFrom('noreply@coursey.it-team.in.ua')
                 ->setTo($email)
