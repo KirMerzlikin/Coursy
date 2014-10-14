@@ -89,6 +89,7 @@ class AdminController extends Controller
             'admSearchModel' => $admSearchModel,
             'admDataProvider' => $admDataProvider,
         ]);
+        
 
     }
 
