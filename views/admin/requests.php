@@ -5,7 +5,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\Tabs;
-
+Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 $this->title = 'Admin panel -> Registration requests';
 
 echo Nav::widget([

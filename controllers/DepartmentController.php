@@ -83,7 +83,7 @@ class DepartmentController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('../admin/department');
+            $this->redirect(Yii::$app->user->returnUrl);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -101,7 +101,7 @@ class DepartmentController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect('../admin/department');
+        $this->redirect(Yii::$app->user->returnUrl);
     }
 
     /**

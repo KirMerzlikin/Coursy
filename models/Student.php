@@ -73,7 +73,10 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function updateSt()
     {
-        $this->passHash = md5($this->password);
+        if($this->password!='')
+        {
+            $this->passHash = md5($this->password);
+        }
         return $this->save();
     }
 
