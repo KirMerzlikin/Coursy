@@ -40,6 +40,7 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],
             ['degree', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное звание'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
+            ['email', 'validateEmail']
         ];
     }
 
@@ -84,6 +85,13 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function checkPassword($password)
     {
         return $this->getAttribute('passHash') == md5($password);
+    }
+
+    public function validateEmail($attribute, $params)
+    {
+        $user = Lecturer::find()->where(['email'=>$this->email])->count() + Student::find()->where(['email'=>$this->email])->count();
+        if ($user!=0)
+            $this->addError('email','Данный email уже используется.');
     }
 
     public static function findIdentityByAccessToken($token, $type = null)

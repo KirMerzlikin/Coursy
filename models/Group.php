@@ -31,6 +31,7 @@ class Group extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
             ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я0-9\\s-]*$/', 'message' => 'Пожалуйста, введите корректную группу'],
+            ['name', 'validateName']
         ];
     }
 
@@ -43,6 +44,15 @@ class Group extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    public function validateName()
+    {
+        $group = Group::find()->where(['name'=>$this->name])->count();
+        if($group != 0)
+        {
+            $this->addError('name','Данная группа уже существует.');
+        }
     }
 
     /**

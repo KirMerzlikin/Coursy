@@ -101,7 +101,7 @@ class LecturerController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect('../admin/lecturer');
+        return $this->redirect(Yii::$app->user->returnUrl);
     }
 
     /**

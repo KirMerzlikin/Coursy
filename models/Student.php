@@ -49,6 +49,7 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
             ['password', 'validatePassword'],
             ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
+            ['email', 'validateEmail']
         ];
     }
 
@@ -81,6 +82,13 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
             $this->passHash = md5($this->password);
         }
         return $this->save();
+    }
+
+    public function validateEmail($attribute, $params)
+    {
+        $user = Lecturer::find()->where(['email'=>$this->email])->count() + Student::find()->where(['email'=>$this->email])->count();
+        if ($user!=0)
+            $this->addError('email','Данный email уже используется.');
     }
 
     /**

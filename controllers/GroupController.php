@@ -63,7 +63,7 @@ class GroupController extends Controller
         $model = new Group();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect('../admin/group');
+            return $this->redirect(Yii::$app->user->returnUrl);
         } else {
             return $this->render('create', [
                 'model' => $model,
