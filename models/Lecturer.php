@@ -101,7 +101,7 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
 
     public function getId()
     {
-        return $this->id;
+        return $this->id + 3010;
     }
 
     /**
@@ -122,7 +122,7 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
 
      public static function findIdentity($id)
     {
-        $lecturer = Lecturer::find()->where(['id' => $id])->one();
+        $lecturer = Lecturer::find()->where(['id' => $id - 3010])->one();
         return $lecturer;
     }
 }

@@ -158,7 +158,7 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function getId()
     {
-        return $this->id;
+        return $this->id + 10;
     }
 
     /**
@@ -179,7 +179,7 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
 
      public static function findIdentity($id)
     {
-        $student = Student::find()->where(['id' => $id])->one();
+        $student = Student::find()->where(['id' => $id - 10])->one();
         return $student;
     }
 }
