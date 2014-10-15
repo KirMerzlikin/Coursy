@@ -48,7 +48,7 @@ $lcProvider =  $lcSearchModel->search(['LecturerSearch' => ['active' => '0']]);
                   Html::button('Отклонить',
                     ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'student_'.$student->id.'\',\'' . $student->name . '\', \'' . $student->email .'\')']), 
                   ['class' => 'pull-right']),
-                ['class' => 'list-group-item']);
+                ['class' => 'list-group-item','id' => 'student_'.$student->id]);
               }
             ]),
 
@@ -71,7 +71,7 @@ $lcProvider =  $lcSearchModel->search(['LecturerSearch' => ['active' => '0']]);
                   Html::button('Отклонить',
                     ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'lecturer_'.$lecturer->id.'\',\'' . $lecturer->name . '\',\'' . $lecturer->email . '\')']), 
                   ['class' => 'pull-right']),
-                ['class' => 'list-group-item']);
+                ['class' => 'list-group-item','id' => 'lecturer_'.$lecturer->id]);
               }
             ]),
         ],
@@ -114,7 +114,7 @@ echo Html::endTag('div');
       }
     });
  }
- function openModal(name, email)
+ function openModal(id,name, email)
  {
     $('#modalLabel').text('Кому: ' + name + " (" + email + ")");
     $('#reason').val('');
@@ -122,7 +122,7 @@ echo Html::endTag('div');
     $('#sendResponseButton').click(function()
     {
       var reason = $('#reason').text();
-      sendResponse(email, false, reason);
+      sendResponse(id,email, false, reason);
       $('#myModal').modal('hide');
     });
 

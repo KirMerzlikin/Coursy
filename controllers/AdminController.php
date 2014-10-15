@@ -122,7 +122,7 @@ class AdminController extends Controller
     {
         $subject = ($result ? "Подтверждение" : "Отклонение") . " регистрации. Coursey.it-team.in.ua";
         $body = "Ваша заявка на регистрацию на сайте Coursey была " 
-            . ($result ? "подтверждена" : "отклонена.\nПричина:" . $reason) . ".Не отвечайте на это письмо.";
+            . ($result ? "подтверждена" : "отклонена.\nПричина: " . $reason) . ". Не отвечайте на это письмо.";
         Yii::$app->mailer->compose()
                 ->setFrom('noreply@coursey.it-team.in.ua')
                 ->setTo($email)
