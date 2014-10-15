@@ -48,10 +48,11 @@ class Department extends \yii\db\ActiveRecord
 
     public function validateName()
     {
-        $group = Department::find()->where(['name'=>$this->name])->count();
-        if($group != 0)
-        {
-            $this->addError('name','Данная кафедра уже существует.');
+        foreach (Department::find()->where(['name'=>$this->name])->all() as $value) {
+            if($value->id != $this->id)
+            {
+                $this->addError('name','Данная группа уже существует.');
+            }
         }
     }
 

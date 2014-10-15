@@ -86,9 +86,19 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function validateEmail($attribute, $params)
     {
-        $user = Lecturer::find()->where(['email'=>$this->email])->count() + Student::find()->where(['email'=>$this->email])->count();
-        if ($user!=0)
-            $this->addError('email','Данный email уже используется.');
+        foreach (Lecturer::find()->where(['email'=>$this->email])->all() as $value) {
+            if($value->id != $this->id)
+            {
+                $this->addError('email','Данный email уже используется.');
+            }
+        }
+
+        foreach (Student::find()->where(['email'=>$this->email])->all() as $value) {
+            if($value->id != $this->id)
+            {
+                $this->addError('email','Данный email уже используется.');
+            }
+        }
     }
 
     /**

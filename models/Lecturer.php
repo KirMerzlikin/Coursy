@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Student;
 
 /**
  * This is the model class for table "lecturer".
@@ -89,9 +90,19 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
 
     public function validateEmail($attribute, $params)
     {
-        $user = Lecturer::find()->where(['email'=>$this->email])->count() + Student::find()->where(['email'=>$this->email])->count();
-        if ($user!=0)
-            $this->addError('email','Данный email уже используется.');
+        foreach (Lecturer::find()->where(['email'=>$this->email])->all() as $value) {
+            if($value->id != $this->id)
+            {
+                $this->addError('email','Данный email уже используется.');
+            }
+        }
+
+        foreach (Student::find()->where(['email'=>$this->email])->all() as $value) {
+            if($value->id != $this->id)
+            {
+                $this->addError('email','Данный email уже используется.');
+            }
+        }
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
