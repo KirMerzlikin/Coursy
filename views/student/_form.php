@@ -18,7 +18,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'passHash')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'passHash')->textInput(['maxlength' => 255, 'readonly'=> true]) ?>
 
     <?= $form->field($model, 'idGroup')->dropDownList(ArrayHelper::map(Group::find()->all(), 'id', 'name'))->label('Group') ?>
 

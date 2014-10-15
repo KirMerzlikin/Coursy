@@ -12,19 +12,19 @@ use yii\helpers\ArrayHelper;
 
 <div class="lecturer-form">
 
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'active')->textInput() ?>
+    <?php $form = ActiveForm::begin(); ?>    
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'passHash')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'passHash')->textInput(['maxlength' => 255, 'readonly'=> true]) ?>
 
     <?= $form->field($model, 'idDepartment')->dropDownList(ArrayHelper::map(Department::find()->all(), 'id', 'name'))->label('Department') ?>
 
     <?= $form->field($model, 'degree')->textInput(['maxlength' => 255]) ?>
+
+    <?= $form->field($model, 'active')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

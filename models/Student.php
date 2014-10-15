@@ -47,6 +47,8 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
             [['idGroup', 'active'], 'integer'],
             [['name', 'email', 'passHash'], 'string', 'max' => 255],
             ['password', 'validatePassword'],
+            ['name', 'validateName'],
+            ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
         ];
     }
 
@@ -63,6 +65,14 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
             'idGroup' => 'Id Group',
             'active' => 'Active',
         ];
+    }
+
+    public function validateName()
+    {
+        if(!(preg_match('/[^a-z ]/i', $this->name) xor preg_match('/[^а-яё ]/i', $this->name)))
+        {
+          $this->addError('name','Имя может содержать только буквы.');
+        }
     }
 
     public function validatePassword()
