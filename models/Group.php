@@ -29,7 +29,8 @@ class Group extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name'], 'string', 'max' => 255]
+            [['name'], 'string', 'max' => 255],
+            ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я0-9\\s-]*$/', 'message' => 'Пожалуйста, введите корректную группу'],
         ];
     }
 
