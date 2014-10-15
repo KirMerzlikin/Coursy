@@ -135,7 +135,7 @@ class StudentController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect('../admin/student');
+        return $this->redirect(Yii::$app->user->returnUrl);
     }
 
     /**

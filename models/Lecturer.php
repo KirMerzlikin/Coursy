@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\Student;
 
 /**
  * This is the model class for table "lecturer".
@@ -37,8 +38,10 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             [['active', 'name', 'email', 'passHash', 'idDepartment'], 'required'],
             [['active', 'idDepartment'], 'integer'],
             [['name', 'email', 'passHash', 'degree'], 'string', 'max' => 255],
-            ['name', 'validateName'],
+            ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],
+            ['degree', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное звание'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
+            ['email', 'validateEmail']
         ];
     }
 
@@ -85,11 +88,20 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
         return $this->getAttribute('passHash') == md5($password);
     }
 
-    public function validateName()
+    public function validateEmail($attribute, $params)
     {
-        if(!(preg_match('/[^a-z ]/i', $this->name) xor preg_match('/[^а-яё ]/i', $this->name)))
-        {
-          $this->addError('name','Имя может содержать только буквы.');
+        foreach (Lecturer::find()->where(['email'=>$this->email])->all() as $value) {
+            if($value->id != $this->id)
+            {
+                $this->addError('email','Данный email уже используется.');
+            }
+        }
+
+        foreach (Student::find()->where(['email'=>$this->email])->all() as $value) {
+            if($value->id != $this->id)
+            {
+                $this->addError('email','Данный email уже используется.');
+            }
         }
     }
 

@@ -110,7 +110,7 @@ echo Tabs::widget([
                   return Url::toRoute($params);
                   }],
                 ],
-              ]),
+              ]).Html::a('Создать',['group/create'] ,['class' => 'btn btn-primary']),
         ],
         [
             'label' => 'Кафедры',
@@ -128,7 +128,7 @@ echo Tabs::widget([
                   return Url::toRoute($params);
                   }],
                 ],
-              ]),
+              ]).Html::a('Создать',['department/create'] ,['class' => 'btn btn-primary']),
         ],
 
     ],

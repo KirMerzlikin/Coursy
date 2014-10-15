@@ -47,8 +47,9 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
             [['idGroup', 'active'], 'integer'],
             [['name', 'email', 'passHash'], 'string', 'max' => 255],
             ['password', 'validatePassword'],
-            ['name', 'validateName'],
+            ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
+            ['email', 'validateEmail']
         ];
     }
 
@@ -67,13 +68,6 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
         ];
     }
 
-    public function validateName()
-    {
-        if(!(preg_match('/[^a-z ]/i', $this->name) xor preg_match('/[^а-яё ]/i', $this->name)))
-        {
-          $this->addError('name','Имя может содержать только буквы.');
-        }
-    }
 
     public function validatePassword()
     {
@@ -88,6 +82,23 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
             $this->passHash = md5($this->password);
         }
         return $this->save();
+    }
+
+    public function validateEmail($attribute, $params)
+    {
+        foreach (Lecturer::find()->where(['email'=>$this->email])->all() as $value) {
+            if($value->id != $this->id)
+            {
+                $this->addError('email','Данный email уже используется.');
+            }
+        }
+
+        foreach (Student::find()->where(['email'=>$this->email])->all() as $value) {
+            if($value->id != $this->id)
+            {
+                $this->addError('email','Данный email уже используется.');
+            }
+        }
     }
 
     /**
