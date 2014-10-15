@@ -34,6 +34,8 @@ class RegistrationForm extends Model
             [['name','second_name','email', 'password','confirmation','role'], 'required', 'message' => 'Пожалуйста, заполните это поле'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
             // password is validated by validatePassword()
+            ['name', 'validateString'],
+            ['second_name', 'validateString'],
             ['password', 'validatePassword'],
             ['email', 'validateEmail'],
         ];
@@ -70,6 +72,18 @@ class RegistrationForm extends Model
         $user = Lecturer::find()->where(['email'=>$this->email])->count() + Student::find()->where(['email'=>$this->email])->count();
         if ($user!=0)
             $this->addError('email','Данный email уже используется.');
+    }
+
+    public function validateString($attribute, $params)
+    {
+        if(!(preg_match('/[^a-z]/i', $this->name) xor preg_match('/[^а-яё]/i', $this->name)))
+        {
+          $this->addError('name','Имя может содержать только буквы.');
+        }
+        if(!(preg_match('/[^a-z\-]/i', $this->second_name) xor preg_match('/[^а-яё\-]/i', $this->second_name)))
+        {
+          $this->addError('second_name','Фамилия может содержать только буквы и символ "-".');
+        }
     }
 
     /**

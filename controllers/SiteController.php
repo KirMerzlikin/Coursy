@@ -87,7 +87,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
         $model = new RegistrationForm();
-        if(array_key_exists('Registration', $_POST))
+        if(array_key_exists('RegistrationForm', $_POST))
         {
             $info = $_POST['RegistrationForm'];
             $model->department = $info['department'];
@@ -99,7 +99,10 @@ class SiteController extends Controller
             if($model->register())
                 return $this->render('success_registration');
             else
+            {
+                print_r($model);
                 return $this->render('fail_registration');
+            }
         } else {
             return $this->render('registration', ['model'=>$model,]);
         }
