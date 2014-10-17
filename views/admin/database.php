@@ -40,7 +40,7 @@ echo Tabs::widget([
                   'passHash',
                   ['attribute' => 'idGroup', 'value' => function($data)
                     {
-                        return $data->getIdGroup0()->one()->name;
+                        return $data->getIdGroup()->one()->name;
                     }],
 
                   ['class' => 'yii\grid\ActionColumn', 'urlCreator' => function($action, $model, $key, $index)
