@@ -74,10 +74,10 @@ class LoginForm extends Model
     }
 
     //to-do set from mail
-    public function recovery()
+    public function recovery($email)
     {
-        $user = $this->getUser();
-        if($user != null)
+        $user = User::findByEmail($this->email);
+        if($user != null && ($user->tableName() == 'admin' || $user->active == 1))
         {
             $newPass = $this->generatePassword();
             $user->passHash = md5($newPass);

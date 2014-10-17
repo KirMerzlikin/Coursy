@@ -127,6 +127,18 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    public function actionFailRecovery()
+    {
+        $this->layout='new';
+        return $this->render('fail_recovery');
+    }
+
+    public function actionSuccessRecovery()
+    {
+        $this->layout='new';
+        return $this->render('success_recovery');
+    }
+
     public function actionRecovery()
     {
         $this->layout='new';
@@ -134,18 +146,12 @@ class SiteController extends Controller
         //    return $this->goHome();
         //}
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post())){
-            if($model->recovery())
-            {
-                return $this->render('success_recovery');
-            }
-            else{
-                return $this->render('fail_recovery');
-            }
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+        $email = $_POST['email'];
+        if($model->recovery($email)){
+            return $this->redirect('success-recovery');
+        }
+        else{
+            return $this->redirect('fail-recovery');
         }
     }
 }
