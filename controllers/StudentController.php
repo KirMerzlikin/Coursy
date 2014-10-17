@@ -75,15 +75,11 @@ class StudentController extends Controller
     
     public function actionProfile()
     {
-        $model = new Student();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('profile', [
+        $model = Yii::$app->user->getIdentity();           
+        return $this->render('profile', [
                 'model' => $model,
-            ]);
-        }
+                'content' => $this->renderPartial('update_st', ['model'  => $model])
+        ]);        
     }
 
     /**
@@ -103,26 +99,22 @@ class StudentController extends Controller
                 'model' => $model,
             ]);
         }
-    }
+    }   
 
-    public function actionUpdateSt($id)
+    public function actionUpdateSt()
     {
-        $model = $this->findModel($id);
+        $model = Yii::$app->user->getIdentity();   
         if ($model->load(Yii::$app->request->post())) {
-            //$model->group = $_POST['RegistrationForm[group]'];
             $info = $_POST['Student'];
             $model->password = $info['password'];
             $model->confirmation = $info['confirmation'];
-            if($model->validate())
+            if($model->updateSt())
             {
-                $model->updateSt();
                 return $this->redirect(Yii::$app->user->returnUrl);
             } else{
-                return $this->render('update_st', ['model'=>$model,]);
+                
             }
-        } else {
-            return $this->render('update_st', ['model'=>$model,]);
-        }
+        } 
     }
 
     /**

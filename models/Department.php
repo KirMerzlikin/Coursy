@@ -51,7 +51,7 @@ class Department extends \yii\db\ActiveRecord
         foreach (Department::find()->where(['name'=>$this->name])->all() as $value) {
             if($value->id != $this->id)
             {
-                $this->addError('name','Данная группа уже существует.');
+                $this->addError('name','Данная кафедра уже существует.');
             }
         }
     }

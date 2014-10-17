@@ -36,7 +36,7 @@ class AdminController extends Controller
         }
         else if (Yii::$app->user->identity->tableName() != 'admin')
         {
-            return $this->redirect('../site/about');   
+            return $this->redirect('../web/site/about');   
         }
         
     }
