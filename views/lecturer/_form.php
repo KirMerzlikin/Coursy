@@ -24,10 +24,11 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'degree')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'active')->textInput() ?>
+    <?= $form->field($model, 'active')->radioList(ArrayHelper::map([['value' => '1', 'label' => 'да'],
+                                                        ['value' => '0', 'label' => 'нет']], 'value', 'label')) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
