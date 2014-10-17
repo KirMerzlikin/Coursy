@@ -41,8 +41,8 @@ class Admin extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return [
             'id' => 'ID',
             'email' => 'Email',
-            'passHash' => 'Pass Hash',
-            'name' => 'Name',
+            'passHash' => 'Хэш пароля',
+            'name' => 'Имя',
         ];
     }
 

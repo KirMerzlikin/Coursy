@@ -38,8 +38,10 @@ echo Tabs::widget([
                   'name',
                   'email:email',
                   'passHash',
-                  'idGroup',
-            
+                  ['attribute' => 'idGroup', 'value' => function($data)
+                    {
+                        return $data->getIdGroup0()->one()->name;
+                    }],
 
                   ['class' => 'yii\grid\ActionColumn', 'urlCreator' => function($action, $model, $key, $index)
                   {
@@ -61,7 +63,10 @@ echo Tabs::widget([
                 'name',
                 'email:email',
                 'passHash',
-                'idDepartment',
+                ['attribute' => 'idDepartment', 'value' => function($data)
+                    {
+                        return $data->getIdDepartment0()->one()->name;
+                    }],
                 'degree',
 
                 ['class' => 'yii\grid\ActionColumn', 'urlCreator' => function($action, $model, $key, $index)
@@ -129,6 +134,29 @@ echo Tabs::widget([
                   }],
                 ],
               ]).Html::a('Создать',['department/create'] ,['class' => 'btn btn-primary']),
+        ],
+        [
+            'label' => 'Курсы',
+            'content' => GridView::widget([
+              'dataProvider' => $crDataProvider,
+                'columns' => [
+                  'name',
+                  ['attribute' => 'idLecturer',
+                        'value' => function($data)
+                        {
+                          return $data->getIdLecturer0()->one()->name;
+                        }],
+                  ['attribute' => 'published',  'format' => 'boolean'],
+
+                  ['class' => 'yii\grid\ActionColumn', 'urlCreator' => function($action, $model, $key, $index)
+                  {
+                      $params = is_array($key) ? $key : ['id' => (string) $key];
+                      $params[0] = '/course' . '/' . $action;
+
+                  return Url::toRoute($params);
+                  }],
+                ],
+              ]),
         ],
 
     ],

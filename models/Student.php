@@ -60,11 +60,11 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Имя',
             'email' => 'Email',
-            'passHash' => 'Pass Hash',
-            'idGroup' => 'Id Group',
-            'active' => 'Active',
+            'passHash' => 'Хэш пароля',
+            'idGroup' => 'Группа',
+            'active' => 'Подтвержден',
         ];
     }
 

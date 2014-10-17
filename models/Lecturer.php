@@ -58,12 +58,12 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     {
         return [
             'id' => 'ID',
-            'active' => 'Active',
-            'name' => 'Name',
+            'active' => 'Подтвержден',
+            'name' => 'Имя',
             'email' => 'Email',
-            'passHash' => 'Pass Hash',
-            'idDepartment' => 'Id Department',
-            'degree' => 'Degree',
+            'passHash' => 'Хэш пароля',
+            'idDepartment' => 'Кафедра',
+            'degree' => 'Степень',
         ];
     }
 

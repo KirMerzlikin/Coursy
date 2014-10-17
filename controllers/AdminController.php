@@ -12,6 +12,7 @@ use app\models\LecturerSearch;
 use app\models\DepartmentSearch;
 use app\models\GroupSearch;
 use app\models\AdminSearch;
+use app\models\CourseSearch;
 use app\models\User;
 
 class AdminController extends Controller
@@ -77,6 +78,10 @@ class AdminController extends Controller
         $admDataProvider = $admSearchModel->search([]);
         $admDataProvider->setPagination(['pageSize' => 10]);
 
+        $crSearchModel = new CourseSearch();
+        $crDataProvider = $crSearchModel->search([]);
+        $crDataProvider->setPagination(['pageSize' => 10]);
+
          return $this->render('database', [
             'stSearchModel' => $stSearchModel,
             'stDataProvider' => $stDataProvider,
@@ -88,6 +93,8 @@ class AdminController extends Controller
             'depDataProvider' => $depDataProvider,
             'admSearchModel' => $admSearchModel,
             'admDataProvider' => $admDataProvider,
+            'crSearchModel' => $crSearchModel,
+            'crDataProvider' => $crDataProvider,
         ]);
         
 
@@ -114,7 +121,8 @@ class AdminController extends Controller
         }
         else
         {
-            
+            $user = User::findByEmail($email);
+            $user->delete();
         }
     }
 
