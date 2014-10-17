@@ -28,30 +28,7 @@ $this->title = 'Авторизация';
             <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block btn-lg', 'name' => 'login-button']) ?>
             <?= Html::label('Забыли пароль?', 0, ['style' => "text-decoration:underline;  cursor: pointer;", 'onclick' =>"openModal()", 'class'=>'reg-message']) ?>
         </div>
-    </div>      
-
-
-     <?php ActiveForm::end(); ?>
-     <?php $form = ActiveForm::begin([
-        'action' => 'recovery',
-        'id' => 'recovery-form',
-        'options' => ['visibility' => 'hidden', 'class' => 'form-horizontal'],
-        'fieldConfig' => [
-            'template' => "<div class=\"col-lg-12\">{input}{error}</div>\n",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
-    <div id="hidden-div" style="visibility:hidden;">
-        <?= Html::label('Введите свой email для получения нового пароля!', 0, ['class'=>'reg-message']) ?>
-        <?= $form->field($model, 'email') ?>
-
-        <div class="form-group">
-            <div class=" col-lg-12">
-                <?= Html::submitButton('Отправить', ['class' => 'btn btn-block btn-lg btn- btn-primary', 'name' => 'recovery-button']) ?>
-            </div>
-        </div>
-    </div>        
-     <?php ActiveForm::end(); ?>
+    </div>
 </div>
 
 <div class="modal fade bs-example-modal-sm" id='myModal' tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
