@@ -119,4 +119,16 @@ class LecturerController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+	public function actionProfile()
+{
+$model = new Lecturer();
+
+if ($model->load(Yii::$app->request->post()) && $model->save()) {
+return $this->redirect(['view', 'id' => $model->id]);
+} else {
+return $this->render('profile', [
+'model' => $model,
+]);
+}
+}
 }

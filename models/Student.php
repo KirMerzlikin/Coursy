@@ -46,10 +46,10 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
             [['name', 'email', 'passHash', 'idGroup', 'active'], 'required'],
             [['idGroup', 'active'], 'integer'],
             [['name', 'email', 'passHash'], 'string', 'max' => 255],
-            ['password', 'validatePassword'],
             ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
-            ['email', 'validateEmail']
+            ['email', 'validateEmail'],
+            ['confirmation', 'compare', 'compareAttribute'=>'password', 'message'=>"Подтверждение пароля не совпадает с паролем."]
         ];
     }
 
@@ -120,9 +120,14 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdGroup0()
+    public function getIdGroup()
     {
         return $this->hasOne(Group::className(), ['id' => 'idGroup']);
+    }
+
+    public function getGroup()
+    {
+        return $this->hasOne(Group::className(), ['id' => 'idGroup'])->one()->name;
     }
 
     /**

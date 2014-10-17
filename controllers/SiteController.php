@@ -65,6 +65,8 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             if(Yii::$app->user->identity->tableName() == 'admin')
                 return $this->redirect('../admin');
+            if(Yii::$app->user->identity->tableName() == 'student')
+                return $this->redirect('../student/profile');
             else return $this->redirect('../site/about');
         } else {
             return $this->render('login', [
