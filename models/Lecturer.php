@@ -24,6 +24,11 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     /**
      * @inheritdoc
      */
+
+    public $password;
+    public $confirmation;
+
+
     public static function tableName()
     {
         return 'lecturer';
@@ -41,7 +46,8 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
             ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],
             ['degree', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное звание'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
-            ['email', 'validateEmail']
+            ['email', 'validateEmail'],
+            ['confirmation', 'compare', 'compareAttribute'=>'password', 'message'=>"Подтверждение пароля не совпадает с паролем."]
         ];
     }
 
@@ -86,6 +92,15 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function checkPassword($password)
     {
         return $this->getAttribute('passHash') == md5($password);
+    }
+
+    public function updateLc()
+    {
+        if($this->password!='')
+        {
+            $this->passHash = md5($this->password);
+        }
+        return $this->save();
     }
 
     public function validateEmail($attribute, $params)

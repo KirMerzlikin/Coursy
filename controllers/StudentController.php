@@ -75,6 +75,7 @@ class StudentController extends Controller
     
     public function actionProfile()
     {
+        $this->layout='main_layout';
         $model = Yii::$app->user->getIdentity();           
         return $this->render('profile', [
                 'model' => $model,

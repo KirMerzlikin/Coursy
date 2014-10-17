@@ -8,6 +8,8 @@ use yii\bootstrap\Tabs;
 use app\models\Group;
 use yii\helpers\ArrayHelper;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
+
+echo "<div class='wrapper2'>";
 echo Nav::widget([
     'items' => [
         '<li><center><b>'.$model->name.'</b></center></li>',
@@ -30,6 +32,7 @@ echo Nav::widget([
 
 echo Html::beginTag('div', ['class' => 'col-lg-9']);?>
 <?= $content ?>
+</div>
     
      
      
