@@ -5,8 +5,8 @@ height: 100%;
 .wrap {
 min-height: 100%;
 height: auto;
-margin: 0 auto -60px;
-padding: 0 0 60px;
+margin: -27px auto -60px;
+padding: 0 0 0px;
 }
 .wrap > .container {
 padding: 70px 15px 20px;
@@ -97,7 +97,7 @@ padding-top: 10px;
 }
 .wrapper2 {
 width: 970px;
-min-height: 620px;
+min-height: 420px;
 margin: 0 auto;
 margin: 10px;
 background: url(../images/body_bg1.png) repeat;

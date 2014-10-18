@@ -144,7 +144,7 @@ class LecturerController extends Controller
 	public function actionProfile()
 {
 $model = new Lecturer();
-
+$this->layout = "main_layout";
 if ($model->load(Yii::$app->request->post()) && $model->save()) {
 return $this->redirect(['view', 'id' => $model->id]);
 } else {
