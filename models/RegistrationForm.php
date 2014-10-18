@@ -106,7 +106,6 @@ class RegistrationForm extends Model
         }
         else if ($this->role == 'student')
         {
-            //print_r($_POST);
             $student = new Student();
             $student->name = $this->second_name." ".$this->name;
             $student->email = $this->email;
