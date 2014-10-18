@@ -142,15 +142,52 @@ class LecturerController extends Controller
         }
     }
 	public function actionProfile()
-{
-$model = new Lecturer();
-$this->layout = "main_layout";
-if ($model->load(Yii::$app->request->post()) && $model->save()) {
-return $this->redirect(['view', 'id' => $model->id]);
-} else {
-return $this->render('profile', [
-'model' => $model,
-]);
-}
-}
+    {
+        $this->layout = "main_layout";
+        $model = Yii::$app->user->getIdentity();           
+        return $this->render('courses', [
+                'model' => $model
+        ]);    
+    }
+
+    public function actionCourses()
+    {
+        $this->layout='main_layout';
+        $model = Yii::$app->user->getIdentity();           
+        return $this->render('courses', [
+                'model' => $model
+        ]);        
+    }
+
+    public function actionRequests()
+    {
+        $this->layout='main_layout';
+        $model = Yii::$app->user->getIdentity();           
+        return $this->render('requests', [
+                'model' => $model
+        ]);        
+    }
+
+    public function actionProfileUpdate()
+    {
+        $this->layout = "main_layout";
+        $model = Yii::$app->user->getIdentity();   
+        if ($model->load(Yii::$app->request->post())) {
+            $info = $_POST['Lecturer'];
+            $model->password = $info['password'];
+            $model->confirmation = $info['confirmation'];
+            if($model->updateLc())
+            {
+                return $this->redirect(Yii::$app->user->returnUrl);
+            } else{
+                
+            }
+        }
+        else
+        {
+             return $this->render('profile_update', [
+                'model' => $model
+        ]);
+        } 
+    }
 }
