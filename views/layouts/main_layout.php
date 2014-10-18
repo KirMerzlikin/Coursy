@@ -13,13 +13,7 @@ use app\assets\AppAsset;
 <link rel="stylesheet" type="text/css" href="../css/main_site.css" />
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js'></script>
 <script type="text/javascript">
-function show(id, id2)
-{
-if (document.getElementById(id).style.display == 'none'){
-document.getElementById(id).style.display = 'block';
-document.getElementById(id2).style.display = 'none';
-}
-}
+
 </script>
 <!--[if IE]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
