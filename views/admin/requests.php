@@ -41,7 +41,7 @@ $lcProvider =  $lcSearchModel->search(['LecturerSearch' => ['active' => '0']]);
                 return Html::tag('li',
                 "Студент <b>" . $student->name . "</b> " . 
                 "(email:" .  $student->email . ") " .
-                "из группы " . $student->getIdGroup0()->one()->name .
+                "из группы " . $student->getIdGroup()->one()->name .
                   Html::tag('span',
                   Html::button('Подтвердить',
                     ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'student_'.$student->id.'\',\'' . $student->email . '\', true)']) .
