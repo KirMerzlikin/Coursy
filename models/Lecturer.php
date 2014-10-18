@@ -40,7 +40,7 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public function rules()
     {
         return [
-            [['active', 'name', 'email', 'passHash', 'idDepartment'], 'required'],
+            [['active', 'name', 'email', 'passHash', 'idDepartment'], 'required', 'message'=>'Поле "{attribute}" не может быть пустым.'],
             [['active', 'idDepartment'], 'integer'],
             [['name', 'email', 'passHash', 'degree'], 'string', 'max' => 255],
             ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],

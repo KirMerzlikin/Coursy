@@ -43,7 +43,7 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['name', 'email', 'passHash', 'idGroup', 'active'], 'required'],
+            [['name', 'email', 'passHash', 'idGroup', 'active'], 'required', 'message'=>'Поле "{attribute}" не может быть пустым.'],
             [['idGroup', 'active'], 'integer'],
             [['name', 'email', 'passHash'], 'string', 'max' => 255],
             ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],
