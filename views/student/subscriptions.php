@@ -19,11 +19,13 @@ echo Nav::widget([
         
         [
             'label' => 'Подписки',
-            'options' => ['class' => 'active']
+            'options' => ['class' => 'active'],
+            'url'=>'../student/subscriptions'
         ],
 
         [
-            'label' => 'Редактировать профиль',    
+            'label' => 'Редактировать профиль',
+            'url'=>'../student/profile-update'              
         ],
     ],
     'options' => ['class' => 'nav-pills nav-stacked admin-menu',
@@ -31,9 +33,8 @@ echo Nav::widget([
 ]);
 
 echo Html::beginTag('div', ['class' => 'col-lg-9']);?>
-<?= $content ?>
+<div><center>Здесь будут подписки.</center></div>
 </div>
-    
      
      
 

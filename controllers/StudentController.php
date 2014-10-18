@@ -75,11 +75,10 @@ class StudentController extends Controller
     
     public function actionProfile()
     {
-        $this->layout='main_layout';
+        //$this->layout='main_layout';
         $model = Yii::$app->user->getIdentity();           
-        return $this->render('profile', [
-                'model' => $model,
-                'content' => $this->renderPartial('update_st', ['model'  => $model])
+        return $this->render('subscriptions', [
+                'model' => $model
         ]);        
     }
 
@@ -89,6 +88,16 @@ class StudentController extends Controller
      * @param integer $id
      * @return mixed
      */
+
+    public function actionSubscriptions()
+    {
+        //$this->layout='main_layout';
+        $model = Yii::$app->user->getIdentity();           
+        return $this->render('subscriptions', [
+                'model' => $model
+        ]);        
+    }
+
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -102,7 +111,7 @@ class StudentController extends Controller
         }
     }   
 
-    public function actionUpdateSt()
+    public function actionProfileUpdate()
     {
         $model = Yii::$app->user->getIdentity();   
         if ($model->load(Yii::$app->request->post())) {
@@ -115,7 +124,12 @@ class StudentController extends Controller
             } else{
                 
             }
-        } 
+        }
+        else{
+             return $this->render('profile_update', [
+                'model' => $model
+        ]);
+        }
     }
 
     /**

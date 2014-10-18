@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
 
 <div class="student-form">
 
-    <?php $form = ActiveForm::begin(['method' => 'post', 'action' => 'update-st']); ?>
+    <?php $form = ActiveForm::begin(['method' => 'post', 'action' => 'profile-update']); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 

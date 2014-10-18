@@ -13,13 +13,7 @@ use app\assets\AppAsset;
 <link rel="stylesheet" type="text/css" href="../css/main_site.css" />
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js'></script>
 <script type="text/javascript">
-function show(id, id2)
-{
-if (document.getElementById(id).style.display == 'none'){
-document.getElementById(id).style.display = 'block';
-document.getElementById(id2).style.display = 'none';
-}
-}
+
 </script>
 <!--[if IE]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -28,7 +22,7 @@ document.getElementById(id2).style.display = 'none';
 </head>
 <body>
 <?php $this->beginBody() ?>
-<?php
+<?php NavBar::begin();
 echo Nav::widget([
 'options' => ['class' => 'navbar-nav navbar-right'],
 'items' => [
@@ -42,7 +36,7 @@ Yii::$app->user->isGuest ?
 'linkOptions' => ['data-method' => 'post']],
 ],
 ]);
-?>
+NavBar::end();?>?>
 <div class="wrapper">
 <div width="500px"><img src="../images/logo.png" alt="Coursey" title="Coursey"/></div>
 <?= $content ?>

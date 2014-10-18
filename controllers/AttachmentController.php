@@ -3,17 +3,22 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Lecturer;
-use app\models\LecturerSearch;
+use app\models\Attachment;
+use app\models\AttachmentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
- * LecturerController implements the CRUD actions for Lecturer model.
+ * AttachmentController implements the CRUD actions for Attachment model.
  */
-class LecturerController extends Controller
+class AttachmentController extends Controller
 {
+
+    const LECTURER = 1;
+    const ADMIN = 2;
+
     public function behaviors()
     {
         return [
@@ -26,13 +31,24 @@ class LecturerController extends Controller
         ];
     }
 
+    private function validateAccess($params)
+    {
+        $cur_user = Yii::$app->user->identity;
+        if(Yii::$app->user->isGuest)
+            return $this->redirect('../site/login');
+        else if(($cur_user->tableName() == 'lecturer' && (($params & self::LECTURER) == 0)) ||
+                    ($cur_user->tableName() == 'admin' && (($params & self::ADMIN) == 0)))
+            return $this->redirect('../site/about');
+    }
+
     /**
-     * Lists all Lecturer models.
+     * Lists all Attachment models.
      * @return mixed
      */
+    /*
     public function actionIndex()
     {
-        $searchModel = new LecturerSearch();
+        $searchModel = new AttachmentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -40,31 +56,40 @@ class LecturerController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-        
+    */
 
     /**
-     * Displays a single Lecturer model.
+     * Displays a single Attachment model.
      * @param integer $id
      * @return mixed
      */
+    /*
     public function actionView($id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
-
+    */
     /**
-     * Creates a new Lecturer model.
+     * Creates a new Attachment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
-        $model = new Lecturer();
-
+        $model = new Attachment();
+        $model->idLesson = $id;
+        if (isset($_FILES['Attachment'])) {
+            $rnd = rand(0,9999);
+            $uploadedFile = UploadedFile::getInstance($model,'resource');
+            $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
+            $model->resource = $fileName;
+            $uploadedFile->saveAs($fileName);
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            return $this->redirect(['lesson/view', 'id' => $model->idLesson]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -73,7 +98,7 @@ class LecturerController extends Controller
     }
 
     /**
-     * Updates an existing Lecturer model.
+     * Updates an existing Attachment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -82,8 +107,17 @@ class LecturerController extends Controller
     {
         $model = $this->findModel($id);
 
+        if ($_FILES['Attachment']['name']['resource']!="") {
+            unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->resource);
+            $rnd = rand(0,9999);
+            $uploadedFile = UploadedFile::getInstance($model,'resource');
+            $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
+            $model->resource = $fileName;
+            $uploadedFile->saveAs($fileName);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(Yii::$app->user->returnUrl);
+            return $this->redirect(['lesson/view', 'id' => $model->idLesson]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -91,30 +125,8 @@ class LecturerController extends Controller
         }
     }
 
-    public function actionUpdateLc()
-    {
-        $model = Yii::$app->user->getIdentity();   
-        if ($model->load(Yii::$app->request->post())) {
-            $info = $_POST['Lecturer'];
-            $model->password = $info['password'];
-            $model->confirmation = $info['confirmation'];
-            if($model->updateLc())
-            {
-                return $this->redirect(Yii::$app->user->returnUrl);
-            } else{
-                
-            }
-        }
-        else
-        {
-             return $this->render('update_lc', [
-                'model' => $model,
-            ]);
-        } 
-    }
-
     /**
-     * Deletes an existing Lecturer model.
+     * Deletes an existing Attachment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -123,34 +135,22 @@ class LecturerController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(Yii::$app->user->returnUrl);
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Lecturer model based on its primary key value.
+     * Finds the Attachment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Lecturer the loaded model
+     * @return Attachment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Lecturer::findOne($id)) !== null) {
+        if (($model = Attachment::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-	public function actionProfile()
-{
-$model = new Lecturer();
-$this->layout = "main_layout";
-if ($model->load(Yii::$app->request->post()) && $model->save()) {
-return $this->redirect(['view', 'id' => $model->id]);
-} else {
-return $this->render('profile', [
-'model' => $model,
-]);
-}
-}
 }
