@@ -77,9 +77,14 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdDepartment0()
+    public function getIdDepartment()
     {
         return $this->hasOne(Department::className(), ['id' => 'idDepartment']);
+    }
+
+    public function getDepartment()
+    {
+        return $this->hasOne(Department::className(), ['id' => 'idDepartment'])->one()->name;
     }
 
     public static function findByEmail($email)
