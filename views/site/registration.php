@@ -11,8 +11,8 @@ use app\models\Group;
 $this->title = 'Регистрация';
 ?>
 
-<div id="page_name">Registration</div>
-                <div class="wrapper2"><center>
+
+                <div class="wrapper2"><div id="page_name">Registration</div><center>
                 
                 <div> 
                 <?php $form = ActiveForm::begin([

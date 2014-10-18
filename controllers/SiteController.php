@@ -56,7 +56,7 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
-        $this->layout='auth';
+        $this->layout='main_layout';
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -84,7 +84,7 @@ class SiteController extends Controller
 
     public function actionRegistration()
     {
-        $this->layout = "new";
+        $this->layout = "main_layout";
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -92,17 +92,19 @@ class SiteController extends Controller
         if(array_key_exists('RegistrationForm', $_POST))
         {
             $info = $_POST['RegistrationForm'];
-            $model->department = $info['department'];
-            $model->degree = $info['degree'];
-            $model->group = $info['group'];
+            if ($info['role']=='lecturer')
+            {
+                $model->department = $info['department'];
+                $model->degree = $info['degree'];
+            }
+            else
+                $model->group = $info['group'];
         }
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            //$model->group = $_POST['RegistrationForm[group]'];
             if($model->register())
                 return $this->render('success_registration');
             else
             {
-                print_r($model);
                 return $this->render('fail_registration');
             }
         } else {
