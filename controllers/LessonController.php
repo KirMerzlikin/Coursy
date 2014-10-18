@@ -67,6 +67,7 @@ class LessonController extends Controller
 
     public function actionViewCourse($id)
     {
+        $this->validateAccess(self::LECTURER);
         $course = Course::findOne($id);
         if ($course == null)
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -87,6 +88,7 @@ class LessonController extends Controller
      */
     public function actionView($id)
     {
+        $this->validateAccess(self::LECTURER);
         $searchModelAttachment = new AttachmentSearch();
         $dataProviderAttachment = $searchModelAttachment->search(['AttachmentSearch' => ['idLesson' => $id]]);
         $model = $this->findModel($id);
@@ -105,6 +107,7 @@ class LessonController extends Controller
      */
     public function actionCreate($id)
     {
+        $this->validateAccess(self::LECTURER);
         $model = new Lesson();
         $model->idCourse = $id;
 
@@ -121,6 +124,7 @@ class LessonController extends Controller
 	
     public function actionCr_lesson()
     {
+        $this->validateAccess(self::LECTURER);
         $model = new Lesson();
 
 
@@ -140,6 +144,7 @@ class LessonController extends Controller
      */
     public function actionList()
     {
+        $this->validateAccess(self::LECTURER);
         $model = new Lesson();
         
 
@@ -160,6 +165,7 @@ class LessonController extends Controller
      */
     public function actionDelete($id)
     {
+        $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
         $idCourse = $model->idCourse;
         $model->delete();

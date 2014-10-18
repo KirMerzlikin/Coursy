@@ -78,6 +78,7 @@ class AttachmentController extends Controller
      */
     public function actionCreate($id)
     {
+        $this->validateAccess(self::LECTURER);
         $model = new Attachment();
         $model->idLesson = $id;
         if (isset($_FILES['Attachment'])) {
@@ -105,6 +106,7 @@ class AttachmentController extends Controller
      */
     public function actionUpdate($id)
     {
+        $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
 
         if ($_FILES['Attachment']['name']['resource']!="") {
@@ -133,6 +135,7 @@ class AttachmentController extends Controller
      */
     public function actionDelete($id)
     {
+        $this->validateAccess(self::LECTURER);
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
