@@ -56,7 +56,7 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
-        $this->layout='auth';
+        $this->layout='main_layout';
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -84,7 +84,7 @@ class SiteController extends Controller
 
     public function actionRegistration()
     {
-        $this->layout = "new";
+        $this->layout = "main_layout";
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
