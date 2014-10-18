@@ -29,7 +29,6 @@ document.getElementById(id2).style.display = 'none';
 <body>
 <?php $this->beginBody() ?>
 <?php
-NavBar::begin();
 echo Nav::widget([
 'options' => ['class' => 'navbar-nav navbar-right'],
 'items' => [
@@ -43,7 +42,6 @@ Yii::$app->user->isGuest ?
 'linkOptions' => ['data-method' => 'post']],
 ],
 ]);
-NavBar::end();
 ?>
 <div class="wrapper">
 <div width="500px"><img src="../images/logo.png" alt="Coursey" title="Coursey"/></div>
