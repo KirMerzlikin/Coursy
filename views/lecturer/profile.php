@@ -8,6 +8,8 @@ use yii\bootstrap\Tabs;
 use yii\helpers\ArrayHelper;
 ?><div class="wrapper2">
 <?php echo Html::tag('div','Profile', ['id'=>'page_name']);?>
+<div style=" width:100%; height:1px; clear:both;">
+<div style="width: 24%; float:left;">
  <?php echo Nav::widget([
     'items' => [
         '<li><center><b>'.$model->name.'</b></center></li>',
@@ -36,7 +38,7 @@ use yii\helpers\ArrayHelper;
     'options' => ['class' => 'nav-pills nav-stacked admin-menu',
     				 'style' => 'margin:20px 20px 0 0; padding:5px; border-radius: 4px; border:1px solid #DDDDDD'],
 ]);?>
-<div style="width: 75%; margin-left: 24%;">
+<div style="position:relative; width: 75%; float:left;">
 <?php echo Html::tag('div', Html::tag('center', Html::tag('h1', 'Имя курса')));
 ?>
     <div class="form-group">
