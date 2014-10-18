@@ -68,10 +68,14 @@ $this->title = "Создание урока";
 	  <?= Html::tag('div', Html::tag('h6','Название добавленного объекта')) ?>
   </br></br>
 	   <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary', 'style' => 'float: left; margin-left: 5px; padding: 5px 25px 5px 25px']) ?>
-	    <?= Html::tag('div', Html::tag('h6','Название добавленного объекта')) ?>
 	   
- 	 <?= Html::submitButton('Создать', ['class' => 'btn btn-primary', 'style' => 'float: right; margin-left: 20px; padding: 5px 25px 5px 25px']) ?>
-	 
+	    <?= Html::tag('div', Html::tag('h6','Название добавленного объекта')) ?></br>
+	   
+ 	
+	  <?= Html::submitButton('Добавить вопросник', ['class' => 'btn btn-primary', 'style' => 'float: left; margin-left: 5px; padding: 5px 25px 5px 25px']) ?>
+	  
+  	 <?= Html::submitButton('Создать', ['class' => 'btn btn-primary', 'style' => 'float: right; margin-left: 20px; padding: 5px 25px 5px 25px']) ?>
+	  
 	  <?= Html::submitButton('Редактировать', ['class' => 'btn btn-primary', 'style' => 'float: right; margin-left: 20px; padding: 5px 25px 5px 25px']) ?>
 	 
      <div class="form-group">

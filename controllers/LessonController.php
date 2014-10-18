@@ -117,20 +117,36 @@ class LessonController extends Controller
         }
     }
 
+ 
+	
+    public function actionCr_lesson()
+    {
+        $model = new Lesson();
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('cr_lesson', [
+                'model' => $model,
+            ]);
+        }
+    }
     /**
      * Updates an existing Lesson model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionList()
     {
-        $model = $this->findModel($id);
+        $model = new Lesson();
+        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
+            return $this->render('list', [
                 'model' => $model,
             ]);
         }
