@@ -33,7 +33,7 @@ class Course extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'idLecturer', 'published'], 'required'],
+            [['name', 'description', 'idLecturer', 'published'], 'required', 'message' => 'Пожалуйста, заполните это поле'],
             [['description'], 'string'],
             [['idLecturer', 'published'], 'integer'],
             [['name'], 'string', 'max' => 255]
