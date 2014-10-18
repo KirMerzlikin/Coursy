@@ -36,12 +36,13 @@ Yii::$app->user->isGuest ?
 'linkOptions' => ['data-method' => 'post']],
 ],
 ]);
-NavBar::end();?>?>
+NavBar::end();?>
+<div class="wrap">
 <div class="wrapper">
 <div width="500px"><img src="../images/logo.png" alt="Coursey" title="Coursey"/></div>
 <?= $content ?>
 </div>
-<p class="credit" align="center">Copyright by Khnure Students. 2014<br></p>
+<div><p class="credit" align="center">Copyright by Khnure Students. 2014<br></p></div></div>
 </body>
 </html>
 <?php $this->endBody() ?>

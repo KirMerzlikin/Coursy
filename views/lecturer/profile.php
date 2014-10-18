@@ -37,7 +37,7 @@ use yii\helpers\ArrayHelper;
     ],
     'options' => ['class' => 'nav-pills nav-stacked admin-menu',
     				 'style' => 'margin:20px 20px 0 0; padding:5px; border-radius: 4px; border:1px solid #DDDDDD'],
-]);?>
+]);?></div>
 <div style="position:relative; width: 75%; float:left;">
 <?php echo Html::tag('div', Html::tag('center', Html::tag('h1', 'Имя курса')));
 ?>
