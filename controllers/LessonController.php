@@ -136,6 +136,26 @@ class LessonController extends Controller
             ]);
         }
     }
+	
+    public function actionRead_lesson()
+    {
+       // $this->validateAccess(self::LECTURER);
+        $model = new Lesson();
+		
+        $pagination = new Pagination([
+            'pageSize' => 1,
+            'totalCount' => 2,
+        ]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('read_lesson', [
+                'model' => $model,
+				'pagination' => $pagination,
+            ]);
+        }
+    }
     /**
      * Updates an existing Lesson model.
      * If update is successful, the browser will be redirected to the 'view' page.
