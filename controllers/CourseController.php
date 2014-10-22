@@ -141,4 +141,34 @@ class CourseController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+      public function actionPresentation()
+    {
+         $this->layout = "main_layout"; 
+       $searchModel = new CourseSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('presentation', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+     public function actionList()
+    {
+         $this->layout = "main_layout"; 
+     //   $this->validateAccess(self::LECTURER);
+        $model = new Course();
+         return $this->render('list', [
+                'model' => $model,
+            ]);
+
+     /*   if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('list', [
+                'model' => $model,
+            ]);
+        }*/
+    }
 }
