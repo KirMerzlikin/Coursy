@@ -76,8 +76,8 @@ class CourseController extends Controller
      */
     public function actionCreate()
     {
-        $this->validateAccess(self::LECTURER);
-
+        $this->layout = "main_layout";
+		$this->validateAccess(self::LECTURER);
         $user = Yii::$app->user->identity;
         $model = new Course();
         $model->idLecturer =  $user->id;
@@ -100,6 +100,7 @@ class CourseController extends Controller
      */
     public function actionUpdate($id)
     {
+		$this->layout = "main_layout";
         $this->validateAccess(self::LECTURER | self::ADMIN);
 
         $model = $this->findModel($id);

@@ -67,6 +67,7 @@ class LessonController extends Controller
 
     public function actionViewCourse($id)
     {
+        $this->validateAccess(self::LECTURER);
         $course = Course::findOne($id);
         if ($course == null)
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -87,6 +88,7 @@ class LessonController extends Controller
      */
     public function actionView($id)
     {
+        $this->validateAccess(self::LECTURER);
         $searchModelAttachment = new AttachmentSearch();
         $dataProviderAttachment = $searchModelAttachment->search(['AttachmentSearch' => ['idLesson' => $id]]);
         $model = $this->findModel($id);
@@ -105,6 +107,7 @@ class LessonController extends Controller
      */
     public function actionCreate($id)
     {
+        $this->validateAccess(self::LECTURER);
         $model = new Lesson();
         $model->idCourse = $id;
 
@@ -117,20 +120,58 @@ class LessonController extends Controller
         }
     }
 
+ 
+	
+    public function actionCr_lesson()
+    {
+        $this->validateAccess(self::LECTURER);
+        $model = new Lesson();
+
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('cr_lesson', [
+                'model' => $model,
+            ]);
+        }
+    }
+	
+    public function actionRead_lesson()
+    {
+       // $this->validateAccess(self::LECTURER);
+        $model = new Lesson();
+		
+        $pagination = new Pagination([
+            'pageSize' => 1,
+            'totalCount' => 2,
+        ]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('read_lesson', [
+                'model' => $model,
+				'pagination' => $pagination,
+            ]);
+        }
+    }
     /**
      * Updates an existing Lesson model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionList()
     {
-        $model = $this->findModel($id);
+        $this->validateAccess(self::LECTURER);
+        $model = new Lesson();
+        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
+            return $this->render('list', [
                 'model' => $model,
             ]);
         }
@@ -144,6 +185,7 @@ class LessonController extends Controller
      */
     public function actionDelete($id)
     {
+        $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
         $idCourse = $model->idCourse;
         $model->delete();
