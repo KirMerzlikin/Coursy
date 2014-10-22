@@ -7,54 +7,58 @@ use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
 use yii\helpers\ArrayHelper;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
-?><div class="wrapper2">
-<?php echo Html::tag('div','Profile', ['id'=>'page_name']);?>
-<div style=" width:100%; height:1px; clear:both;">
-<div style="width: 24%; float:left;">
- <?php echo Nav::widget([
+?>
+<div class="wrapper2 clearfix">
+<?php echo Html::tag('div','Курсы', ['id'=>'page_name']);?>
+<div style="width: 26%; float:left;">
+<?php echo Nav::widget([
     'items' => [
-        '<li><center><b>'.$model->name.'</b></center></li>',
-        '<li class="divider"></li>',
-        '<li><center>Лектор</center></li>',
-        /*'<li><center>Кафедра: '.$model->getDepartment().'</center></li>',*/    
-		'<li><center>Степень: '.$model->degree.'</center></li>', 
+        "<li class='left-info'><b>".$model->name.'</b><br>'.
+        $model->email . '<br>' .
+		'Степень: '.$model->degree.'</li><hr>', 
         
-        [
-            'label' => 'Мои курсы',
-            'options' => ['class' => 'active'],
-            'url'=>'../lecturer/courses', 
-        ],
+        "<li class = 'active'><a href='../lecturer/courses'><span class = 'glyphicon glyphicon-list'></span> Мои курсы</a></li>",
 		
-		[
-            'label' => 'Запросы на подписку',
-            'url'=> '../lecturer/requests'
-        ],
+		"<li><a href='../lecturer/requests'><span class = 'glyphicon glyphicon-question-sign'></span> Запросы на подписку</a></li>",
 		
-		[
-            'label' => 'Тесты (ответы)',
-        ],
+		"<li><a><span class = 'glyphicon glyphicon-list-alt'></span> Тесты (ответы)</a></li>",
 
-        [
-            'label' => 'Редактировать профиль',
-            'url'=>'../lecturer/profile-update',    
-        ],
+        "<li><a href='../lecturer/profile-update'><span class = 'glyphicon glyphicon-pencil'></span> Редактировать профиль</a></li>",
+
+        "<li><a href='#'><span class = 'glyphicon glyphicon-info-sign'></span> Помощь</a></li>",
+        
     ],
-    'options' => ['class' => 'nav-pills nav-stacked admin-menu',
-    				 'style' => 'margin:20px 20px 0 0; padding:5px; border-radius: 4px; border:1px solid #DDDDDD'],
+    'options' => ['class' => 'nav-pills nav-stacked',
+    				 'style' => 'margin:0 20px 0 10px; padding:5px; border-radius: 4px; border:1px solid #DDDDDD; background:#fff'],
 ]);?>
 </div>
-<div style="position:relative; width: 75%; float:left;">
-<?php echo Html::tag('div', Html::tag('center', Html::tag('h1', 'Имя курса')));
-?>
-    <div class="form-group">
+<div style="position:relative; width: 73%; float:left;">
+<?php 
 
-        <?= Html::tag('div', Html::tag('center', Html::tag('h6','Лекции: кол-во лекций')))?>
-        <?=Html::img('h', ['style'=>'width: 150px; height: 150px; float:left; margin: 7px 7px 7px 0;'])?>
+    for($i = 0; $i < $model->getCourses()->count(); $i++)
+    {
+    /*echo Html::beginTag('div', ['class' => 'form-group']); 
+
+        echo Html::tag('div', Html::tag('center', Html::tag('h1', $model->getCourses()->all()[$i]->name)));
+
+        echo Html::tag('div', Html::tag('center', Html::tag('h6','Лекции:' . $model->getCourses()->all()[$i]->getLessons()->count())));
+        echo Html::img('h', ['style'=>'width: 150px; height: 150px; float:left; margin: 7px 7px 7px 0; background-image:url("http://placehold.it/150x150")']);
          
-        <?= Html::tag('div', '3ds Max - очень сложная программа, данный курс создан с единственной целью, чтобы вы убедились, что эту программу, не смотря на ее трудоемкость, можно изучить.
-    В курсе подробно рассмотрены все основные аспекты необходимые для работы с 3ds Max. Вы познакомитесь с интерфейсом программы, клавиатурными сокращениями и дублированием объектов. Рассмотрите систему координат рабочей области, группировку, привязку и выравнивание, а также много еще полезного и необходимого для работы с данной программой. Данный курс как нельзя лучше подходит для людей, которые готовы постепенно познакомиться с такой увлекательной и непредсказуемой областью как 3D. ')?>
-        <?= Html::submitButton('Редактировать', ['class' => 'btn btn-primary', 'style' => 'float: right;margin-left: 20px']) ?>
-        <?= Html::submitButton('Добавить уроки', ['class' => 'btn btn-primary', 'style' => 'float: right; margin-left: 20px']) ?>
-    </div>
+        echo Html::tag('div', $model->getCourses()->all()[$i]->description);
+        echo Html::a('Редактировать', '../course/view?id=' . $model->getCourses()->all()[$i]->id,['class' => 'btn btn-primary', 'style' => 'float: right;margin-left: 20px; margin-top:10px']);
+    echo Html::endTag('div', ['class' => 'form-group']);*/
+
+    echo Html::beginTag('div', ['class' => 'panel panel-default']); 
+    echo Html::tag('div', Html::tag('span', $model->getCourses()->all()[$i]->name . 
+        ' (' . $model->getCourses()->all()[$i]->getLessons()->count() . ' лекций)', ['class' => 'panel-title', 'style' => 'float:left; width:80%;']) . 
+        Html::a('Редактировать', '../course/view?id=' . $model->getCourses()->all()[$i]->id,['class' => 'btn btn-xs btn-primary', 'style' => 'float: right;margin-left: 20px;']), 
+        ['class' => 'panel-heading clearfix']);
+    echo Html::beginTag('div', ['class' => 'panel-body']);
+    echo Html::img('h', ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px; background-image:url("http://placehold.it/75x75")']);
+    echo Html::tag('div', $model->getCourses()->all()[$i]->description);
+    echo Html::endTag('div'); 
+    echo Html::endTag('div'); 
+    }
+?>
 </div>
 </div>

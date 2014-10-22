@@ -65,7 +65,7 @@ echo Tabs::widget([
                 'passHash',
                 ['attribute' => 'idDepartment', 'value' => function($data)
                     {
-                        return $data->getIdDepartment0()->one()->name;
+                        return $data->getIdDepartment()->one()->name;
                     }],
                 'degree',
 

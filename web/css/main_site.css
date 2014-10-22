@@ -114,9 +114,9 @@ color: #096982;
 text-align: right;
 }
 
-.wrapper2 input, select{
+/*.wrapper2 input, select{
 margin-left: 15px;
-}
+}*/
 .wrapper2 .sel{
 width:365;
 }
@@ -168,4 +168,14 @@ color: #34b0c5;
 position: absolute;
 top: 175px;
 width: 170px;
+}
+
+.left-info{
+	font-size:1.1em;
+	line-height:1.7em;
+	padding-left: 10px;
+}
+.left-info + hr{
+	margin-top:10px;
+	margin-bottom:10px;
 }

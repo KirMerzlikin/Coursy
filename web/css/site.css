@@ -118,7 +118,9 @@ textarea.form-control{
     float: left;
 }
 
-
+.form-group > input{
+    margin-left: 0px;
+}
 
 
 

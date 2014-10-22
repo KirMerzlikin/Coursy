@@ -18,14 +18,14 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'degree')->textInput()?>
 
-    <?= $form->field($model, 'password')->passwordInput()?>
+    <?= $form->field($model, 'password')->passwordInput()->label('Пароль')?>
 
-    <?= $form->field($model, 'confirmation')->passwordInput()?>
+    <?= $form->field($model, 'confirmation')->passwordInput()->label('Подтверждение пароля')?>
 
     <?= $form->field($model, 'idDepartment')->dropDownList(ArrayHelper::map(Department::find()->all(), 'id', 'name'))->label('Кафедра') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right', 'style' => 'margin-bottom:10px;']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

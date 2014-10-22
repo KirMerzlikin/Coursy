@@ -22,7 +22,8 @@ use app\assets\AppAsset;
 </head>
 <body>
 <?php $this->beginBody() ?>
-<?php NavBar::begin();
+<?php 
+/*NavBar::begin();
 echo Nav::widget([
 'options' => ['class' => 'navbar-nav navbar-right'],
 'items' => [
@@ -36,7 +37,7 @@ Yii::$app->user->isGuest ?
 'linkOptions' => ['data-method' => 'post']],
 ],
 ]);
-NavBar::end();?>
+NavBar::end();*/?>
 <div class="wrap">
 <div class="wrapper">
 <div width="500px"><img src="../images/logo.png" alt="Coursey" title="Coursey"/></div>

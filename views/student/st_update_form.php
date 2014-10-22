@@ -16,9 +16,9 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput()?>
+    <?= $form->field($model, 'password')->passwordInput()->label('Пароль')?>
 
-    <?= $form->field($model, 'confirmation')->passwordInput()?>
+    <?= $form->field($model, 'confirmation')->passwordInput()->label('Подтверждение пароля')?>
 
     <?= $form->field($model, 'idGroup')->dropDownList(ArrayHelper::map(Group::find()->all(), 'id', 'name'))->label('Группа') ?>
 

@@ -139,9 +139,9 @@ body {
             text-align:center;
         }
         
-        .wrapper2 input, select{
+        /*.wrapper2 input, select{
             margin-left: 15px;
-        }
+        }*/
         
         .wrapper2 .sel{
             width:365;
