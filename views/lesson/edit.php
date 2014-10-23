@@ -1,12 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ListView;
 
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Course */
-
-$this->title = 'Новый курс';
 ?>
 <div class="wrapper2 clearfix">
 <?php echo Html::tag('div','Курсы', ['id'=>'page_name']);?>
@@ -16,17 +12,13 @@ $this->title = 'Новый курс';
 ?>
 </div>
 
-
 <div style="position:relative; width: 73%; float:left;">
 
 <div class="panel panel-default">
-  <div class="panel-body" style = 'padding-top:10px'>
+  <div class="panel-heading"><b>Общая информация</b></div>
+  <div class="panel-body">
     <?= $this->render('_form', [
-        'model' => $crModel,
-        'is_lecturer' => $is_lecturer,
+        'model' => $lsModel
     ]) ?>
+  </div>
 </div>
-</div>
-</div>
-</div>
-

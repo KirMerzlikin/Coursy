@@ -114,7 +114,7 @@ class LessonController extends Controller
         $model->idCourse = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['course/edit?id=' . $id]);
         } else {
             return $this->render('create', [
                 'lcModel' => Yii::$app->user->identity,

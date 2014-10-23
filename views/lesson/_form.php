@@ -30,7 +30,7 @@ $lesson = Lesson::findBySql($sql)->one();
     <?= $form->field($model, 'lessonNumber')->textInput(['value'=>$lesson->lessonNumber+1]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' pull-right']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' pull-right']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
