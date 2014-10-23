@@ -14,7 +14,7 @@ $this->title = 'Изменить курс: ' . ' ' . $model->name;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'is_lecturer' => $is_lecturer,
+        'is_lecturer' => false,
     ]) ?>
 
 </div></div>

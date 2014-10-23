@@ -43,8 +43,8 @@ class Attachment extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'resource' => 'Resource',
+            'name' => 'Название',
+            'resource' => 'Ресурс',
             'idLesson' => 'Id Lesson',
         ];
     }

@@ -144,7 +144,7 @@ echo Tabs::widget([
                   ['attribute' => 'idLecturer',
                         'value' => function($data)
                         {
-                          return $data->getIdLecturer0()->one()->name;
+                          return $data->getIdLecturer()->one()->name;
                         }],
                   ['attribute' => 'published',  'format' => 'boolean'],
 

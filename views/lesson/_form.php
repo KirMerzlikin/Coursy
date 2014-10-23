@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idCourse')->dropDownList(ArrayHelper::map(Course::find()->all(), 'id', 'name'))->label('Course')  ?>
+    <!--<?= $form->field($model, 'idCourse')->dropDownList(ArrayHelper::map(Course::find()->all(), 'id', 'name'))->label('Course')  ?>-->
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 255]) ?>
 
@@ -30,7 +30,7 @@ $lesson = Lesson::findBySql($sql)->one();
     <?= $form->field($model, 'lessonNumber')->textInput(['value'=>$lesson->lessonNumber+1]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' pull-right']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

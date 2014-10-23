@@ -36,7 +36,7 @@ class Lesson extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idCourse', 'name', 'description', 'published', 'lessonNumber'], 'required'],
+            [['idCourse', 'name', 'description', 'published', 'lessonNumber'], 'required',  'message' => 'Пожалуйста, заполните это поле'],
             [['idCourse', 'published', 'lessonNumber'], 'integer'],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 255]
@@ -51,10 +51,10 @@ class Lesson extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'idCourse' => 'Id Course',
-            'name' => 'Name',
-            'description' => 'Description',
-            'published' => 'Published',
-            'lessonNumber' => 'Lesson Number',
+            'name' => 'Название',
+            'description' => 'Описание',
+            'published' => 'Опубликован',
+            'lessonNumber' => 'Порядковый номер',
         ];
     }
 
@@ -69,7 +69,7 @@ class Lesson extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdCourse0()
+    public function getIdCourse()
     {
         return $this->hasOne(Course::className(), ['id' => 'idCourse']);
     }

@@ -75,7 +75,7 @@ class StudentController extends Controller
     
     public function actionProfile()
     {
-        //$this->layout='main_layout';
+        $this->layout='main_layout';
         $model = Yii::$app->user->getIdentity();           
         return $this->render('subscriptions', [
                 'model' => $model
@@ -91,7 +91,7 @@ class StudentController extends Controller
 
     public function actionSubscriptions()
     {
-        //$this->layout='main_layout';
+        $this->layout='main_layout';
         $model = Yii::$app->user->getIdentity();           
         return $this->render('subscriptions', [
                 'model' => $model
@@ -113,6 +113,7 @@ class StudentController extends Controller
 
     public function actionProfileUpdate()
     {
+        $this->layout = "main_layout";
         $model = Yii::$app->user->getIdentity();   
         if ($model->load(Yii::$app->request->post())) {
             $info = $_POST['Student'];

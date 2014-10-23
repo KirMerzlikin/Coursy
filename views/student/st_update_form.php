@@ -23,7 +23,7 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'idGroup')->dropDownList(ArrayHelper::map(Group::find()->all(), 'id', 'name'))->label('Группа') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

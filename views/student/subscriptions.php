@@ -6,34 +6,28 @@ use yii\bootstrap\Nav;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
 use app\models\Group;
+
+
 use yii\helpers\ArrayHelper;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
+?>
 
-echo "<div class='wrapper2'>";
-echo Nav::widget([
-    'items' => [
-        '<li><center><b>'.$model->name.'</b></center></li>',
-        '<li class="divider"></li>',
-        '<li><center>Студент</center></li>',
-        '<li><center>Группа: '.$model->getGroup().'</center></li>',    
+<div class='wrapper2 clearfix'>
+<?php echo Html::tag('div','Подписки', ['id'=>'page_name']);?>
+<div style="width: 26%; float:left;">
+<?=
+    $this->render('menu_left', ['current' => 'subscriptions', 'model' => $model]);
+?>
+</div>
+
+<div style="position:relative; width: 73%; float:left;">
+<?php 
+    for($i = 0; $i < 5; $i++)
+    {
         
-        [
-            'label' => 'Подписки',
-            'options' => ['class' => 'active'],
-            'url'=>'../student/subscriptions'
-        ],
-
-        [
-            'label' => 'Редактировать профиль',
-            'url'=>'../student/profile-update'              
-        ],
-    ],
-    'options' => ['class' => 'nav-pills nav-stacked admin-menu',
-    				 'style' => 'margin:20px 20px 0 0; padding:5px; border-radius: 4px; border:1px solid #DDDDDD'],
-]);
-
-echo Html::beginTag('div', ['class' => 'col-lg-9']);?>
-<div><center>Здесь будут подписки.</center></div>
+    }
+?>
+</div>
 </div>
      
      

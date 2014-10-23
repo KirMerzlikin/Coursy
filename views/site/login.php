@@ -1,15 +1,14 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\bootstrap\BootstrapPluginAsset;
 
-/* @var $this yii\web\View */
-/* @var $form yii\widgets\ActiveForm */
-/* @var $model app\models\LoginForm */
-
+BootstrapPluginAsset::register($this);
 $this->title = 'Авторизация';
+
 ?>
 <div class="wrapper2"><div id="page_name"><?= Html::encode($this->title) ?></div>
-  <div class="site-login">
+  <div class="site-login" style='margin-top:70px'>
       <?php $form = ActiveForm::begin([
           'id' => 'login-form',
           'options' => ['class' => 'form-horizontal'],

@@ -57,7 +57,7 @@ class Course extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdLecturer0()
+    public function getIdLecturer()
     {
         return $this->hasOne(Lecturer::className(), ['id' => 'idLecturer']);
     }

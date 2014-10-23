@@ -4,22 +4,27 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Lesson */
-/* @var $courseModel app\models\Course */
-/* @var $dataProviderAttachment app\models\Attachment */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Lessons', 'url' => ['view-course?id='.$courseModel->id]];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<div class="wrapper2 clearfix">
+<?php echo Html::tag('div','Лекция', ['id'=>'page_name']);?>
+<div style="width: 26%; float:left;">
+<?=
+    $this->render('../lecturer/menu_left', ['current' => 'courses', 'model' => $lcModel]);
+?>
+</div>
+
+<div style="position:relative; width: 73%; float:left;">
+<div class="panel panel-default">
+<div class="panel-body" style='padding-top:10px;'>
 <div class="lesson-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $lsModel->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $lsModel->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -29,13 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?= DetailView::widget([
-        'model' => $model,
+        'model' => $lsModel,
         'attributes' => [
             //'id',
             //'idCourse',
             [
-                'label'=>'Course',
-                'value'=>$courseModel->name,
+                'label'=>'Курс',
+                'value'=>$lsModel->getIdCourse()->one()->name,
             ],
             'name',
             'description:ntext',
@@ -46,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <br/>
 <h3>Прикрепленные файлы к уроку</h3>
 <p>
-<?= Html::a('Добавить файл', ['attachment/create?id='.$model->id], ['class' => 'btn btn-success']) ?>
+<?= Html::a('Добавить файл', ['attachment/create?id='.$lsModel->id], ['class' => 'btn btn-success']) ?>
 </p>
     <?= GridView::widget([
         'dataProvider' => $dataProviderAttachment,
@@ -61,12 +66,16 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
-                'urlCreator' => function ($action, $model, $key, $index) {
-                    $url ='../attachment/'.$action.'?id='.$model->id;
+                'urlCreator' => function ($action, $lsModel, $key, $index) {
+                    $url ='../attachment/'.$action.'?id='.$lsModel->id;
                     return $url;
                 }
             ],
         ],
     ]); ?>
 
+</div>
+</div>
+</div>
+</div>
 </div>

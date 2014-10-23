@@ -88,13 +88,14 @@ class LessonController extends Controller
      */
     public function actionView($id)
     {
+        $this->layout = "main_layout";
         $this->validateAccess(self::LECTURER);
         $searchModelAttachment = new AttachmentSearch();
         $dataProviderAttachment = $searchModelAttachment->search(['AttachmentSearch' => ['idLesson' => $id]]);
         $model = $this->findModel($id);
         return $this->render('view', [
-            'model' => $model,
-            'courseModel' => Course::findOne($model->idCourse),
+            'lsModel' => $model,
+            'lcModel' => Yii::$app->user->identity,
             'dataProviderAttachment' => $dataProviderAttachment,
         ]);
     }
@@ -107,6 +108,7 @@ class LessonController extends Controller
      */
     public function actionCreate($id)
     {
+        $this->layout = "main_layout";
         $this->validateAccess(self::LECTURER);
         $model = new Lesson();
         $model->idCourse = $id;
@@ -115,7 +117,8 @@ class LessonController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'lcModel' => Yii::$app->user->identity,
+                'lsModel' => $model,
             ]);
         }
     }
@@ -187,10 +190,7 @@ class LessonController extends Controller
     {
         $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
-        $idCourse = $model->idCourse;
         $model->delete();
-
-        return $this->redirect(['view-course?id='.$idCourse]);
     }
 
     /**

@@ -64,8 +64,10 @@ class CourseController extends Controller
      */
     public function actionView($id)
     {
+        $this->layout = "main_layout";
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'crModel' => $this->findModel($id),
+            'lcModel' => $this->findModel($id)->getIdLecturer()->one(),
         ]);
     }
 
@@ -100,17 +102,34 @@ class CourseController extends Controller
      */
     public function actionUpdate($id)
     {
-		$this->layout = "main_layout";
-        $this->validateAccess(self::LECTURER | self::ADMIN);
+		$this->validateAccess(self::ADMIN);
 
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->user->returnUrl);
         } else {
+
             return $this->render('update', [
                 'model' => $model,
-                'is_lecturer' => Yii::$app->user->identity->tableName() == 'lecturer',
+            ]);
+        }
+    }
+
+    public function actionEdit($id)
+    {
+        $this->layout = "main_layout";
+        $this->validateAccess(self::LECTURER);
+
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(Yii::$app->user->returnUrl);
+        } else {
+            
+            return $this->render('edit', [
+                'crModel' => $model,
+                'lcModel' => $this->findModel($id)->getIdLecturer()->one(),
             ]);
         }
     }

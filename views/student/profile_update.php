@@ -7,33 +7,23 @@ use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
 use app\models\Group;
 use yii\helpers\ArrayHelper;
-Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
+Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl(); ?>
 
-echo "<div class='wrapper2'>";
-echo Nav::widget([
-    'items' => [
-        '<li><center><b>'.$model->name.'</b></center></li>',
-        '<li class="divider"></li>',
-        '<li><center>Студент</center></li>',
-        '<li><center>Группа: '.$model->getGroup().'</center></li>',    
-        
-       [
-            'label' => 'Подписки',
-            'url'=>'../student/subscriptions'
-        ],
+<div class='wrapper2'>
+<?php echo Html::tag('div','Профиль', ['id'=>'page_name']);?>
+<div style="width: 26%; float:left;">
+<?=
+    $this->render('menu_left', ['current' => 'profile-update', 'model' => $model]);
+?>
+</div>
 
-        [
-            'label' => 'Редактировать профиль',
-            'url'=>'../student/profile-update',
-            'options' => ['class' => 'active'],              
-        ],
-    ],
-    'options' => ['class' => 'nav-pills nav-stacked admin-menu',
-    				 'style' => 'margin:20px 20px 0 0; padding:5px; border-radius: 4px; border:1px solid #DDDDDD'],
-]);
-
-echo Html::beginTag('div', ['class' => 'col-lg-9']);?>
-<?= $this->render('update_st', [
+<div style="position:relative; width: 73%; float:left;">
+<div class="panel panel-default">
+  <div class="panel-body">
+<?= $this->render('st_update_form', [
         'model' => $model,
     ]) ?>
+</div>
+</div>
+</div>
 </div>
