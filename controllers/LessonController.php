@@ -140,25 +140,7 @@ class LessonController extends Controller
         }
     }
 	
-    public function actionRead_lesson()
-    {
-       // $this->validateAccess(self::LECTURER);
-        $model = new Lesson();
-		
-        $pagination = new Pagination([
-            'pageSize' => 1,
-            'totalCount' => 2,
-        ]);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('read_lesson', [
-                'model' => $model,
-				'pagination' => $pagination,
-            ]);
-        }
-    }
+    
     /**
      * Updates an existing Lesson model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -179,16 +161,7 @@ class LessonController extends Controller
             ]);
         }
     }
-	
-	 public function actionListforStudent()
-    {
-        $this->layout = "main_layout"; 
-		//$this->validateAccess(self::LECTURER);
-        $model = new Lesson();
-            return $this->render('listfor-student', [
-                'model' => $model,
-            ]);
-    }
+		
 
     /**
      * Deletes an existing Lesson model.
@@ -216,6 +189,18 @@ class LessonController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    public function actionViewLesson($id)
+    {
+        $this->layout='main_layout';
+        $model = Lesson::find()->where(['id' => $id])->one();
+        if($model == null){
+            return $this->render('fail');
+        }
+        else{
+            return $this->render('lesson', ['model' => $model, 'stModel' => Yii::$app->user->identity]);
         }
     }
 }
