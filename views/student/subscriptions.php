@@ -30,7 +30,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 	    	['class' => 'panel-heading clearfix']);
 	    echo Html::beginTag('div', ['class' => 'panel-body']);
 	    echo Html::img('h', ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px; background-image:url("http://placehold.it/75x75")']);
-	    echo Html::tag('div', substr($model->getSubscriptions()->all()[$i]->getCourse()->one()->description, 0, 1000).'...');
+	    echo Html::tag('div', mb_substr($model->getSubscriptions()->all()[$i]->getCourse()->one()->description, 0, 1000).'...');
 	    echo Html::tag('br');
 	    echo Html::a('Перейти', '../course/view-course?id=' . $model->getSubscriptions()->all()[$i]->getCourse()->one()->id,['class' => 'btn btn-x btn-primary', 'style' => 'float: right;']);
 	    echo Html::endTag('div'); 
