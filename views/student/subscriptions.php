@@ -22,9 +22,19 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 
 <div style="position:relative; width: 73%; float:left;">
 <?php 
-    for($i = 0; $i < 5; $i++)
+    for($i = 0; $i < $model->getSubscriptions()->count(); $i++)
     {
-        
+	    echo Html::beginTag('div', ['class' => 'panel panel-default']);
+	    echo Html::tag('div', Html::tag('span', $model->getSubscriptions()->all()[$i]->getCourse()->one()->name, ['class' => 'panel-title', 'style' => 'float:left; width:80%;']).
+	    	Html::tag('span', 'Лектор: '.$model->getSubscriptions()->all()[$i]->getCourse()->one()->getIdLecturer()->one()->name, ['style' => 'float:right; width:20%;']), 
+	    	['class' => 'panel-heading clearfix']);
+	    echo Html::beginTag('div', ['class' => 'panel-body']);
+	    echo Html::img('h', ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px; background-image:url("http://placehold.it/75x75")']);
+	    echo Html::tag('div', substr($model->getSubscriptions()->all()[$i]->getCourse()->one()->description, 0, 1000).'...');
+	    echo Html::tag('br');
+	    echo Html::a('Перейти', '../course/view-course?id=' . $model->getSubscriptions()->all()[$i]->getCourse()->one()->id,['class' => 'btn btn-x btn-primary', 'style' => 'float: right;']);
+	    echo Html::endTag('div'); 
+	    echo Html::endTag('div'); 
     }
 ?>
 </div>

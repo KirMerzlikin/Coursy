@@ -190,4 +190,17 @@ class CourseController extends Controller
             ]);
         }*/
     }
+
+    public function actionViewCourse($id)
+    {
+        $this->layout='main_layout';
+        $model = Course::find()->where(['id' => $id])->one();
+        $subscribtion = Yii::$app->user->identity->getSubscriptions()->where(['idCourse' => $id])->one();
+        if($model == null || $subscribtion == null || $subscribtion->active == 0){
+            return $this->render('fail');
+        }
+        else{
+            return $this->render('course', ['model' => $model, 'stModel' => Yii::$app->user->identity]);
+        }
+    }
 }
