@@ -167,7 +167,7 @@ class LessonController extends Controller
      */
     public function actionList()
     {
-        $this->validateAccess(self::LECTURER);
+        $this->layout = "main_layout";
         $model = new Lesson();
         
 
@@ -178,6 +178,16 @@ class LessonController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+	
+	 public function actionListforStudent()
+    {
+        $this->layout = "main_layout"; 
+		//$this->validateAccess(self::LECTURER);
+        $model = new Lesson();
+            return $this->render('listfor-student', [
+                'model' => $model,
+            ]);
     }
 
     /**
