@@ -12,7 +12,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 <?php echo Html::tag('div','Курсы', ['id'=>'page_name']);?>
 <div style="width: 26%; float:left;">
 <?=
-    $this->render('..\student\menu_left', ['current' => 'subscriptions', 'model' => $stModel]);
+    $this->render('..\student\menu_left', ['current' => $current, 'model' => $stModel]);
 ?>
 </div>
 
@@ -28,15 +28,27 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 	echo Html::tag('div', Html::tag('div', $model->description));
 	echo Html::tag('br');
 	echo Html::tag('div', 'Лекции: ');
-	
-	echo Html::ul($model->getLessons()->orderBy('lessonNumber')->all(), [
+	if($subscribed == 1){
+		echo Html::ul($model->getLessons()->orderBy('lessonNumber')->all(), [
+	        'class' => 'list-group',
+	        'item' => function($lesson, $index)
+	        {
+	          	return Html::tag('li',
+	          	"<b>" . Html::a('Лекция #'.$lesson->lessonNumber.'. '.$lesson->name , '../lesson/view-lesson?id='.$lesson->id,['class' => '']), ['class' => 'list-group-item']);
+	        }
+	    ]);
+	}
+    else
+    {
+    	echo Html::ul($model->getLessons()->orderBy('lessonNumber')->all(), [
         'class' => 'list-group',
         'item' => function($lesson, $index)
         {
           	return Html::tag('li',
-          	"<b>" . Html::a('Лекция #'.$lesson->lessonNumber.'. '.$lesson->name , '../lesson/view-lesson?id='.$lesson->id,['class' => '']), ['class' => 'list-group-item']);
+          		"<b>" . Html::tag('span','Лекция #'.$lesson->lessonNumber.'. '.$lesson->name , ['class' => '']), ['class' => 'list-group-item']);
         }
-    ]);	
+    ]);
+    }	
 
     /*for($i = 0; $i < $model->getLessons()->count(); $i++)
     {
@@ -49,6 +61,17 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 	    echo Html::endTag('div'); 
 	    echo Html::endTag('div'); 
 	}*/
+	if($subscribed == 0)
+	{
+		if($stModel->getSubscribtions()->where(['idCourse' => $model->id])->one() == null)
+		{
+	   		echo Html::a('Подписаться', '../course/subscribe?id='.$model->id ,['class' => 'btn btn-x btn-success', 'style' => 'float: right;']);
+		}
+		else
+		{
+			echo Html::tag('div','Запрос на  подписку  находится  на рассмотрении у  лектора.');
+		}
+	}
 	echo Html::endTag('div');
 	echo Html::endTag('div'); 
 ?>

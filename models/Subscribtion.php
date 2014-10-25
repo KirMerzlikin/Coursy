@@ -15,7 +15,7 @@ use Yii;
  * @property Course $idCourse0
  * @property Student $idStudent0
  */
-class Subscription extends \yii\db\ActiveRecord
+class Subscribtion extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
