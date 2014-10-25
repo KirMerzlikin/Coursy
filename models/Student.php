@@ -133,9 +133,9 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStudentanswers()
+    public function getStudentAnswers()
     {
-        return $this->hasMany(Studentanswer::className(), ['idStudent' => 'id']);
+        return $this->hasMany(StudentAnswer::className(), ['idStudent' => 'id']);
     }
 
     /**
