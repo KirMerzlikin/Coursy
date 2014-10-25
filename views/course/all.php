@@ -20,6 +20,8 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 
 <?php 
 
+	echo Html::tag('div',
+          	"<input type=\"text\" placeholder=\"Введите запрос или часть запроса...\" class=\"form-control\" id=\"search-field\" style=\"width:77%;display: inline-block; margin-right:10px;\" onchange=setLink()></input>"."<a id=\"search-link\" href=\"#\" class=\"btn btn-x btn-default glyphicon glyphicon-search\" style=\"width:20%;display: inline-block; margin-left:10px;\" onClick=search()></a>",['style' => 'margin-bottom:20px;']);
 	for($i = 0; $i < count($courses->all()); $i++)
     {
     	if($courses->all()[$i]->published == 1)
@@ -44,3 +46,25 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 ?>
 </div>
 </div>
+
+<script>
+function search()
+{
+	var key = $('#search-field').val();
+	$.ajax({
+      type     :'GET',
+      cache    : false,
+      url  : '../course/search',
+      data: {'key':key},
+      async: false,
+      statusCode: {
+        500: function(data){alert('Error!\n'+data.responseText);},
+        200: function(){$('#'+id).hide('slow');}
+      }
+    });
+}
+function setLink()
+{
+	$('#search-link').attr('href', '../course/search?key=' + $('#search-field').val());
+}
+</script>

@@ -240,4 +240,19 @@ class CourseController extends Controller
         $subscribtion->save();
         return $this->redirect(Yii::$app->user->returnUrl);
     }
+
+    public function actionSearch($key)
+    {
+        $this->layout='main_layout';        
+        $this->validateAccess(self::STUDENT);
+        $courses = Course::find()->where(['like', 'name', $key]);
+        if($courses == null)
+        {
+            return $this->render('fail');
+        }
+        else
+        {
+            return $this->render('all', ['courses' => $courses, 'stModel' => Yii::$app->user->identity]);
+        }
+    }
 }

@@ -36,7 +36,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
           	"<b>" . $attachment->name.'(.'.explode(".", $attachment->resource)[1].')'."</b>".Html::a('', '../attachment/file-force-download?id='.$attachment->id,['class' => 'glyphicon glyphicon-download-alt pull-right', 'style' => 'float: right;']), ['class' => 'list-group-item']);
         }
     ]);
-    
+
     $hasAnswer = 0;
     for($i = 0; $i < $stModel->getStudentAnswers()->count(); $i++)
     {
@@ -46,7 +46,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
     		break;
     	}
     }
-    if($hasAnswer == 0)
+    if($hasAnswer == 0 && $model->getQuestions()->all()!=null)
     {
         echo Html::a('Пройти тест', '../question/list?id='.$model->id ,['class' => 'btn btn-x btn-success', 'style' => 'float: right;']);
 	}
