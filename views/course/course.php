@@ -28,8 +28,17 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 	echo Html::tag('div', Html::tag('div', $model->description));
 	echo Html::tag('br');
 	echo Html::tag('div', 'Лекции: ');
-	echo Html::endTag('div');	
-    for($i = 0; $i < $model->getLessons()->count(); $i++)
+	
+	echo Html::ul($model->getLessons()->orderBy('lessonNumber')->all(), [
+        'class' => 'list-group',
+        'item' => function($lesson, $index)
+        {
+          	return Html::tag('li',
+          	"<b>" . Html::a('Лекция #'.$lesson->lessonNumber.'. '.$lesson->name , '../lesson/view-lesson?id='.$lesson->id,['class' => '']), ['class' => 'list-group-item']);
+        }
+    ]);	
+
+    /*for($i = 0; $i < $model->getLessons()->count(); $i++)
     {
 	    echo Html::beginTag('div', ['class' => 'panel panel-default', 'style' => 'margin:10px;' ]); 
 	    echo Html::tag('div', Html::tag('span', $model->getLessons()->all()[$i]->name, ['class' => 'panel-title', 'style' => 'float:left; width:80%;'] ), ['class' => 'panel-heading clearfix' ]);
@@ -39,7 +48,8 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 	    echo Html::a('Просмотреть', '../lesson/view-lesson?id='.$model->getLessons()->all()[$i]->id,['class' => 'btn btn-x btn-primary', 'style' => 'float: right;']);
 	    echo Html::endTag('div'); 
 	    echo Html::endTag('div'); 
-	}
+	}*/
+	echo Html::endTag('div');
 	echo Html::endTag('div'); 
 ?>
 </div>
