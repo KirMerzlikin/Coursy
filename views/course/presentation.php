@@ -10,7 +10,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 ?><div class="wrapper2 clearfix">
 <?php echo Html::tag('div','Информация о курсе', ['id'=>'page_name']);?>
 
-<div style="position:relative; width: 73%; float:left;">
+<div style="position:relative; width: 100%; float:left;">
 <?php echo Html::tag('div', Html::tag('center', Html::tag('h1', $model->name)));
 ?>
     <div class="form-group">
@@ -35,21 +35,5 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 		}
 	  
 	  ?>
-      <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-       // 'filterModel' => $searchModel,
-        'columns' => [
-         //   ['class' => 'yii\grid\SerialColumn'],
-
-            'idCourse'=>'Занятия',
-         
-            'name'=> 'Заголовок',
-            'description'=>'Описание',
-        
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
-
+</div>
 </div>
