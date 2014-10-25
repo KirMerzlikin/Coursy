@@ -35,7 +35,7 @@ use yii\widgets\ListView;
         'item' => function($lesson, $index)
         {
           	return Html::tag('li',
-          	"<a href = '../lesson/view?id=" . $lesson->id . "'>Лекция #" . $lesson->lessonNumber . ": <b>\"" . $lesson->name . "\"</b></a>" . 
+          	"<a href = '../lesson/edit?id=" . $lesson->id . "'>Лекция #" . $lesson->lessonNumber . ": <b>\"" . $lesson->name . "\"</b></a>" . 
           	Html::tag('span', '', ['class' => 'pull-right glyphicon glyphicon-remove', 
           		'style' => 'cursor:pointer; color:#428BCA',
           		'onClick' => 'deleteLesson('. $lesson->id .')']),

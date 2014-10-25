@@ -161,6 +161,29 @@ class LessonController extends Controller
             ]);
         }
     }
+
+    public function actionEdit($id)
+    {
+        $this->layout = "main_layout";
+        $this->validateAccess(self::LECTURER);
+
+        $model = $this->findModel($id);
+
+        $searchModelAttachment = new AttachmentSearch();
+        $dataProviderAttachment = $searchModelAttachment->search(['AttachmentSearch' => ['idLesson' => $id]]);
+        $dataProviderAttachment->setPagination(['pageSize' => 5]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->refresh();
+        } else {
+            
+            return $this->render('edit', [
+                'lsModel' => $model,
+                'lcModel' => Yii::$app->user->identity,
+                'dataProviderAttachment' => $dataProviderAttachment,
+            ]);
+        }
+    }
 		
 
     /**
