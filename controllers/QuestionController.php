@@ -16,6 +16,9 @@ use app\models\StudentAnswer;
  */
 class QuestionController extends Controller
 {
+    const LECTURER = 1;
+    const ADMIN = 2;
+
     public function behaviors()
     {
         return [
@@ -28,12 +31,24 @@ class QuestionController extends Controller
         ];
     }
 
+    private function validateAccess($params)
+    {
+        $cur_user = Yii::$app->user->identity;
+        if(Yii::$app->user->isGuest)
+            return $this->redirect('../site/login');
+        else if(($cur_user->tableName() == 'lecturer' && (($params & self::LECTURER) == 0)) ||
+                    ($cur_user->tableName() == 'admin' && (($params & self::ADMIN) == 0)))
+            return $this->redirect('../site/about');
+    }
+
     /**
      * Lists all Question models.
      * @return mixed
      */
+    /*
     public function actionIndex()
     {
+        $this->validateAccess(self::LECTURER);
         $searchModel = new QuestionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -42,21 +57,23 @@ class QuestionController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
+    */
     /**
      * Displays a single Question model.
      * @param integer $id
      * @return mixed
      */
+    /*
     public function actionView($id)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
-
+    */
     public function actionList($id)
     {
+        $this->validateAccess(self::LECTURER);
         $this->layout = 'main_layout';
         $stModel = Yii::$app->user->identity; 
         $lesson = Lesson::findOne($id);
@@ -73,12 +90,13 @@ class QuestionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
+        $this->validateAccess(self::LECTURER);
         $model = new Question();
-
+        $model->idLesson = $id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['lesson/edit', 'id' => $id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -94,10 +112,11 @@ class QuestionController extends Controller
      */
     public function actionUpdate($id)
     {
+        $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['lesson/edit', 'id' => $model->idLesson]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -113,9 +132,12 @@ class QuestionController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $this->validateAccess(self::LECTURER);
+        $model = $this->findModel($id);
+        $idLesson = $model->idLesson;
+        $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['lesson/edit','id' => $idLesson]);
     }
 
     public function actionHandleCompletion()

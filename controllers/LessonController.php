@@ -7,6 +7,8 @@ use app\models\Lesson;
 use app\models\LessonSearch;
 use app\models\Attachment;
 use app\models\AttachmentSearch;
+use app\models\Question;
+use app\models\QuestionSearch;
 use app\models\Course;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -92,11 +94,14 @@ class LessonController extends Controller
         $this->validateAccess(self::LECTURER);
         $searchModelAttachment = new AttachmentSearch();
         $dataProviderAttachment = $searchModelAttachment->search(['AttachmentSearch' => ['idLesson' => $id]]);
+        $searchModelQuestion = new QuestionSearch();
+        $dataProviderQuestion = $searchModelQuestion->search(['QuestionSearch' => ['idLesson' => $id]]);
         $model = $this->findModel($id);
         return $this->render('view', [
             'lsModel' => $model,
             'lcModel' => Yii::$app->user->identity,
             'dataProviderAttachment' => $dataProviderAttachment,
+            'dataProviderQuestion' => $dataProviderQuestion,
         ]);
     }
 
@@ -174,6 +179,10 @@ class LessonController extends Controller
         $dataProviderAttachment = $searchModelAttachment->search(['AttachmentSearch' => ['idLesson' => $id]]);
         $dataProviderAttachment->setPagination(['pageSize' => 5]);
 
+        $searchModelQuestion = new QuestionSearch();
+        $dataProviderQuestion = $searchModelQuestion->search(['QuestionSearch' => ['idLesson' => $id]]);
+        $dataProviderQuestion->setPagination(['pageSize' => 10]);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->refresh();
         } else {
@@ -182,6 +191,7 @@ class LessonController extends Controller
                 'lsModel' => $model,
                 'lcModel' => Yii::$app->user->identity,
                 'dataProviderAttachment' => $dataProviderAttachment,
+                'dataProviderQuestion' => $dataProviderQuestion,
             ]);
         }
     }

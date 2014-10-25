@@ -23,7 +23,7 @@ use yii\grid\GridView;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Редактировать', ['update', 'id' => $lsModel->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Редактировать', ['edit', 'id' => $lsModel->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $lsModel->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -68,6 +68,31 @@ use yii\grid\GridView;
                 'template' => '{update} {delete}',
                 'urlCreator' => function ($action, $lsModel, $key, $index) {
                     $url ='../attachment/'.$action.'?id='.$lsModel->id;
+                    return $url;
+                }
+            ],
+        ],
+    ]); ?>
+<br/>
+<h3>Вопросы к уроку</h3>
+<p>
+<?= Html::a('Добавить вопрос', ['question/create?id='.$lsModel->id], ['class' => 'btn btn-success']) ?>
+</p>
+    <?= GridView::widget([
+        'dataProvider' => $dataProviderQuestion,
+        //'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            //'id',
+            'text',
+            'answer',
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $lsModel, $key, $index) {
+                    $url ='../attachment/'.$action.'?id='.$key;
                     return $url;
                 }
             ],
