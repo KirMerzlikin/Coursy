@@ -29,7 +29,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 	echo Html::tag('br');
 	echo Html::tag('div', 'Лекции: ');
 	if($subscribed == 1){
-		echo Html::ul($model->getLessons()->orderBy('lessonNumber')->all(), [
+		echo Html::ul($model->getLessons()->where(['published' => 1])->orderBy('lessonNumber')->all(), [
 	        'class' => 'list-group',
 	        'item' => function($lesson, $index)
 	        {
@@ -40,14 +40,12 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 	}
     else
     {
-    	echo Html::ul($model->getLessons()->orderBy('lessonNumber')->all(), [
+    	echo Html::ul($model->getLessons()->where(['published' => 1])->orderBy('lessonNumber')->all(), [
         'class' => 'list-group',
         'item' => function($lesson, $index)
         {
-        	if($lesson->published == 1){
-          		return Html::tag('li',
-          			"<b>" . Html::tag('span','Лекция #'.$lesson->lessonNumber.'. '.$lesson->name , ['class' => '']), ['class' => 'list-group-item']);
-        	}
+          	return Html::tag('li',
+          		"<b>" . Html::tag('span','Лекция #'.$lesson->lessonNumber.'. '.$lesson->name , ['class' => '']), ['class' => 'list-group-item']);
         }
     ]);
     }	
