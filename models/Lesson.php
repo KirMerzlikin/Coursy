@@ -53,7 +53,7 @@ class Lesson extends \yii\db\ActiveRecord
             'idCourse' => 'Id Course',
             'name' => 'Название',
             'description' => 'Описание',
-            'published' => 'Опубликован',
+            'published' => 'Опубликована',
             'lessonNumber' => 'Порядковый номер',
         ];
     }

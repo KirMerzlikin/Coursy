@@ -7,16 +7,26 @@ use yii\helpers\Html;
 /* @var $model app\models\Course */
 
 $this->title = 'Новый курс';
-?><div class="wrapper2">
-<div id="page_name">Создать курс</div>
-<div class="course-create" style="width: 86%; margin-left:7%">
+?>
+<div class="wrapper2 clearfix">
+<?php echo Html::tag('div','Курсы', ['id'=>'page_name']);?>
+<div style="width: 26%; float:left;">
+<?=
+    $this->render('..\lecturer\menu_left', ['current' => 'courses', 'model' => $lcModel]);
+?>
+</div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
+<div style="position:relative; width: 73%; float:left;">
+
+<div class="panel panel-default">
+  <div class="panel-body" style = 'padding-top:10px'>
     <?= $this->render('_form', [
-        'model' => $model,
+        'model' => $crModel,
         'is_lecturer' => $is_lecturer,
     ]) ?>
+</div>
+</div>
+</div>
+</div>
 
-</div>
-</div>

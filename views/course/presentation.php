@@ -15,18 +15,22 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
     'items' => [
         '<li><center><b>'.$model->name.'</b></center></li>',
         '<li class="divider"></li>',
-        '<li><center>item1</center></li>',
+        '<li><center>Студент</center></li>',
         [
-            'label' => 'item1',
-            'options' => ['class' => 'active'],
-           // 'url'=>'../lecturer/courses', 
+            'label' => 'Группа',
         ],
 		
 		[
-            'label' => 'item2',
-         //   'url'=> '../lecturer/requests'
+            'label' => 'Подписки',
         ],
 		
+		[
+            'label' => 'Тесты',
+        ],
+		
+		[
+            'label' => 'Редактировать профиль',
+        ],
 	
     ],
     'options' => ['class' => 'nav-pills nav-stacked admin-menu',
@@ -46,9 +50,6 @@ Java изначально появилась на свет ')?>
         <?= Html::tag('div',Html::tag('h4','Автор: Кузницов В.И.'))?>
         
          <?= Html::tag('div',Html::tag('center',Html::tag('h3','План занятий')))?>
-        
-      
-      
       
       
       <?= GridView::widget([

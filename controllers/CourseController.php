@@ -85,11 +85,12 @@ class CourseController extends Controller
         $model->idLecturer =  $user->id;
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['lecturer/courses']);
         } else {
             return $this->render('create', [
-                'model' => $model,
-                'is_lecturer' => $user->tableName() == 'lecturer',
+                'crModel' => $model,
+                'lcModel' => Yii::$app->user->identity,
+                'is_lecturer' => true,
             ]);
         }
     }

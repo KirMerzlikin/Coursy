@@ -27,10 +27,10 @@ use yii\helpers\ArrayHelper;
 $sql = 'SELECT MAX(`lessonNumber`) AS lessonNumber FROM `lesson` WHERE `idCourse`='.$model->idCourse;
 $lesson = Lesson::findBySql($sql)->one();
 ?>
-    <?= $form->field($model, 'lessonNumber')->textInput(['value'=>$lesson->lessonNumber+1]) ?>
+    <?= $form->field($model, 'lessonNumber')->textInput(['value'=> isset($model->lessonNumber) ? $model->lessonNumber : $lesson->lessonNumber+1]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' pull-right']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' pull-right']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

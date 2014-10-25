@@ -114,7 +114,7 @@ class LessonController extends Controller
         $model->idCourse = $id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['course/edit?id=' . $id]);
         } else {
             return $this->render('create', [
                 'lcModel' => Yii::$app->user->identity,
@@ -158,6 +158,29 @@ class LessonController extends Controller
         } else {
             return $this->render('list', [
                 'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionEdit($id)
+    {
+        $this->layout = "main_layout";
+        $this->validateAccess(self::LECTURER);
+
+        $model = $this->findModel($id);
+
+        $searchModelAttachment = new AttachmentSearch();
+        $dataProviderAttachment = $searchModelAttachment->search(['AttachmentSearch' => ['idLesson' => $id]]);
+        $dataProviderAttachment->setPagination(['pageSize' => 5]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->refresh();
+        } else {
+            
+            return $this->render('edit', [
+                'lsModel' => $model,
+                'lcModel' => Yii::$app->user->identity,
+                'dataProviderAttachment' => $dataProviderAttachment,
             ]);
         }
     }
