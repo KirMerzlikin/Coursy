@@ -44,8 +44,10 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
         'class' => 'list-group',
         'item' => function($lesson, $index)
         {
-          	return Html::tag('li',
-          		"<b>" . Html::tag('span','Лекция #'.$lesson->lessonNumber.'. '.$lesson->name , ['class' => '']), ['class' => 'list-group-item']);
+        	if($lesson->published == 1){
+          		return Html::tag('li',
+          			"<b>" . Html::tag('span','Лекция #'.$lesson->lessonNumber.'. '.$lesson->name , ['class' => '']), ['class' => 'list-group-item']);
+        	}
         }
     ]);
     }	
