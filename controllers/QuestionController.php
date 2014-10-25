@@ -8,7 +8,8 @@ use app\models\QuestionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\models\Lesson;
+use app\models\Lesson;
+use app\models\StudentAnswer;
 
 /**
  * QuestionController implements the CRUD actions for Question model.
@@ -56,13 +57,15 @@ class QuestionController extends Controller
 
     public function actionList($id)
     {
+        $this->layout = 'main_layout';
         $stModel = Yii::$app->user->identity; 
-        $lesson = Lesson::finOne($id);
+        $lesson = Lesson::findOne($id);
         $qListModel = $lesson->getQuestions();
 
          return $this->render('list', [
                 'stModel' => $stModel,
                 'qListModel' => $qListModel,
+                ]);
     }
 
     /**
@@ -113,6 +116,19 @@ class QuestionController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionHandleCompletion()
+    {
+        $idStudent = $_POST['idStudent'];
+        $answers = $_POST['answers'];
+
+        foreach($answers as $idQuestion => $answer)
+        {
+            $stAnswer = new StudentAnswer();
+            $stAnswer->load(['StudentAnswer' => ['idQuestion' => $idQuestion , 'idStudent' => $idStudent , 'answer' => $answer]]);
+            $stAnswer->save();
+        }
     }
 
     /**

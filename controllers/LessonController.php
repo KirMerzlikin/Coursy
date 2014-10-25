@@ -113,6 +113,7 @@ class LessonController extends Controller
         $model = new Lesson();
         $model->idCourse = $id;
 
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['course/edit?id=' . $id]);
         } else {
