@@ -32,7 +32,7 @@ class Question extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idLesson', 'text', 'answer'], 'required'],
+            [['idLesson', 'text', 'answer'], 'required', "message" => "Пожалуйста, заполните это поле"],
             [['idLesson'], 'integer'],
             [['text', 'answer'], 'string', 'max' => 255]
         ];
@@ -46,8 +46,8 @@ class Question extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'idLesson' => 'Id Lesson',
-            'text' => 'Text',
-            'answer' => 'Answer',
+            'text' => 'Текст вопроса',
+            'answer' => 'Правильный ответ',
         ];
     }
 

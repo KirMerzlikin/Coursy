@@ -109,7 +109,7 @@ class AttachmentController extends Controller
         $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
 
-        if ($_FILES['Attachment']['name']['resource']!="") {
+        if (isset($_FILES['Attachment'])) {
             unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->resource);
             $rnd = rand(0,9999);
             $uploadedFile = UploadedFile::getInstance($model,'resource');
@@ -136,9 +136,12 @@ class AttachmentController extends Controller
     public function actionDelete($id)
     {
         $this->validateAccess(self::LECTURER);
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
-        return $this->redirect(['index']);
+        $idLesson = $model->idLesson;
+        $model->delete();
+
+        return $this->redirect(['lesson/edit','id' => $idLesson]);
     }
 
     /**

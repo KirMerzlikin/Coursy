@@ -7,7 +7,7 @@ use yii\grid\GridView;
 
 ?>
 <div class="wrapper2 clearfix">
-<?php echo Html::tag('div','Курсы', ['id'=>'page_name']);?>
+<?php echo Html::tag('div','Лекции', ['id'=>'page_name']);?>
 <div style="width: 26%; float:left;">
 <?=
     $this->render('..\lecturer\menu_left', ['current' => 'courses', 'model' => $lcModel]);
@@ -42,8 +42,10 @@ use yii\grid\GridView;
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'urlCreator' => function ($action, $lsModel, $key, $index) {
-                    $url ='../attachment/'.$action.'?id='.$lsModel->id;
-                    return $url;
+                    $params = is_array($key) ? $key : ['id' => (string) $key];
+                    $params[0] = '/attachment' . '/' . $action;
+
+                    return Url::toRoute($params);
                 }
             ],
         ],
@@ -67,8 +69,10 @@ use yii\grid\GridView;
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'urlCreator' => function ($action, $lsModel, $key, $index) {
-                    $url ='../question/'.$action.'?id='.$key;
-                    return $url;
+                    $params = is_array($key) ? $key : ['id' => (string) $key];
+                    $params[0] = '/question' . '/' . $action;
+
+                    return Url::toRoute($params);
                 }
             ],
         ],
