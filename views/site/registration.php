@@ -63,9 +63,18 @@ $this->title = 'Регистрация';
                         
         </div>
         <script>
-        $(document).ready(function(){
-            $('#<?=$model->role?>_role').click();
-            $('#lecturer_department').val('<?=$model->department?>');
-            $('#student_group').val('<?=$model->group?>');
-        });
+            $(document).ready(function(){
+                $('#<?=$model->role?>_role').click();
+                $('#lecturer_department').val('<?=$model->department?>');
+                $('#student_group').val('<?=$model->group?>');
+            });
+
+            function show(id, id2)  
+            {   
+                if (document.getElementById(id).style.display == 'none')
+                {
+                    document.getElementById(id).style.display = 'block';
+                    document.getElementById(id2).style.display = 'none';
+                }
+            } 
         </script>
