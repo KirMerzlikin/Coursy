@@ -133,19 +133,19 @@ class SiteController extends Controller
 
     public function actionFailRecovery()
     {
-        $this->layout='new';
+        $this->layout='main_layout';
         return $this->render('fail_recovery');
     }
 
     public function actionSuccessRecovery()
     {
-        $this->layout='new';
+        $this->layout='main_layout';
         return $this->render('success_recovery');
     }
 
     public function actionRecovery()
     {
-        $this->layout='new';
+        $this->layout='main_layout';
         //if (!\Yii::$app->user->isGuest) {
         //    return $this->goHome();
         //}

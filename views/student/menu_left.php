@@ -66,7 +66,7 @@ echo Nav::widget([
 
     $('#sendMailButton').click(function()
     {
-        var problem = $('#problem').text();
+        var problem = $('#problem').val();
         if(! ($.trim(problem).length == 0))
         {
             mailAdmin(email, problem);
