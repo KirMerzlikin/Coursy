@@ -37,15 +37,8 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
         }
     ]);
 
-    $hasAnswer = 0;
-    for($i = 0; $i < $stModel->getStudentAnswers()->count(); $i++)
-    {
-    	if($stModel->getStudentAnswers()->all()[$i]->getIdQuestion()->one()->idLesson == $model->id)
-    	{
-    		$hasAnswer = 1;
-    		break;
-    	}
-    }
+    $hasAnswer = $stModel->getIdQuestions()->where(['idLesson' => $model->id])->count() != 0;
+    
     if($hasAnswer == 0 && $model->getQuestions()->all()!=null)
     {
         echo Html::a('Пройти тест', '../question/list?id='.$model->id ,['class' => 'btn btn-x btn-success', 'style' => 'float: right;']);

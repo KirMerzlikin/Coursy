@@ -8,6 +8,7 @@ use app\models\LecturerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\StudentAnswer;
 
 /**
  * LecturerController implements the CRUD actions for Lecturer model.
@@ -189,5 +190,10 @@ class LecturerController extends Controller
                 'model' => $model
         ]);
         } 
+    }
+
+    public function actionResults()
+    {
+        
     }
 }

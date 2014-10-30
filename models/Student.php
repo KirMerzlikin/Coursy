@@ -143,7 +143,7 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getIdQuestions()
     {
-        return $this->hasMany(Question::className(), ['id' => 'idQuestion'])->viaTable('{studentanswer}', ['idStudent' => 'id']);
+        return $this->hasMany(Question::className(), ['id' => 'idQuestion'])->viaTable('studentanswer', ['idStudent' => 'id']);
     }
 
     /**

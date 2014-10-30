@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Lesson;
 use app\models\StudentAnswer;
+use app\models\Result;
 
 /**
  * QuestionController implements the CRUD actions for Question model.
@@ -144,6 +145,7 @@ class QuestionController extends Controller
     {
         $idStudent = $_POST['idStudent'];
         $answers = $_POST['answers'];
+        $idLesson = $this->findModel(array_keys($answers)[0])->getIdLesson()->one()->id;
 
         foreach($answers as $idQuestion => $answer)
         {
@@ -151,6 +153,19 @@ class QuestionController extends Controller
             $stAnswer->load(['StudentAnswer' => ['idQuestion' => $idQuestion , 'idStudent' => $idStudent , 'answer' => $answer]]);
             $stAnswer->save();
         }
+
+        $lastResult = Result::findOne(['idLesson' => $idLesson, 'idStudent' => $idStudent]);
+        if($lastResult == null)
+        {
+            $lastResult = new Result();
+            $lastResult->idStudent = $idStudent; 
+            $lastResult->idLesson = $idLesson;
+        }
+
+        $lastResult->tryNumber = isset($lastResult->tryNumber) ? $lastResult->tryNumber + 1 : 1;
+        $lastResult->approved = 0;
+
+        $lastResult->save();
     }
 
     /**

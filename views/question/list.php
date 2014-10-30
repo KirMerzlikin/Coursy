@@ -62,6 +62,11 @@ use yii\grid\GridView;
             questions.push(new Question(spans[i].id, spans[i].innerHTML));
           }
         })();
+
+        
+        if(index == questions.length - 1)
+          $('#btn-next').addClass("disabled");
+                  
       };
 
     function nextClick()
