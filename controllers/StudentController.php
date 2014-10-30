@@ -54,8 +54,8 @@ class StudentController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }    
-     
+    }
+
 
     /**
      * Displays a single Student model.
@@ -86,16 +86,16 @@ class StudentController extends Controller
             ]);
         }
     }
-    
-    
+
+
     public function actionProfile()
     {
         $this->validateAccess(self::STUDENT);
         $this->layout='main_layout';
-        $model = Yii::$app->user->getIdentity();           
+        $model = Yii::$app->user->getIdentity();
         return $this->render('subscriptions', [
                 'model' => $model
-        ]);        
+        ]);
     }
 
     /**
@@ -109,45 +109,47 @@ class StudentController extends Controller
     {
         $this->validateAccess(self::STUDENT);
         $this->layout='main_layout';
-        $model = Yii::$app->user->getIdentity();           
+        $model = Yii::$app->user->getIdentity();
         return $this->render('subscriptions', [
                 'model' => $model
-        ]);        
+        ]);
     }
 
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {            
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->user->returnUrl);
         } else {
-            
+
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
-    }   
+    }
 
     public function actionProfileUpdate()
     {
         $this->validateAccess(self::STUDENT);
         $this->layout = "main_layout";
-        $model = Yii::$app->user->getIdentity();   
+        $model = Yii::$app->user->getIdentity();
+
         if ($model->load(Yii::$app->request->post())) {
             $info = $_POST['Student'];
             $model->password = $info['password'];
             $model->confirmation = $info['confirmation'];
+
             if($model->updateSt())
             {
                 return $this->redirect(Yii::$app->user->returnUrl);
             } else{
-                
+
             }
         }
         else{
              return $this->render('profile_update', [
                 'model' => $model
-        ]);
+            ]);
         }
     }
 
@@ -194,6 +196,6 @@ class StudentController extends Controller
                 ->setTo($email)
                 ->setSubject($subject)
                 ->setTextBody($body)
-                ->send(); 
+                ->send();
     }
 }

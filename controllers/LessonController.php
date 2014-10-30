@@ -45,32 +45,15 @@ class LessonController extends Controller
     }
 
     /**
-     * Lists all Lesson models.
-     * @return mixed
-     */
-    /*  NOT IN USE
-    public function actionIndex()
-    {
-        $searchModel = new LessonSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    */
-
-    /**
      * Displays Lessons of the course.
      * @param integer $id (idCourse)
      * @return mixed
      */
-
     public function actionViewCourse($id)
     {
         $this->validateAccess(self::LECTURER);
         $course = Course::findOne($id);
+
         if ($course == null)
             throw new NotFoundHttpException('The requested page does not exist.');
         $searchModel = new LessonSearch();
@@ -97,6 +80,7 @@ class LessonController extends Controller
         $searchModelQuestion = new QuestionSearch();
         $dataProviderQuestion = $searchModelQuestion->search(['QuestionSearch' => ['idLesson' => $id]]);
         $model = $this->findModel($id);
+
         return $this->render('view', [
             'lsModel' => $model,
             'lcModel' => Yii::$app->user->identity,
@@ -129,45 +113,6 @@ class LessonController extends Controller
         }
     }
 
- 
-	
-    public function actionCr_lesson()
-    {
-        $this->validateAccess(self::LECTURER);
-        $model = new Lesson();
-
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('cr_lesson', [
-                'model' => $model,
-            ]);
-        }
-    }
-	
-    
-    /**
-     * Updates an existing Lesson model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionList()
-    {
-        $this->layout = "main_layout";
-        $model = new Lesson();
-        
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('list', [
-                'model' => $model,
-            ]);
-        }
-    }
-
     public function actionEdit($id)
     {
         $this->layout = "main_layout";
@@ -186,7 +131,6 @@ class LessonController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->refresh();
         } else {
-            
             return $this->render('edit', [
                 'lsModel' => $model,
                 'lcModel' => Yii::$app->user->identity,
@@ -195,7 +139,6 @@ class LessonController extends Controller
             ]);
         }
     }
-		
 
     /**
      * Deletes an existing Lesson model.
