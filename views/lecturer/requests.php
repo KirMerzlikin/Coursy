@@ -19,12 +19,12 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 	    <?php
 	    for($i = 0; $i < count($rqProvider); $i++)
 	    {
-			echo Html::beginTag('div', ['class' => 'panel panel-default']);
+			echo Html::beginTag('div', ['class' => 'panel panel-default', 'id' => $rqProvider[$i]->id]);
 			echo Html::beginTag('div', ['class' => 'panel-body']);
 			echo Html::tag('div', "Cтудент <b>" . $rqProvider[$i]->getIdStudent()->one()->name . "</b> ".
                 			"(email:" .  $rqProvider[$i]->getIdStudent()->one()->email . ") ".
                 			"из группы " . $rqProvider[$i]->getIdStudent()->one()->getGroup().
-                			" хочет подписаться на курс " . $rqProvider[$i]->getCourse()->one()->name . ".",
+                			" хочет подписаться на курс \"" . $rqProvider[$i]->getCourse()->one()->name . "\".",
                 			['id' => 'request_'.$rqProvider[$i]->id]);
        		echo Html::tag('span', "<br/>".Html::button('Подтвердить',
                     			['class' => 'btn btn-success btn-xs', 'style' => 'margin-right:10px;', 'onClick' => 'sendResponse(\''.$rqProvider[$i]->id.'\',\'' . $rqProvider[$i]->getIdStudent()->one()->email . '\', true)']) .

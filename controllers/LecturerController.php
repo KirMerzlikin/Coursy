@@ -241,6 +241,8 @@ class LecturerController extends Controller
 
     public function actionHandleResponse()
     {
+
+        $this->validateAccess(self::LECTURER);
         $email = $_POST['email'];
         $response = $_POST['response'];
         $reason = $_POST['reason'];
