@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Lecturer;
 use app\models\LecturerSearch;
+use app\models\SubscriptionSearch;
+use app\models\Subscription;
 use app\models\Course;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -16,6 +18,11 @@ use app\models\StudentAnswer;
  */
 class LecturerController extends Controller
 {
+
+    const LECTURER = 1;
+    const ADMIN = 2;
+    const STUDENT = 3;
+
     public function behaviors()
     {
         return [
@@ -26,6 +33,17 @@ class LecturerController extends Controller
                 ],
             ],
         ];
+    }
+
+    private function validateAccess($params)
+    {
+        $cur_user = Yii::$app->user->identity;
+        if(Yii::$app->user->isGuest)
+            return $this->redirect('../site/login');
+        else if(($cur_user->tableName() == 'lecturer' && (($params & self::LECTURER) == 0)) ||
+                    ($cur_user->tableName() == 'admin' && (($params & self::ADMIN) == 0))||
+                    ($cur_user->tableName() == 'student' && (($params & self::STUDENT) == 0)))
+            return $this->redirect('../site/about');
     }
 
     /**
@@ -167,10 +185,23 @@ class LecturerController extends Controller
     public function actionRequests()
     {
         $this->layout='main_layout';
+        $this->validateAccess(self::LECTURER);
         $model = Yii::$app->user->getIdentity();
-
+        $courses = $model->getCourses()->all();
+        $ids = array();
+        for($i = 0; $i < count($courses); $i++)
+        {
+            $ids[$i] = $courses[$i]->id; 
+        }
+        $rqSearchModel = Subscription::find();
+        $rqProvider =  $rqSearchModel->where(['active' => '0']);
+        if (count($rqProvider) != 0) {
+            $rqProvider = $rqProvider->andWhere(['in', 'idCourse', $ids])->all();
+        }
+        Yii::info("Количество подписок ".count($rqProvider));
         return $this->render('requests', [
-                'model' => $model
+                'model' => $model,
+                'rqProvider' => $rqProvider
         ]);
     }
 
@@ -206,5 +237,40 @@ class LecturerController extends Controller
         return $this->render('statistics', [
             'model' => $user,
         ]);
+    }
+
+    public function actionHandleResponse()
+    {
+        $email = $_POST['email'];
+        $response = $_POST['response'];
+        $reason = $_POST['reason'];
+        $id = $_POST['id'];
+
+        $this->sendMail($id, $email, $response == 'true' ? true : false, $reason);
+
+        if($response == 'true')
+        {
+            $subscription = Subscription::find()->where(['id' => $id])->one();
+            $subscription->active = 1;
+            $subscription->save();
+        }
+        else
+        {
+            $subscription = Subscription::find()->where(['id' => $id])->one();
+            $subscription->delete();
+        }
+    }
+
+    private function sendMail($idSubscription, $email, $result, $reason)
+    {
+        $subject = ($result ? "Подтверждение" : "Отклонение") . " подписки на  курс ".Subscription::find()->where(['id' => $idSubscription])->one()->getCourse()->one()->name.". Coursey.it-team.in.ua";
+        $body = "Ваша заявка на подписку курса на сайте Coursey была "
+            . ($result ? "подтверждена" : "отклонена.\nПричина: " . $reason) . ". Не отвечайте на это письмо.";
+        Yii::$app->mailer->compose()
+                ->setFrom('noreply@coursey.it-team.in.ua')
+                ->setTo($email)
+                ->setSubject($subject)
+                ->setTextBody($body)
+                ->send();
     }
 }

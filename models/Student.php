@@ -149,9 +149,9 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSubscribtions()
+    public function getSubscriptions()
     {
-        return $this->hasMany(Subscribtion::className(), ['idStudent' => 'id']);
+        return $this->hasMany(Subscription::className(), ['idStudent' => 'id']);
     }
 
     public static function findByEmail($email)

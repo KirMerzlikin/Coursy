@@ -29,7 +29,7 @@ echo Nav::widget([
 
         Html::tag("li", "<a href='#stay-here' onClick='openModal()'><span class = 'glyphicon glyphicon-info-sign'></span> Обратная связь</a>"),
 
-        Html::tag("li", "<a href='/web/site/logout' data-method='post'><span class = 'glyphicon glyphicon-log-out'></span> Выйти</a>"),
+        Html::tag("li", "<a href='/projects/Coursey/web/site/logout' data-method='post'><span class = 'glyphicon glyphicon-log-out'></span> Выйти</a>"),
     ],
     'options' => ['class' => 'nav-pills nav-stacked',
     				 'style' => 'margin:0 20px 0 10px; padding:5px; border-radius: 4px; border:1px solid #DDDDDD; background:#fff'],
