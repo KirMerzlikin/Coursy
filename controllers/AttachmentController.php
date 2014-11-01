@@ -42,36 +42,6 @@ class AttachmentController extends Controller
     }
 
     /**
-     * Lists all Attachment models.
-     * @return mixed
-     */
-    /*
-    public function actionIndex()
-    {
-        $searchModel = new AttachmentSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    */
-
-    /**
-     * Displays a single Attachment model.
-     * @param integer $id
-     * @return mixed
-     */
-    /*
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-    */
-    /**
      * Creates a new Attachment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -109,7 +79,7 @@ class AttachmentController extends Controller
         $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
 
-        if ($_FILES['Attachment']['name']['resource']!="") {
+        if (isset($_FILES['Attachment'])) {
             unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->resource);
             $rnd = rand(0,9999);
             $uploadedFile = UploadedFile::getInstance($model,'resource');
@@ -136,9 +106,11 @@ class AttachmentController extends Controller
     public function actionDelete($id)
     {
         $this->validateAccess(self::LECTURER);
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $idLesson = $model->idLesson;
+        $model->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['lesson/edit','id' => $idLesson]);
     }
 
     /**
@@ -160,12 +132,9 @@ class AttachmentController extends Controller
     public function actionFileForceDownload($id) {
         $file = Attachment::findOne($id)->resource;
         if (file_exists($file)) {
-                // сбрасываем буфер вывода PHP, чтобы избежать переполнения памяти выделенной под скрипт
-                // если этого не сделать файл будет читаться в память полностью!
             if (ob_get_level()) {
                 ob_end_clean();
             }
-            // заставляем браузер показать окно сохранения файла
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename=' . basename($file));
@@ -174,7 +143,6 @@ class AttachmentController extends Controller
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
             header('Content-Length: ' . filesize($file));
-            // читаем файл и отправляем его пользователю
             readfile($file);
             exit;
         }

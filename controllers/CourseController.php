@@ -45,22 +45,6 @@ class CourseController extends Controller
 
     /**
      * NOT IN USE NOW
-     * Lists all Course models.
-     * @return mixed
-     */
-    /*public function actionIndex()
-    {
-        $searchModel = new CourseSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }*/
-
-    /**
-     * NOT IN USE NOW
      * Displays a single Course model.
      * @param integer $id
      * @return mixed
@@ -86,7 +70,7 @@ class CourseController extends Controller
         $user = Yii::$app->user->identity;
         $model = new Course();
         $model->idLecturer =  $user->id;
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['lecturer/courses']);
         } else {
@@ -107,7 +91,6 @@ class CourseController extends Controller
     public function actionUpdate($id)
     {
 		$this->validateAccess(self::ADMIN);
-
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -124,13 +107,12 @@ class CourseController extends Controller
     {
         $this->layout = "main_layout";
         $this->validateAccess(self::LECTURER);
-
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->user->returnUrl);
         } else {
-            
+
             return $this->render('edit', [
                 'crModel' => $model,
                 'lcModel' => $this->findModel($id)->getIdLecturer()->one(),
@@ -164,40 +146,10 @@ class CourseController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
-      public function actionPresentation()
-    {
-        $this->layout = "main_layout"; 
-        $searchModel = new CourseSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('presentation', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    
-     public function actionList()
-    {
-         $this->layout = "main_layout"; 
-     //   $this->validateAccess(self::LECTURER);
-        $model = new Course();
-         return $this->render('list', [
-                'model' => $model,
-            ]);
-
-     /*   if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('list', [
-                'model' => $model,
-            ]);
-        }*/
-    }
 
     public function actionViewCourse($id)
     {
-        $this->layout='main_layout';    
+        $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
         $model = Course::find()->where(['id' => $id])->one();
         $subscribtion = Yii::$app->user->identity->getSubscribtions()->where(['idCourse' => $id])->one();
@@ -217,7 +169,7 @@ class CourseController extends Controller
     //for Student
     public function actionAll()
     {
-        $this->layout='main_layout';        
+        $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
         $courses = Course::find();
         if($courses == null)
@@ -243,7 +195,7 @@ class CourseController extends Controller
 
     public function actionSearch($key)
     {
-        $this->layout='main_layout';        
+        $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
         $courses = Course::find()->where(['like', 'name', $key]);
         if($courses == null)

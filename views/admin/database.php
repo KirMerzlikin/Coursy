@@ -163,5 +163,4 @@ echo Tabs::widget([
   ]);
 
 echo Html::endTag('div');
-?>
-
+?>       

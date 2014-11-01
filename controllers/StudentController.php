@@ -14,6 +14,10 @@ use yii\filters\VerbFilter;
  */
 class StudentController extends Controller
 {
+    const LECTURER = 1;
+    const ADMIN = 2;
+    const STUDENT = 3;
+
     public function behaviors()
     {
         return [
@@ -24,6 +28,17 @@ class StudentController extends Controller
                 ],
             ],
         ];
+    }
+
+    private function validateAccess($params)
+    {
+        $cur_user = Yii::$app->user->identity;
+        if(Yii::$app->user->isGuest)
+            return $this->redirect('../site/login');
+        else if(($cur_user->tableName() == 'lecturer' && (($params & self::LECTURER) == 0)) ||
+                    ($cur_user->tableName() == 'admin' && (($params & self::ADMIN) == 0))||
+                    ($cur_user->tableName() == 'student' && (($params & self::STUDENT) == 0)))
+            return $this->redirect('../site/about');
     }
 
     /**
@@ -39,8 +54,8 @@ class StudentController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-    }    
-     
+    }
+
 
     /**
      * Displays a single Student model.
@@ -71,15 +86,16 @@ class StudentController extends Controller
             ]);
         }
     }
-    
-    
+
+
     public function actionProfile()
     {
+        $this->validateAccess(self::STUDENT);
         $this->layout='main_layout';
-        $model = Yii::$app->user->getIdentity();           
+        $model = Yii::$app->user->getIdentity();
         return $this->render('subscriptions', [
                 'model' => $model
-        ]);        
+        ]);
     }
 
     /**
@@ -91,45 +107,49 @@ class StudentController extends Controller
 
     public function actionSubscriptions()
     {
+        $this->validateAccess(self::STUDENT);
         $this->layout='main_layout';
-        $model = Yii::$app->user->getIdentity();           
+        $model = Yii::$app->user->getIdentity();
         return $this->render('subscriptions', [
                 'model' => $model
-        ]);        
+        ]);
     }
 
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {            
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->user->returnUrl);
         } else {
-            
+
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
-    }   
+    }
 
     public function actionProfileUpdate()
     {
+        $this->validateAccess(self::STUDENT);
         $this->layout = "main_layout";
-        $model = Yii::$app->user->getIdentity();   
+        $model = Yii::$app->user->getIdentity();
+
         if ($model->load(Yii::$app->request->post())) {
             $info = $_POST['Student'];
             $model->password = $info['password'];
             $model->confirmation = $info['confirmation'];
+
             if($model->updateSt())
             {
                 return $this->redirect(Yii::$app->user->returnUrl);
             } else{
-                
+
             }
         }
         else{
              return $this->render('profile_update', [
                 'model' => $model
-        ]);
+            ]);
         }
     }
 
@@ -160,6 +180,23 @@ class StudentController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionSendLetter()
+    {
+        $this->layout='main_layout';
+        $this->validateAccess(self::STUDENT);
+
+        $email = $_POST['email'];
+        $subject = 'Письмо от студента coursey.it-team.ua '.Yii::$app->user->getIdentity()->name;
+        $body = $_POST['text'];
+
+        Yii::$app->mailer->compose()
+                ->setFrom(Yii::$app->user->getIdentity()->email)
+                ->setTo($email)
+                ->setSubject($subject)
+                ->setTextBody($body)
+                ->send();
     }
 }
 

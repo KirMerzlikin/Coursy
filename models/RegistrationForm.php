@@ -70,6 +70,7 @@ class RegistrationForm extends Model
     public function validateEmail($attribute, $params)
     {
         $user = Lecturer::find()->where(['email'=>$this->email])->count() + Student::find()->where(['email'=>$this->email])->count();
+
         if ($user!=0)
             $this->addError('email','Данный email уже используется.');
     }
@@ -80,6 +81,7 @@ class RegistrationForm extends Model
         {
           $this->addError('name','Имя может содержать только буквы.');
         }
+
         if(!(preg_match('/[^a-z\-]/i', $this->second_name) xor preg_match('/[^а-яё\-]/i', $this->second_name)))
         {
           $this->addError('second_name','Фамилия может содержать только буквы и символ "-".');

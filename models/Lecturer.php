@@ -90,7 +90,7 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public static function findByEmail($email)
     {
         $lecturer = Lecturer::find()->where(['email' => $email])->one();
-        return $lecturer; 
+        return $lecturer;
     }
 
     public function checkPassword($password)
@@ -127,7 +127,7 @@ class Lecturer extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfac
     public static function findIdentityByAccessToken($token, $type = null)
     {
         $lecturer = Lecturer::find()->where(['passHash' => $token])->one();
-        return $lecturer; 
+        return $lecturer;
     }
 
     public function getId()
