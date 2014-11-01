@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Lecturer;
 use app\models\LecturerSearch;
+use app\models\Course;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -195,5 +196,15 @@ class LecturerController extends Controller
                 'model' => $model
         ]);
         }
+    }
+
+    public function actionStatistics()
+    {
+        $this->layout = "main_layout";
+        $user = Yii::$app->user->getIdentity();
+
+        return $this->render('statistics', [
+            'model' => $user,
+        ]);
     }
 }
