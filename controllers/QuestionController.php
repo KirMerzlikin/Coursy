@@ -42,41 +42,11 @@ class QuestionController extends Controller
             return $this->redirect('../site/about');
     }
 
-    /**
-     * Lists all Question models.
-     * @return mixed
-     */
-    /*
-    public function actionIndex()
-    {
-        $this->validateAccess(self::LECTURER);
-        $searchModel = new QuestionSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    */
-    /**
-     * Displays a single Question model.
-     * @param integer $id
-     * @return mixed
-     */
-    /*
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-    */
     public function actionList($id)
     {
         $this->validateAccess(self::LECTURER);
         $this->layout = 'main_layout';
-        $stModel = Yii::$app->user->identity; 
+        $stModel = Yii::$app->user->identity;
         $lesson = Lesson::findOne($id);
         $qListModel = $lesson->getQuestions();
 
@@ -155,6 +125,7 @@ class QuestionController extends Controller
         }
 
         $lastResult = Result::findOne(['idLesson' => $idLesson, 'idStudent' => $idStudent]);
+
         if($lastResult == null)
         {
             $lastResult = new Result();

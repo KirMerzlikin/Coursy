@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Lecturer;
 use app\models\LecturerSearch;
+use app\models\Course;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,7 +42,6 @@ class LecturerController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-        
 
     /**
      * Displays a single Lecturer model.
@@ -94,7 +94,8 @@ class LecturerController extends Controller
 
     public function actionUpdateLc()
     {
-        $model = Yii::$app->user->getIdentity();   
+        $model = Yii::$app->user->getIdentity();
+
         if ($model->load(Yii::$app->request->post())) {
             $info = $_POST['Lecturer'];
             $model->password = $info['password'];
@@ -103,7 +104,7 @@ class LecturerController extends Controller
             {
                 return $this->redirect(Yii::$app->user->returnUrl);
             } else{
-                
+
             }
         }
         else
@@ -111,7 +112,7 @@ class LecturerController extends Controller
              return $this->render('update_lc', [
                 'model' => $model,
             ]);
-        } 
+        }
     }
 
     /**
@@ -142,37 +143,42 @@ class LecturerController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 	public function actionProfile()
     {
         $this->layout = "main_layout";
-        $model = Yii::$app->user->getIdentity();           
+        $model = Yii::$app->user->getIdentity();
+
         return $this->render('courses', [
                 'model' => $model
-        ]);    
+        ]);
     }
 
     public function actionCourses()
     {
         $this->layout='main_layout';
-        $model = Yii::$app->user->getIdentity();           
+        $model = Yii::$app->user->getIdentity();
+
         return $this->render('courses', [
                 'model' => $model
-        ]);        
+        ]);
     }
 
     public function actionRequests()
     {
         $this->layout='main_layout';
-        $model = Yii::$app->user->getIdentity();           
+        $model = Yii::$app->user->getIdentity();
+
         return $this->render('requests', [
                 'model' => $model
-        ]);        
+        ]);
     }
 
     public function actionProfileUpdate()
     {
         $this->layout = "main_layout";
-        $model = Yii::$app->user->getIdentity();   
+        $model = Yii::$app->user->getIdentity();
+
         if ($model->load(Yii::$app->request->post())) {
             $info = $_POST['Lecturer'];
             $model->password = $info['password'];
@@ -181,7 +187,7 @@ class LecturerController extends Controller
             {
                 return $this->redirect(Yii::$app->user->returnUrl);
             } else{
-                
+
             }
         }
         else
@@ -189,6 +195,16 @@ class LecturerController extends Controller
              return $this->render('profile_update', [
                 'model' => $model
         ]);
-        } 
+        }
+    }
+
+    public function actionStatistics()
+    {
+        $this->layout = "main_layout";
+        $user = Yii::$app->user->getIdentity();
+
+        return $this->render('statistics', [
+            'model' => $user,
+        ]);
     }
 }

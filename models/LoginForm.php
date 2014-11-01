@@ -83,6 +83,7 @@ class LoginForm extends Model
             $user->passHash = md5($newPass);
             $subject = "New password for service Coursey.it-team.in.ua.";
             $body = "There was request for new  password  for your account. Here it is: $newPass.\n This is automatic made letter. Don't replay.";
+
             if(Yii::$app->mailer->compose()
                     ->setTo($this->email)
                     ->setSubject($subject)

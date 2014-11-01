@@ -37,9 +37,9 @@ class AdminController extends Controller
         }
         else if (Yii::$app->user->identity->tableName() != 'admin')
         {
-            return $this->redirect('../web/site/about');   
+            return $this->redirect('../web/site/about');
         }
-        
+
     }
 
     public function actionRequests()
@@ -96,7 +96,7 @@ class AdminController extends Controller
             'crSearchModel' => $crSearchModel,
             'crDataProvider' => $crDataProvider,
         ]);
-        
+
 
     }
 
@@ -129,15 +129,15 @@ class AdminController extends Controller
     private function sendMail($email, $result, $reason)
     {
         $subject = ($result ? "Подтверждение" : "Отклонение") . " регистрации. Coursey.it-team.in.ua";
-        $body = "Ваша заявка на регистрацию на сайте Coursey была " 
+        $body = "Ваша заявка на регистрацию на сайте Coursey была "
             . ($result ? "подтверждена" : "отклонена.\nПричина: " . $reason) . ". Не отвечайте на это письмо.";
         Yii::$app->mailer->compose()
                 ->setFrom('noreply@coursey.it-team.in.ua')
                 ->setTo($email)
                 ->setSubject($subject)
                 ->setTextBody($body)
-                ->send();       
+                ->send();
     }
 
-    
+
 }
