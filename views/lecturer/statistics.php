@@ -7,7 +7,7 @@ use yii\bootstrap\Tabs;
 use yii\helpers\ArrayHelper;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 ?>
-<script src="/web/js/Chart.js"></script>
+<script src="<?=Yii::$app->request->BaseUrl?>/js/Chart.js"></script>
 <script>
 var optionsPie = {
     //Boolean - Whether we should show a stroke on each segment
@@ -206,9 +206,6 @@ var optionsBar = {
                 echo Html::endTag('div');
                 echo Html::endTag('div');
             }
-
-            echo Html::a("<span class = 'glyphicon glyphicon-plus'></span> Создать курс", '../course/create',
-                ['class' => 'btn btn-primary btn-block', 'style' => 'margin-bottom:15px;']);
         ?>
     </div>
 </div>

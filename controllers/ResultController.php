@@ -113,6 +113,7 @@ class ResultController extends Controller
         $lcModel = Yii::$app->user->getIdentity();
 
         $results = Result::find()->where(['approved' => '0'])->all();
+        $testModel = [];
         foreach($results as $result)
         {
             $testModel[] = Student::findOne(['id' => $result->idStudent])->getStudentAnswers()->with(['idQuestion' => 
@@ -125,6 +126,16 @@ class ResultController extends Controller
         return $this->render('list', [
             'lcModel' => $lcModel,
             'testModel' => $testModel]);
+    }
+
+    public function actionHandleResult()
+    {
+        $res = Result::findOne(['idStudent' => $_POST['idStudent'], 'idLesson' => $_POST['idLesson']]);
+        $res->approved = 1;
+        $res->points = $_POST['mark'];
+        $res->passed = $res->points > 60 ? 1 : 0;
+
+        $res->save();
     }
 
     /**
