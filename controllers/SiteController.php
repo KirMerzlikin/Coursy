@@ -62,6 +62,7 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             if(Yii::$app->user->identity->tableName() == 'admin')
                 return $this->redirect('../admin');
@@ -87,13 +88,16 @@ class SiteController extends Controller
     public function actionRegistration()
     {
         $this->layout = "main_layout";
+
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         $model = new RegistrationForm();
+
         if(array_key_exists('RegistrationForm', $_POST))
         {
             $info = $_POST['RegistrationForm'];
+
             if ($info['role']=='lecturer')
             {
                 $model->department = $info['department'];
@@ -102,7 +106,9 @@ class SiteController extends Controller
             else
                 $model->group = $info['group'];
         }
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
             if($model->register())
                 return $this->render('success_registration');
             else
@@ -117,6 +123,7 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
              return $this->refresh();
         } else {
@@ -133,24 +140,22 @@ class SiteController extends Controller
 
     public function actionFailRecovery()
     {
-        $this->layout='new';
+        $this->layout='main_layout';
         return $this->render('fail_recovery');
     }
 
     public function actionSuccessRecovery()
     {
-        $this->layout='new';
+        $this->layout='main_layout';
         return $this->render('success_recovery');
     }
 
     public function actionRecovery()
     {
-        $this->layout='new';
-        //if (!\Yii::$app->user->isGuest) {
-        //    return $this->goHome();
-        //}
+        $this->layout='main_layout';
         $model = new LoginForm();
         $email = $_POST['email'];
+
         if($model->recovery($email)){
             return $this->redirect('success-recovery');
         }

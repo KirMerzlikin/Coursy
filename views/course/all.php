@@ -21,7 +21,9 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 <?php 
 
 	echo Html::tag('div',
-          	"<input type=\"text\" placeholder=\"Введите запрос или часть запроса...\" class=\"form-control\" id=\"search-field\" style=\"width:77%;display: inline-block; margin-right:10px;\" onchange=setLink()></input>"."<a id=\"search-link\" href=\"#\" class=\"btn btn-x btn-default glyphicon glyphicon-search\" style=\"width:20%;display: inline-block; margin-left:10px;\" onClick=search()></a>",['style' => 'margin-bottom:20px;']);
+          	"<input type=\"text\" placeholder=\"Введите запрос или часть запроса...\" class=\"form-control\" id=\"search-field\" style=\"width:77%;display: inline-block; margin-right:10px;\" onchange=setLink()></input>".
+          	"<a id=\"search-link\" href=\"#\" class=\"btn btn-primary glyphicon glyphicon-search\" style=\"width:20%;display: inline-block; margin-left:10px; vertical-align: top; position:relative; top:0px\" onClick=search()></a>",
+          	['style' => 'margin-bottom:20px;']);
 	for($i = 0; $i < count($courses->all()); $i++)
     {
     	if($courses->all()[$i]->published == 1)

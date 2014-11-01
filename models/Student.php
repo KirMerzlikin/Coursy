@@ -143,7 +143,7 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getIdQuestions()
     {
-        return $this->hasMany(Question::className(), ['id' => 'idQuestion'])->viaTable('{studentanswer}', ['idStudent' => 'id']);
+        return $this->hasMany(Question::className(), ['id' => 'idQuestion'])->viaTable('studentanswer', ['idStudent' => 'id']);
     }
 
     /**
@@ -169,7 +169,7 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         $student = Student::find()->where(['passHash' => $token])->where(['active' => 1])->one();
-        return $student; 
+        return $student;
     }
 
     public function getId()

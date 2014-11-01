@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Department;
-use app\models\DepartmentSearch;
+use app\models\Result;
+use app\models\ResultSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DepartmentController implements the CRUD actions for Department model.
+ * ResultController implements the CRUD actions for Result model.
  */
-class DepartmentController extends Controller
+class ResultController extends Controller
 {
     public function behaviors()
     {
@@ -27,12 +27,12 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Lists all Department models.
+     * Lists all Result models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DepartmentSearch();
+        $searchModel = new ResultSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -42,28 +42,29 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Displays a single Department model.
-     * @param integer $id
+     * Displays a single Result model.
+     * @param integer $idStudent
+     * @param integer $idLesson
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($idStudent, $idLesson)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($idStudent, $idLesson),
         ]);
     }
 
     /**
-     * Creates a new Department model.
+     * Creates a new Result model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Department();
+        $model = new Result();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(Yii::$app->user->returnUrl);
+            return $this->redirect(['view', 'idStudent' => $model->idStudent, 'idLesson' => $model->idLesson]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -72,17 +73,18 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Updates an existing Department model.
+     * Updates an existing Result model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param integer $idStudent
+     * @param integer $idLesson
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($idStudent, $idLesson)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($idStudent, $idLesson);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $this->redirect(Yii::$app->user->returnUrl);
+            return $this->redirect(['view', 'idStudent' => $model->idStudent, 'idLesson' => $model->idLesson]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -91,28 +93,30 @@ class DepartmentController extends Controller
     }
 
     /**
-     * Deletes an existing Department model.
+     * Deletes an existing Result model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param integer $idStudent
+     * @param integer $idLesson
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($idStudent, $idLesson)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($idStudent, $idLesson)->delete();
 
-        $this->redirect(Yii::$app->user->returnUrl);
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Department model based on its primary key value.
+     * Finds the Result model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Department the loaded model
+     * @param integer $idStudent
+     * @param integer $idLesson
+     * @return Result the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($idStudent, $idLesson)
     {
-        if (($model = Department::findOne($id)) !== null) {
+        if (($model = Result::findOne(['idStudent' => $idStudent, 'idLesson' => $idLesson])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

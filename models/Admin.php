@@ -61,7 +61,7 @@ class Admin extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         $admin = Admin::find()->where(['passHash' => $token])->one();
-        return $admin; 
+        return $admin;
     }
 
     public function getId()

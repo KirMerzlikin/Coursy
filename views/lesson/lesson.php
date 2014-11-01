@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -18,11 +18,11 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 
 <div style="position:relative; width: 73%; float:left;">
 
-<?php 
+<?php
 
-	echo Html::beginTag('div', ['class' => 'panel panel-default']);	
+	echo Html::beginTag('div', ['class' => 'panel panel-default']);
 	echo Html::tag('div', Html::tag('span', 'Лекция #' . $model->lessonNumber.': '.$model->name, ['class' => 'panel-title', 'style' => 'float:left; width:80%;']).
-	    	Html::tag('span', 'Курс: '.$model->getIdCourse()->one()->name, ['style' => 'float:right; width:20%;']), 
+	    	Html::tag('span', 'Курс: '.$model->getIdCourse()->one()->name, ['style' => 'float:right; width:20%;']),
 	    	['class' => 'panel-heading clearfix']);
 	echo Html::beginTag('div', ['class' => 'panel-body']);
 	echo Html::tag('div', Html::tag('div', $model->description));
@@ -37,20 +37,13 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
         }
     ]);
 
-    $hasAnswer = 0;
-    for($i = 0; $i < $stModel->getStudentAnswers()->count(); $i++)
-    {
-    	if($stModel->getStudentAnswers()->all()[$i]->getIdQuestion()->one()->idLesson == $model->id)
-    	{
-    		$hasAnswer = 1;
-    		break;
-    	}
-    }
+    $hasAnswer = $stModel->getIdQuestions()->where(['idLesson' => $model->id])->count() != 0;
+
     if($hasAnswer == 0 && $model->getQuestions()->all()!=null)
     {
         echo Html::a('Пройти тест', '../question/list?id='.$model->id ,['class' => 'btn btn-x btn-success', 'style' => 'float: right;']);
 	}
-	echo Html::endTag('div'); 
+	echo Html::endTag('div');
 ?>
 </div>
 </div>
