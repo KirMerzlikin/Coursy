@@ -191,9 +191,4 @@ class LecturerController extends Controller
         ]);
         } 
     }
-
-    public function actionResults()
-    {
-        
-    }
 }

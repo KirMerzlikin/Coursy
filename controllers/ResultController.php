@@ -4,7 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Result;
-use app\models\ResultSearch;
+use app\models\Student;
+use app\models\StudentAnswer;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -104,6 +105,26 @@ class ResultController extends Controller
         $this->findModel($idStudent, $idLesson)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionList()
+    {
+        $this->layout = 'main_layout';
+        $lcModel = Yii::$app->user->getIdentity();
+
+        $results = Result::find()->where(['approved' => '0'])->all();
+        foreach($results as $result)
+        {
+            $testModel[] = Student::findOne(['id' => $result->idStudent])->getStudentAnswers()->with(['idQuestion' => 
+                function($query) use ($result)
+                {
+                    $query->andWhere('idLesson = ' . $result->idLesson);
+                }])->all();
+        }
+
+        return $this->render('list', [
+            'lcModel' => $lcModel,
+            'testModel' => $testModel]);
     }
 
     /**

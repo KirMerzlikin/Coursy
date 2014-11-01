@@ -18,7 +18,7 @@ echo Nav::widget([
         Html::tag("li", "<a href='../lecturer/requests'><span class = 'glyphicon glyphicon-question-sign'></span> Запросы на подписку</a>", 
             ['class' => ($current == 'requests') ? 'active' : '']),
 
-        Html::tag("li", "<a href='../lecturer/results'><span class = 'glyphicon glyphicon-list-alt'></span> Тесты (ответы)</a>", 
+        Html::tag("li", "<a href='../result/list'><span class = 'glyphicon glyphicon-list-alt'></span> Тесты (ответы)</a>", 
             ['class' => ($current == 'results') ? 'active' : '']),
 
         Html::tag("li", "<a href='../lecturer/profile-update'><span class = 'glyphicon glyphicon-pencil'></span> Редактировать профиль</a>",
