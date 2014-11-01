@@ -54,6 +54,12 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+	public function actionMain()
+	{
+		 $this->layout='main_page';
+		 return $this->render('main');
+	}
+	
     public function actionLogin()
     {
         $this->layout='main_layout';
