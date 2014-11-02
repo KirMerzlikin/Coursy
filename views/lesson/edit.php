@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ListView;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
+use app\models\Attachment;
+use app\models\Question;
 
 ?>
 <div class="wrapper2 clearfix">
@@ -36,7 +39,7 @@ use yii\grid\GridView;
                         'resource',
                         [
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{update} {delete}',
+                            'template' => '{delete}',
                             'urlCreator' => function ($action, $lsModel, $key, $index) {
                                 $params = is_array($key) ? $key : ['id' => (string) $key];
                                 $params[0] = '/attachment' . '/' . $action;
@@ -46,7 +49,18 @@ use yii\grid\GridView;
                         ],
                     ],
                 ]); ?>
-              <a href="<?=Url::to(['attachment/create','id'=>$lsModel->id]);?>" class="btn btn-primary pull-right">Добавить</a>
+
+                <?php
+                $model = new Attachment();
+                $model->idLesson = $lsModel->id; 
+                $form = ActiveForm::begin(['action' => ['attachment/create?id=' . $lsModel->id],
+                    'options' => ['enctype'=>'multipart/form-data']]);
+                echo Html::activeHiddenInput($model, 'idLesson');
+                echo $form->field($model, 'name')->textInput(['maxlength' => 255]);
+                echo $form->field($model, 'resource')->fileInput();
+                echo Html::submitButton('Добавить', ['class' => 'btn btn-primary pull-right']);
+                ActiveForm::end();
+                ?>
             </div>
         </div>
 
@@ -57,8 +71,8 @@ use yii\grid\GridView;
                     'dataProvider' => $dataProviderQuestion,
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                        'text',
-                        'answer',
+                        ['attribute' => 'text', 'options' => ['class' => 'text']],
+                        ['attribute' => 'answer', 'options' => ['class' => 'answer']],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{update} {delete}',
@@ -71,8 +85,50 @@ use yii\grid\GridView;
                         ],
                     ],
                 ]); ?>
-              <a href="<?=Url::to(['question/create','id'=>$lsModel->id]);?>" class="btn btn-primary pull-right">Добавить</a>
+
+                <?php
+                    if(!$qsUpdate)
+                    {
+                        $qsModel = new Question();
+                        $qsModel->idLesson = $lsModel->id; 
+                        $form = ActiveForm::begin(['action' => ['question/create?id=' . $lsModel->id], 'options' => ['id'=>'createForm']]);
+                        echo Html::activeHiddenInput($model, 'idLesson');
+                        echo $form->field($qsModel, 'text')->textInput(['maxlength' => 255]);
+                        echo $form->field($qsModel, 'answer')->textInput(['maxlength' => 255]);
+                        echo Html::submitButton('Добавить', ['class' => 'btn btn-primary pull-right']);
+                        ActiveForm::end();
+                    }
+                    else
+                    {
+                        $form = ActiveForm::begin(['action' => ['question/update?id=' . $lsModel->id], 
+                            'options' => ['id'=>'updateForm']]);
+                        echo Html::activeHiddenInput($qsModel, 'idLesson');
+                        echo $form->field($qsModel, 'text')->textInput(['maxlength' => 255]);
+                        echo $form->field($qsModel, 'answer')->textInput(['maxlength' => 255]);
+                        echo Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right']);
+                        ActiveForm::end();
+                    }
+                ?>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    window.onload= function()
+    {
+        $('.glyphicon-pencil').parent().load(function()
+            {
+                $(this).click(function()
+                {
+                    $.post( "", { qs: });
+                })
+            });
+        click(function(){
+            $('#createForm').toggle();
+            $('#updateForm').toggle();
+
+            $('#updateForm').find('#question-text').text();
+        });*/
+    };
+</script>

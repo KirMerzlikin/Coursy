@@ -136,6 +136,8 @@ class ResultController extends Controller
         $res->passed = $res->points > 60 ? 1 : 0;
 
         $res->save();
+
+        $answers = StudentAnswer::deleteAll(['idStudent' => $_POST['idStudent'], 'idLesson' => $_POST['idLesson']]);
     }
 
     /**

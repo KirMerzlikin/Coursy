@@ -60,7 +60,7 @@ class AttachmentController extends Controller
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            return $this->redirect(['lesson/view', 'id' => $model->idLesson]);
+            return $this->redirect(['lesson/edit', 'id' => $model->idLesson]);
         } else {
             return $this->render('create', [
                 'model' => $model,

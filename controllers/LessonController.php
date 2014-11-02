@@ -136,6 +136,7 @@ class LessonController extends Controller
                 'lcModel' => Yii::$app->user->identity,
                 'dataProviderAttachment' => $dataProviderAttachment,
                 'dataProviderQuestion' => $dataProviderQuestion,
+                'qsUpdate' => isset($_POST['qs']) ? true : false,
             ]);
         }
     }
