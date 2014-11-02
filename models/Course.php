@@ -15,7 +15,7 @@ use Yii;
  *
  * @property Lecturer $idLecturer0
  * @property Lesson[] $lessons
- * @property Subscribtion[] $subscriptions
+ * @property Subscription[] $subscriptions
  */
 class Course extends \yii\db\ActiveRecord
 {
@@ -75,6 +75,6 @@ class Course extends \yii\db\ActiveRecord
      */
     public function getSubscriptions()
     {
-        return $this->hasMany(Subscribtion::className(), ['idCourse' => 'id']);
+        return $this->hasMany(Subscription::className(), ['idCourse' => 'id']);
     }
 }

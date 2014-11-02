@@ -52,13 +52,13 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 
 			if($subscribed == 0)
 			{
-				if($stModel->getSubscribtions()->where(['idCourse' => $model->id])->one() == null)
+				if($stModel->getSubscriptions()->where(['idCourse' => $model->id])->one() == null)
 				{
 			   		echo Html::a('Подписаться', '../course/subscribe?id='.$model->id ,['class' => 'btn btn-x btn-success', 'style' => 'float: right;']);
 				}
 				else
 				{
-					echo Html::tag('div','Запрос на  подписку  находится  на рассмотрении у  лектора.');
+					echo Html::tag('div','<b>Запрос на  подписку  находится  на рассмотрении у  лектора.</b>');
 				}
 			}
 			else
@@ -94,11 +94,10 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
     $.ajax({
       type     :'POST',
       cache    : false,
-      url  : '../student/send-letter',
+      url  : '../student/send-mail',
       data: {'email':email, 'text':text},
       statusCode: {
-        500: function(data){alert('Error!\n'+data.responseText);},
-        200: function(){$('#'+id).hide('slow');}
+        500: function(data){alert('Error!\n'+data.responseText);}
       }
     });
  }

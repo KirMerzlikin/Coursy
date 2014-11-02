@@ -4,7 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Result;
-use app\models\ResultSearch;
+use app\models\Student;
+use app\models\StudentAnswer;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -104,6 +105,37 @@ class ResultController extends Controller
         $this->findModel($idStudent, $idLesson)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionList()
+    {
+        $this->layout = 'main_layout';
+        $lcModel = Yii::$app->user->getIdentity();
+
+        $results = Result::find()->where(['approved' => '0'])->all();
+        $testModel = [];
+        foreach($results as $result)
+        {
+            if($result->getIdLesson()->one()->getIdCourse()->one()->idLecturer == $lcModel->id)
+            {
+                $testModel[] = Student::findOne(['id' => $result->idStudent])->getStudentAnswers()->
+                    innerJoin('question', 'idQuestion = id')->where('idLesson = ' . $result->idLesson)->all();
+            }
+        }
+
+        return $this->render('list', [
+            'lcModel' => $lcModel,
+            'testModel' => $testModel]);
+    }
+
+    public function actionHandleResult()
+    {
+        $res = Result::findOne(['idStudent' => $_POST['idStudent'], 'idLesson' => $_POST['idLesson']]);
+        $res->approved = 1;
+        $res->points = $_POST['mark'];
+        $res->passed = $res->points > 60 ? 1 : 0;
+
+        $res->save();
     }
 
     /**

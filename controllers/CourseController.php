@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Course;
-use app\models\Subscribtion;
+use app\models\Subscription;
 use app\models\CourseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -152,12 +152,12 @@ class CourseController extends Controller
         $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
         $model = Course::find()->where(['id' => $id])->one();
-        $subscribtion = Yii::$app->user->identity->getSubscribtions()->where(['idCourse' => $id])->one();
+        $subscription = Yii::$app->user->identity->getSubscriptions()->where(['idCourse' => $id])->one();
         if($model == null)
         {
             return $this->render('fail');
         }
-        else if($subscribtion == null||$subscribtion->active == 0)
+        else if($subscription == null||$subscription->active == 0)
         {
             return $this->render('course', ['model' => $model, 'stModel' => Yii::$app->user->identity, 'subscribed' => 0, 'current' => 'all']);
         }
@@ -185,11 +185,11 @@ class CourseController extends Controller
     public function actionSubscribe($id)
     {
         $this->validateAccess(self::STUDENT);
-        $subscribtion = new Subscribtion();
-        $subscribtion->idCourse = $id;
-        $subscribtion->idStudent = Yii::$app->user->identity->id;
-        $subscribtion->active = 0;
-        $subscribtion->save();
+        $subscription = new Subscription();
+        $subscription->idCourse = $id;
+        $subscription->idStudent = Yii::$app->user->identity->id;
+        $subscription->active = 0;
+        $subscription->save();
         return $this->redirect(Yii::$app->user->returnUrl);
     }
 
