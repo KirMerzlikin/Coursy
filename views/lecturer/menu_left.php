@@ -32,7 +32,7 @@ echo Nav::widget([
         Html::tag("li", "<a href='/projects/Coursey/web/site/logout' data-method='post'><span class = 'glyphicon glyphicon-log-out'></span> Выйти</a>"),
     ],
     'options' => ['class' => 'nav-pills nav-stacked',
-    				 'style' => 'margin:0 20px 0 10px; padding:5px; border-radius: 4px; border:1px solid #DDDDDD; background:#fff'],
+    				 'style' => 'margin:0 20px 20px 10px; padding:5px; border-radius: 4px; border:1px solid #DDDDDD; background:#fff'],
 ]);?>
 
 <div class="modal fade bs-example-modal-sm" id='myModal' tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

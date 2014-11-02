@@ -116,11 +116,11 @@ class ResultController extends Controller
         $testModel = [];
         foreach($results as $result)
         {
-            $testModel[] = Student::findOne(['id' => $result->idStudent])->getStudentAnswers()->with(['idQuestion' => 
-                function($query) use ($result)
-                {
-                    $query->andWhere('idLesson = ' . $result->idLesson);
-                }])->all();
+            if($result->getIdLesson()->one()->getIdCourse()->one()->idLecturer == $lcModel->id)
+            {
+                $testModel[] = Student::findOne(['id' => $result->idStudent])->getStudentAnswers()->
+                    innerJoin('question', 'idQuestion = id')->where('idLesson = ' . $result->idLesson)->all();
+            }
         }
 
         return $this->render('list', [
