@@ -58,7 +58,7 @@ echo Nav::widget([
     $.ajax({
       type     :'POST',
       cache    : false,
-      url  : '../student/mail-admin',
+      url  : '../lecturer/mail-admin',
       data: {'email':email, 'problem':problem},
       statusCode: {
         500: function(data){alert('Error!\n'+data.responseText);}
@@ -73,8 +73,8 @@ echo Nav::widget([
 
     $('#sendMailButton').click(function()
     {
-        var problem = $('#problem').text();
-        if(! ($.trim(problem).length == 0))
+        var problem = $('#problem').val();
+        if(! (problem.length == 0))
         {
             mailAdmin(email, problem);
             $('#myModal').modal('hide');

@@ -83,9 +83,10 @@ var optionsBar = {
                 echo Html::beginTag('div', ['class' => 'panel panel-default']);
                 echo Html::tag('div', Html::tag('span', $model->getCourses()->all()[$i]->name, ['class' => 'panel-title', 'style' => 'float:left; width:80%;']), ['class' => 'panel-heading clearfix']);
                 echo Html::beginTag('div', ['class' => 'panel-body']);
+                echo "<div class='col-lg-12' style='padding-bottom:5px;'>";
                 echo "Всего подписок: ".$model->getCourses()->all()[$i]->getSubscriptions()->count()."<br>";
                 echo "Одобрено подписок: ".$model->getCourses()->all()[$i]->getSubscriptions()->where(['active' => 1])->count()."<br>";
-
+                echo "</div>";
                 $lessons = $model->getCourses()->all()[$i]->getLessons()->all();
                 $lesson_counter = 0;
                 $avg_mark = array();
@@ -133,15 +134,17 @@ var optionsBar = {
                         $lesson_passed=false;
                         if ($passed[$lesson_counter] > $count_students[$lesson_counter]/2)
                             $lesson_passed = true;
-                        echo "<div style='float:left; width:400px;'>";
-                        echo "<h4>Урок \"".$lesson->name."\"</h4>".(($lesson_passed)?"(пройден)":"(не пройден)")."<br>";
-                        echo  "Ср.оценка: {$avg_mark[$lesson_counter]}<br>";
+                        echo "<div class='col-lg-12' style='border-top:1px solid #ccc; border-bottom:1px solid #ccc;'>";
+                        echo "<h4><b>Урок \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройден)":"(не пройден)")."</small></h4>";
+                        echo "<div class='col-lg-6 panel-body'><h5 style='font-size:15px;'><b>Общая статистика</b></h5>";
+                        
+                        //echo  "Ср.оценка: {$avg_mark[$lesson_counter]}<br>";
                         echo  "Ср.кол-во попыток: {$avg_tryNumber[$lesson_counter]}<br>";
-                        echo  "Пройдено: {$passed[$lesson_counter]}<br>";
-                        echo  "Не пройдено: {$not_passed[$lesson_counter]}<br>";
+                        echo  "Успешно прошли тест: {$passed[$lesson_counter]} <small>студента(ов)</small><br>";
+                        echo  "Не прошли тест: {$not_passed[$lesson_counter]} <small>студента(ов)</small><br>";
                         echo "</div>";
                         ?>
-                        <div><canvas id="myChart<?=$lesson_counter?>" width="200" height="200"></canvas></div><br>
+                        <div class='col-lg-6 panel-body'><div class='col-lg-12'><h5 style='font-size:15px; padding-bottom:0px;'><b>Статистика оценок</b></h5></div><div class='col-lg-12'><canvas id="myChart<?=$lesson_counter?>" width="100" height="100"></canvas></div></div></div>
                         <script>
                             var ctx<?=$lesson_counter?> = document.getElementById("myChart<?=$lesson_counter?>").getContext("2d");
                             var data<?=$lesson_counter?> = [
@@ -181,8 +184,10 @@ var optionsBar = {
                 if ($graph_avg_marks)
                 {
                 ?>
-                <h3>Средние оценки по лекциям</h3>
-                <canvas id="myChartBar<?=$i?>" width="650" height="400"></canvas><br>
+                <div class='col-lg-12'>
+                <h5 style='font-size:16px; padding-bottom: 10px;'><b>Средние оценки по лекциям</b></h5>
+                <div class='col-lg-12'><canvas id="myChartBar<?=$i?>" width="650" height="400"></canvas></div><br>
+                </div>
                 <script>
                     var ctxBar<?=$i?> = document.getElementById("myChartBar<?=$i?>").getContext("2d");
                     var dataBar<?=$i?> = {
