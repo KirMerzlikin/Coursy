@@ -100,7 +100,7 @@ use app\models\Question;
                     }
                     else
                     {
-                        $form = ActiveForm::begin(['action' => ['question/update?id=' . $lsModel->id], 
+                        $form = ActiveForm::begin(['action' => ['question/update?id=' . $qsModel->id], 
                             'options' => ['id'=>'updateForm']]);
                         echo Html::activeHiddenInput($qsModel, 'idLesson');
                         echo $form->field($qsModel, 'text')->textInput(['maxlength' => 255]);
@@ -113,22 +113,3 @@ use app\models\Question;
         </div>
     </div>
 </div>
-
-<script>
-    window.onload= function()
-    {
-        $('.glyphicon-pencil').parent().load(function()
-            {
-                $(this).click(function()
-                {
-                    $.post( "", { qs: });
-                })
-            });
-        click(function(){
-            $('#createForm').toggle();
-            $('#updateForm').toggle();
-
-            $('#updateForm').find('#question-text').text();
-        });*/
-    };
-</script>

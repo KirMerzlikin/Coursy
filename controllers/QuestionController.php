@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Question;
 use app\models\QuestionSearch;
+use app\models\AttachmentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -83,7 +84,7 @@ class QuestionController extends Controller
      */
     public function actionUpdate($id)
     {
-        $this->validateAccess(self::LECTURER);
+        /*$this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -91,6 +92,34 @@ class QuestionController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+            ]);
+        }*/
+
+        $this->layout = "main_layout";
+        $this->validateAccess(self::LECTURER);
+
+        $qsModel = $this->findModel($id);
+        $lsModel = $this->findModel($id)->getIdLesson()->one();
+        $lsId = $lsModel->id;
+
+        $searchModelAttachment = new AttachmentSearch();
+        $dataProviderAttachment = $searchModelAttachment->search(['AttachmentSearch' => ['idLesson' => $lsId]]);
+        $dataProviderAttachment->setPagination(['pageSize' => 5]);
+
+        $searchModelQuestion = new QuestionSearch();
+        $dataProviderQuestion = $searchModelQuestion->search(['QuestionSearch' => ['idLesson' => $lsId]]);
+        $dataProviderQuestion->setPagination(['pageSize' => 10]);
+
+        if ($qsModel->load(Yii::$app->request->post()) && $qsModel->save()) {
+            return $this->redirect('../lesson/edit?id=' . $lsModel->id);
+        } else {
+            return $this->render('../lesson/edit', [
+                'lsModel' => $lsModel,
+                'lcModel' => Yii::$app->user->identity,
+                'dataProviderAttachment' => $dataProviderAttachment,
+                'dataProviderQuestion' => $dataProviderQuestion,
+                'qsUpdate' => true,
+                'qsModel' => $qsModel
             ]);
         }
     }
