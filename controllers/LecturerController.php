@@ -189,16 +189,19 @@ class LecturerController extends Controller
         $model = Yii::$app->user->getIdentity();
         $courses = $model->getCourses()->all();
         $ids = array();
+
         for($i = 0; $i < count($courses); $i++)
         {
-            $ids[$i] = $courses[$i]->id; 
+            $ids[$i] = $courses[$i]->id;
         }
+
         $rqSearchModel = Subscription::find();
         $rqProvider =  $rqSearchModel->where(['active' => '0']);
+
         if (count($rqProvider) != 0) {
             $rqProvider = $rqProvider->andWhere(['in', 'idCourse', $ids])->all();
         }
-        Yii::info("Количество подписок ".count($rqProvider));
+
         return $this->render('requests', [
                 'model' => $model,
                 'rqProvider' => $rqProvider
@@ -248,8 +251,6 @@ class LecturerController extends Controller
         $reason = $_POST['reason'];
         $id = $_POST['id'];
 
-        $this->sendMail($id, $email, $response == 'true' ? true : false, $reason);
-
         if($response == 'true')
         {
             $subscription = Subscription::find()->where(['id' => $id])->one();
@@ -261,15 +262,34 @@ class LecturerController extends Controller
             $subscription = Subscription::find()->where(['id' => $id])->one();
             $subscription->delete();
         }
+
+        $this->sendMailNotification($id, $email, $response == 'true' ? true : false, $reason);
     }
 
-    private function sendMail($idSubscription, $email, $result, $reason)
+    private function sendMailNotification($idSubscription, $email, $result, $reason)
     {
         $subject = ($result ? "Подтверждение" : "Отклонение") . " подписки на  курс ".Subscription::find()->where(['id' => $idSubscription])->one()->getCourse()->one()->name.". Coursey.it-team.in.ua";
         $body = "Ваша заявка на подписку курса на сайте Coursey была "
             . ($result ? "подтверждена" : "отклонена.\nПричина: " . $reason) . ". Не отвечайте на это письмо.";
         Yii::$app->mailer->compose()
                 ->setFrom('noreply@coursey.it-team.in.ua')
+                ->setTo($email)
+                ->setSubject($subject)
+                ->setTextBody($body)
+                ->send();
+    }
+
+    public function actionSendMail()
+    {
+        $this->layout='main_layout';
+        $this->validateAccess(self::LECTURER);
+
+        $email = $_POST['email'];
+        $subject = 'Письмо от лектора coursey.it-team.ua '.Yii::$app->user->getIdentity()->name. '. Курс: '.$_POST['course'].'. Лекция: '.$_POST['lesson'];
+        $body = $_POST['text'];
+
+        Yii::$app->mailer->compose()
+                ->setFrom(Yii::$app->user->getIdentity()->email)
                 ->setTo($email)
                 ->setSubject($subject)
                 ->setTextBody($body)

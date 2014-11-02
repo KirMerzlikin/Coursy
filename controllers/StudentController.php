@@ -182,7 +182,7 @@ class StudentController extends Controller
         }
     }
 
-    public function actionSendLetter()
+    public function actionSendMail()
     {
         $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
