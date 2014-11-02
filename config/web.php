@@ -6,6 +6,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['gii'],
+    'defaultRoute' => 'site/main',
     'modules' => [
         'gii' => 'yii\gii\Module',
     ],
