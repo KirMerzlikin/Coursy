@@ -206,9 +206,6 @@ var optionsBar = {
                 echo Html::endTag('div');
                 echo Html::endTag('div');
             }
-
-            echo Html::a("<span class = 'glyphicon glyphicon-plus'></span> Создать курс", '../course/create',
-                ['class' => 'btn btn-primary btn-block', 'style' => 'margin-bottom:15px;']);
         ?>
     </div>
 </div>

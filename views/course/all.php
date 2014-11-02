@@ -37,7 +37,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 		    echo Html::tag('div', mb_substr($courses->all()[$i]->description, 0, 1000).'...');
 		    echo Html::tag('br');
 		    echo Html::a('Перейти', '../course/view-course?id=' . $courses->all()[$i]->id,['class' => 'btn btn-x btn-primary', 'style' => 'float: right;']);
-		    if($stModel->getSubscribtions()->where(['idCourse' => $courses->all()[$i]->id])->one() == null)
+		    if($stModel->getSubscriptions()->where(['idCourse' => $courses->all()[$i]->id])->one() == null)
 		    {
 		    	echo Html::a('Подписаться', '../course/subscribe?id='.$courses->all()[$i]->id ,['class' => 'btn btn-x btn-success', 'style' => 'float: right; margin-right:10px;']);
 			}

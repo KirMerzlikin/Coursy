@@ -15,13 +15,13 @@ echo Nav::widget([
         Html::tag("li", "<a href='../lecturer/courses'><span class = 'glyphicon glyphicon-list'></span> Мои курсы</a>",
             ['class' => ($current == 'courses') ? 'active' : '']),
 
-        Html::tag("li", "<a href='../lecturer/statistics'><span class = 'glyphicon glyphicon-question-sign'></span> Статистика курсов</a>",
+        Html::tag("li", "<a href='../lecturer/statistics'><span class = 'glyphicon glyphicon-stats'></span> Статистика курсов</a>",
             ['class' => ($current == 'statistics') ? 'active' : '']),
 
         Html::tag("li", "<a href='../lecturer/requests'><span class = 'glyphicon glyphicon-question-sign'></span> Запросы на подписку</a>",
             ['class' => ($current == 'requests') ? 'active' : '']),
 
-        Html::tag("li", "<a href='../lecturer/results'><span class = 'glyphicon glyphicon-list-alt'></span> Тесты (ответы)</a>",
+        Html::tag("li", "<a href='../result/list'><span class = 'glyphicon glyphicon-list-alt'></span> Тесты (ответы)</a>", 
             ['class' => ($current == 'results') ? 'active' : '']),
 
         Html::tag("li", "<a href='../lecturer/profile-update'><span class = 'glyphicon glyphicon-pencil'></span> Редактировать профиль</a>",
@@ -29,10 +29,10 @@ echo Nav::widget([
 
         Html::tag("li", "<a href='#stay-here' onClick='openModal()'><span class = 'glyphicon glyphicon-info-sign'></span> Обратная связь</a>"),
 
-        Html::tag("li", "<a href='/web/site/logout' data-method='post'><span class = 'glyphicon glyphicon-log-out'></span> Выйти</a>"),
+        Html::tag("li", "<a href='/projects/Coursey/web/site/logout' data-method='post'><span class = 'glyphicon glyphicon-log-out'></span> Выйти</a>"),
     ],
     'options' => ['class' => 'nav-pills nav-stacked',
-    				 'style' => 'margin:0 20px 0 10px; padding:5px; border-radius: 4px; border:1px solid #DDDDDD; background:#fff'],
+    				 'style' => 'margin:0 20px 20px 10px; padding:5px; border-radius: 4px; border:1px solid #DDDDDD; background:#fff'],
 ]);?>
 
 <div class="modal fade bs-example-modal-sm" id='myModal' tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
