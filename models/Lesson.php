@@ -39,7 +39,17 @@ class Lesson extends \yii\db\ActiveRecord
             [['idCourse', 'name', 'description', 'published', 'lessonNumber'], 'required',  'message' => 'Пожалуйста, заполните это поле'],
             [['idCourse', 'published', 'lessonNumber'], 'integer'],
             [['description'], 'string'],
-            [['name'], 'string', 'max' => 255]
+            [['name'], 'string', 'max' => 255],
+            ['lessonNumber', function ($attribute, $params)
+                {
+                    if(Lesson::find()->where(['idCourse' => $this->idCourse, 'lessonNumber' => $this->lessonNumber])->count() != 0)
+                        $this->addError($attribute, 'У лекций не может быть одинаковых порядковых номеров');
+                }],
+            ['lessonNumber', function ($attribute, $params)
+                {
+                    if($this->lessonNumber < 0)
+                        $this->addError($attribute, 'Номер лекции должен быть неотрицательным числом');
+                }]
         ];
     }
 
