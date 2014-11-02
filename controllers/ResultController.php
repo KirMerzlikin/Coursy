@@ -137,7 +137,10 @@ class ResultController extends Controller
 
         $res->save();
 
-        $answers = StudentAnswer::deleteAll(['idStudent' => $_POST['idStudent'], 'idLesson' => $_POST['idLesson']]);
+        foreach($res->getIdLesson()->one()->getQuestions()->all() as $question)
+        {
+            $answers = StudentAnswer::deleteAll(['idStudent' => $_POST['idStudent'], 'idQuestion' => $question->id]);
+        }
     }
 
     /**
