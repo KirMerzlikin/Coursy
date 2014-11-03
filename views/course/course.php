@@ -58,7 +58,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 				}
 				else
 				{
-					echo Html::tag('div','<b>Запрос на  подписку  находится  на рассмотрении у  лектора.</b>');
+					echo Html::tag('div','<b>Запрос на  подписку  находится  на рассмотрении у  лектора.</b>', ['style' => 'float:right;']);
 				}
 			}
 			else

@@ -80,26 +80,6 @@ echo Tabs::widget([
             ]),
         ],
         [
-            'label' => 'Администраторы',
-            'content' => GridView::widget([
-              'dataProvider' => $admDataProvider,
-              'columns' => [
-                'id',
-                'name',
-                'email:email',
-                'passHash',
-
-                ['class' => 'yii\grid\ActionColumn', 'urlCreator' => function($action, $model, $key, $index)
-                {
-                    $params = is_array($key) ? $key : ['id' => (string) $key];
-                    $params[0] = '/admin' . '/' . $action;
-
-                return Url::toRoute($params);
-                }],
-              ],
-            ]),
-        ],
-        [
             'label' => 'Группы',
             'content' => GridView::widget([
               'dataProvider' => $grDataProvider,

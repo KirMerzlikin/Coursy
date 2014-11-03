@@ -74,10 +74,6 @@ class AdminController extends Controller
         $depDataProvider = $depSearchModel->search([]);
         $depDataProvider->setPagination(['pageSize' => 10]);
 
-        $admSearchModel = new AdminSearch();
-        $admDataProvider = $admSearchModel->search([]);
-        $admDataProvider->setPagination(['pageSize' => 10]);
-
         $crSearchModel = new CourseSearch();
         $crDataProvider = $crSearchModel->search([]);
         $crDataProvider->setPagination(['pageSize' => 10]);
@@ -91,8 +87,6 @@ class AdminController extends Controller
             'grDataProvider' => $grDataProvider,
             'depSearchModel' => $depSearchModel,
             'depDataProvider' => $depDataProvider,
-            'admSearchModel' => $admSearchModel,
-            'admDataProvider' => $admDataProvider,
             'crSearchModel' => $crSearchModel,
             'crDataProvider' => $crDataProvider,
         ]);
