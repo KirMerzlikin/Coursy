@@ -136,8 +136,12 @@ class StudentController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $info = $_POST['Student'];
-            $model->password = $info['password'];
-            $model->confirmation = $info['confirmation'];
+
+            if(isset($info['password'])&&isset($info['confirmation']))
+            {
+                $model->password = $info['password'];
+                $model->confirmation = $info['confirmation'];
+            }
 
             if($model->updateSt())
             {

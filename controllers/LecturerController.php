@@ -110,29 +110,6 @@ class LecturerController extends Controller
         }
     }
 
-    public function actionUpdateLc()
-    {
-        $model = Yii::$app->user->getIdentity();
-
-        if ($model->load(Yii::$app->request->post())) {
-            $info = $_POST['Lecturer'];
-            $model->password = $info['password'];
-            $model->confirmation = $info['confirmation'];
-            if($model->updateLc())
-            {
-                return $this->redirect(Yii::$app->user->returnUrl);
-            } else{
-
-            }
-        }
-        else
-        {
-             return $this->render('update_lc', [
-                'model' => $model,
-            ]);
-        }
-    }
-
     /**
      * Deletes an existing Lecturer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -215,8 +192,12 @@ class LecturerController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $info = $_POST['Lecturer'];
-            $model->password = $info['password'];
-            $model->confirmation = $info['confirmation'];
+
+            if(isset($info['password'])&&isset($info['confirmation']))
+            {
+                $model->password = $info['password'];
+                $model->confirmation = $info['confirmation'];
+            }
             if($model->updateLc())
             {
                 return $this->redirect(Yii::$app->user->returnUrl);
