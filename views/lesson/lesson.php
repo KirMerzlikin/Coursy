@@ -9,7 +9,8 @@ use app\models\Group;
 use yii\helpers\ArrayHelper;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 <div class="wrapper2 clearfix">
-<?php echo Html::tag('div','Лекции', ['id'=>'page_name']);?>
+<?php echo Html::tag('div','Лекции', ['id'=>'page_name']);
+    $this->title = "Лекция\"" . $model->name ."\""?>
 <div style="width: 26%; float:left;">
 <?=
     $this->render('..\student\menu_left', ['current' => 'subscriptions', 'model' => $stModel]);

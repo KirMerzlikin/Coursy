@@ -9,7 +9,8 @@ use yii\helpers\ArrayHelper;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 ?>
 <div class="wrapper2 clearfix">
-	<?php echo Html::tag('div','Профиль', ['id'=>'page_name']);?>
+	<?php echo Html::tag('div','Профиль', ['id'=>'page_name']);
+	$this->title = "Профиль"?>
 	<div style="width: 26%; float:left;">
 		<?=
 		    $this->render('menu_left', ['current' => 'profile-update', 'model' => $model]);

@@ -6,7 +6,8 @@ use yii\grid\GridView;
 
 ?>
 <div class="wrapper2 clearfix">
-    <?php echo Html::tag('div','Тест', ['id'=>'page_name']);?>
+    <?php echo Html::tag('div','Тест', ['id'=>'page_name']);
+    $this->title = "Тестирование"?>
     <div style="width: 26%; float:left;">
         <?=
             $this->render('..\student\menu_left', ['current' => 'subscriptions', 'model' => $stModel]);

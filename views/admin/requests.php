@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\Tabs;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
-$this->title = 'Admin panel -> Registration requests';
+$this->title = 'Запросы на регистрацию';
 
 echo Nav::widget([
     'items' => [
@@ -24,7 +24,7 @@ echo Nav::widget([
 ]);
 
 echo Html::beginTag('div', ['class' => 'col-lg-9']);
-echo Html::tag('div', Html::tag('center', Html::tag('h3', 'Заявки на регистрацию')));
+echo Html::tag('div', Html::tag('center', Html::tag('h3', 'Запросы на регистрацию')));
 
 $stProvider =  $stSearchModel->search(['StudentSearch' => ['active' => '0']]);
 $lcProvider =  $lcSearchModel->search(['LecturerSearch' => ['active' => '0']]);

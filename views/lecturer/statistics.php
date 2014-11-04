@@ -69,7 +69,8 @@ var optionsBar = {
 };
 </script>
 <div class="wrapper2 clearfix">
-    <?php echo Html::tag('div','Статистика', ['id'=>'page_name']);?>
+    <?php echo Html::tag('div','Статистика', ['id'=>'page_name']);
+    $this->title = "Статистика"?>
     <div style="width: 26%; float:left;">
         <?=
             $this->render('menu_left', ['current' => 'statistics', 'model' => $model]);
@@ -135,7 +136,7 @@ var optionsBar = {
                         if ($passed[$lesson_counter] > $count_students[$lesson_counter]/2)
                             $lesson_passed = true;
                         echo "<div class='col-lg-12' style='border-top:1px solid #ccc; border-bottom:1px solid #ccc;'>";
-                        echo "<h4><b>Урок \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройден)":"(не пройден)")."</small></h4>";
+                        echo "<h4><b>Лекция \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройдена)":"(не пройдена)")."</small></h4>";
                         echo "<div class='col-lg-6 panel-body'><h5 style='font-size:15px;'><b>Общая статистика</b></h5>";
                         
                         //echo  "Ср.оценка: {$avg_mark[$lesson_counter]}<br>";

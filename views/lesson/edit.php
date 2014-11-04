@@ -10,7 +10,8 @@ use app\models\Question;
 
 ?>
 <div class="wrapper2 clearfix">
-    <?php echo Html::tag('div','Лекции', ['id'=>'page_name']);?>
+    <?php echo Html::tag('div','Лекции', ['id'=>'page_name']);
+    $this->title = "Лекция\"" . $lsModel->name ."\""?>
     <div style="width: 26%; float:left;">
         <?=
             $this->render('..\lecturer\menu_left', ['current' => 'courses', 'model' => $lcModel]);

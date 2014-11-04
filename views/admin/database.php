@@ -7,7 +7,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\Tabs;
 
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
-$this->title = 'Admin panel -> Database';
+$this->title = 'База данных';
 
 echo Nav::widget([
     'items' => [
