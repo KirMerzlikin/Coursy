@@ -29,7 +29,7 @@ use app\models\Question;
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading"><b>Материалы</b></div>
+            <div class="panel-heading"><b>Материалы к лекции</b></div>
             <div class="panel-body">
                 <?= GridView::widget([
                     'dataProvider' => $dataProviderAttachment,
@@ -65,7 +65,7 @@ use app\models\Question;
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading"><b>Тестовые задания</b></div>
+            <div class="panel-heading"><b>Тестовые задания к лекции</b></div>
             <div class="panel-body">
                 <?= GridView::widget([
                     'dataProvider' => $dataProviderQuestion,

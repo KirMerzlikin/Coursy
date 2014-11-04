@@ -61,10 +61,10 @@ class Lesson extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'idCourse' => 'Id Course',
-            'name' => 'Название',
-            'description' => 'Описание',
+            'name' => 'Название лекции',
+            'description' => 'Описание лекции',
             'published' => 'Опубликована',
-            'lessonNumber' => 'Порядковый номер',
+            'lessonNumber' => 'Порядковый номер лекции',
         ];
     }
 

@@ -47,8 +47,8 @@ class Course extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Название',
-            'description' => 'Описание',
+            'name' => 'Название курса',
+            'description' => 'Описание курса',
             'idLecturer' => 'Лектор',
             'published' => 'Опубликован',
         ];

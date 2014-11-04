@@ -26,7 +26,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 			echo Html::beginTag('div', ['class' => 'panel-body']);
 			echo Html::tag('div', Html::tag('div', $model->description));
 			echo Html::tag('br');
-			echo Html::tag('div', 'Лекции: ');
+			echo Html::tag('div', 'Лекции курса: ');
 
 			if($subscribed == 1){
 				echo Html::ul($model->getLessons()->where(['published' => 1])->orderBy('lessonNumber')->all(), [
@@ -58,7 +58,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 				}
 				else
 				{
-					echo Html::tag('div','<b>Запрос на  подписку  находится  на рассмотрении у  лектора.</b>');
+					echo Html::tag('div','<b>Запрос на  подписку  находится  на рассмотрении у  лектора.</b>', ['style' => 'float:right;']);
 				}
 			}
 			else

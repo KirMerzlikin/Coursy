@@ -32,7 +32,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
             }
 
             echo Html::a("<span class = 'glyphicon glyphicon-plus'></span> Создать курс", '../course/create',
-                ['class' => 'btn btn-primary btn-block', 'style' => 'margin-bottom:15px;']);
+                ['class' => 'btn btn-primary btn-block', 'style' => 'margin-bottom:15px; width:130px;']);
         ?>
     </div>
 </div>
