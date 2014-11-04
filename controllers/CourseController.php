@@ -8,6 +8,7 @@ use app\models\Subscription;
 use app\models\CourseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\HttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -122,13 +123,16 @@ class CourseController extends Controller
 
     /**
      * Deletes an existing Course model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $course = $this->findModel($id);
+        if($course->published != true)
+            $course->delete();
+        else
+            throw new HttpException(406, 'Published course can not be deleted.');
     }
 
     /**

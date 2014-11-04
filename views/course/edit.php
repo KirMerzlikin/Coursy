@@ -52,7 +52,7 @@ use yii\widgets\ListView;
           		if (confirm('Вы действительно хотите удалить данную лекцию?'))
           		{
           			$.post('../lesson/delete?id=' + id);
-          			$('#'+id).hide('slow');
+                $('#'+id).hide('slow');
           		}
           	}
         </script>
