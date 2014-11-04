@@ -29,12 +29,13 @@ echo Nav::widget([
 
         Html::tag("li", "<a href='#stay-here' onClick='openModal()'><span class = 'glyphicon glyphicon-info-sign'></span> Обратная связь</a>"),
 
-        Html::tag("li", "<a href='".Yii::$app->request->BaseUrl."/site/logout' data-method='post'><span class = 'glyphicon glyphicon-log-out'></span> Выйти</a>"),
+        Html::tag("li", "<a href='javascript:askLogout();' id='logout_button'><span class = 'glyphicon glyphicon-log-out'></span> Выйти</a>"),
+
     ],
     'options' => ['class' => 'nav-pills nav-stacked',
     				 'style' => 'margin:0 20px 20px 10px; padding:5px; border-radius: 4px; border:1px solid #DDDDDD; background:#fff'],
 ]);?>
-
+<a href='<?=Yii::$app->request->BaseUrl."/site/logout";?>' data-method='post' style="visibility:none;height:0px;" id="logout_href"></a>
 <div class="modal fade bs-example-modal-sm" id='myModal' tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -53,6 +54,11 @@ echo Nav::widget([
 </div>
 
  <script>
+ function askLogout()
+ {
+    if (confirm('Вы уверены, что хотите выйти?'))
+        $('#logout_href').click();
+ }
  function mailAdmin(email, problem)
  {
     $.ajax({
