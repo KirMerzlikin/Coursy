@@ -9,18 +9,18 @@ $this->title = 'Авторизация';
 ?>
 <div class="wrapper2"><div id="page_name"><?= Html::encode($this->title) ?></div>
     <div class="site-login" style='margin-top:70px'>
-          <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'options' => ['class' => 'form-horizontal'],
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-9\">{input}</div>\n<div class=\"col-lg-10\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-3 control-label'],
-        ],
-    ]); ?>
+         <?php $form = ActiveForm::begin([
+            'id' => 'registration-form',
+            'options' => ['class' => 'form-horizontal'],
+            'fieldConfig' => [
+            'template' => "<div class=\"col-lg-12\">{input}{error}</div>\n"
+            ],
+            ]);
+        ?>
 
-        <?= $form->field($model, 'email')->textInput(['placeholder'=>'Ваш email'])?>
+       <?= Html::label('Ваш email') ?> <?= $form->field($model, 'email')->textInput(['placeholder'=>'Ваш email'])?>
 
-        <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'Ваш пароль']) ?>
+        <?= Html::label('Ваш пароль') ?> <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'Ваш пароль']) ?>
 
         <div class="form-group">
             <div class="col-lg-12">
