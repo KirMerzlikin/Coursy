@@ -11,11 +11,11 @@ $this->title = 'Admin panel -> Registration requests';
 echo Nav::widget([
     'items' => [
         [
-            'label' => 'Database',
+            'label' => 'База данных',
             'url' => ['/admin/database'],
         ],
         [
-            'label' => 'Registration requests',
+            'label' => 'Запросы на регистрацию',
             'options' => ['class' => 'active'],
         ],
     ],

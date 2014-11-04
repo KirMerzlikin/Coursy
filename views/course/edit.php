@@ -26,7 +26,7 @@ use yii\widgets\ListView;
         </div>
 
         <div class="panel panel-default">
-           	<div class="panel-heading"><b>Лекции</b></div>
+           	<div class="panel-heading"><b>Лекции курса</b></div>
             <div class="panel-body">
                 <?php
                   	echo Html::ul($crModel->getLessons()->orderBy('lessonNumber')->all(), [

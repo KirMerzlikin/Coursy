@@ -9,7 +9,7 @@ use app\models\Group;
 use yii\helpers\ArrayHelper;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 <div class="wrapper2 clearfix">
-<?php echo Html::tag('div','Курсы', ['id'=>'page_name']);?>
+<?php echo Html::tag('div','Лекции', ['id'=>'page_name']);?>
 <div style="width: 26%; float:left;">
 <?=
     $this->render('..\student\menu_left', ['current' => 'subscriptions', 'model' => $stModel]);
@@ -27,7 +27,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 	echo Html::beginTag('div', ['class' => 'panel-body']);
 	echo Html::tag('div', Html::tag('div', $model->description));
 	echo Html::tag('br');
-	echo Html::tag('div', 'Материалы: ');
+	echo Html::tag('div', 'Материалы к лекции: ');
 	echo Html::ul($model->getAttachments()->all(), [
         'class' => 'list-group',
         'item' => function($attachment, $index)

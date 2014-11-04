@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype'=>'multipart/form-data']]); ?>
 
-    <h3>Урок: "
+    <h3>Лекция: "
     <?php 
     $lesson=Lesson::findOne($model->idLesson);
     echo Html::encode($lesson->name);
