@@ -139,7 +139,7 @@ var optionsBar = {
                         $lesson_passed=false;
                         if ($passed[$lesson_counter] > $count_students[$lesson_counter]/2)
                             $lesson_passed = true;
-                        echo "<h4><b>Лекция \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройдена)":"(не пройдена)")."</small></h4>";
+                        $content.= "<h4><b>Лекция \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройдена)":"(не пройдена)")."</small></h4>";
                         $content.= "<div class='col-lg-12' style='border-top:1px solid #ccc; border-bottom:1px solid #ccc;'>";
                         $content.= "<h4><b>Урок \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройден)":"(не пройден)")."</small></h4>";
                         $content.= "<div class='col-lg-6 panel-body'><h5 style='font-size:15px;'><b>Общая статистика</b></h5>";
