@@ -6,7 +6,8 @@ use yii\bootstrap\Collapse;
 
 ?>
 <div class="wrapper2 clearfix">
-<?php echo Html::tag('div','Тесты', ['id'=>'page_name']);?>
+<?php echo Html::tag('div','Тесты', ['id'=>'page_name']);
+$this->title = 'Проверка тестов'?>
 <div style="width: 26%; float:left;">
 <?=
 		$this->render('..\lecturer\menu_left', ['current' => 'results', 'model' => $lcModel]);

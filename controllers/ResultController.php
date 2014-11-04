@@ -112,7 +112,8 @@ class ResultController extends Controller
         $this->layout = 'main_layout';
         $lcModel = Yii::$app->user->getIdentity();
 
-        $results = Result::find()->where(['approved' => '0'])->all();
+        $results = Result::find()->where(['approved' => '0'])->innerJoin('lesson', 'idLesson = id')
+            ->orderBy('idCourse')->all();
         $testModel = [];
         foreach($results as $result)
         {
