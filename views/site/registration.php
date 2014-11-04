@@ -29,13 +29,16 @@ $this->title = 'Регистрация';
             <tr><td><p>Ваш E-mail:</p></td><td><?= $form->field($model, 'email')->textInput()?></td></tr>
             <tr><td><p>Пароль:</p></td><td><?= $form->field($model, 'password')->passwordInput()?></td></tr>
             <tr><td><p>Повторите пароль:</p></td><td><?= $form->field($model, 'confirmation')->passwordInput()?></td></tr>
-            <tr><td><p>Кем Вы хотите быть?</p></td><td></td></tr>
-            <tr><td></td><td><input id="lecturer_role" type="radio" name="RegistrationForm[role]" required='required' value="lecturer" onclick="show('lecturer', 'student')"/> лектор
+            <tr><td><p>Кем Вы хотите быть?</p></td>
+            <td><input id="lecturer_role" type="radio" name="RegistrationForm[role]" required='required' value="lecturer" onclick="show('lecturer', 'student')"/> лектор
             <input id="student_role" type="radio" name="RegistrationForm[role]" value="student" onclick="show('student', 'lecturer')"/> студент</td></tr>
         </table>
+        
         <div id="lecturer" style="display:none;">
-                <table>
-                    <tr><td><p>Ученая степень:</p></td><td><?= $form->field($model, 'degree')->textInput()?></td></tr>
+        
+    
+               <table>
+                    <tr><td><p>Ученая степень: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   </p></td><td><?= $form->field($model, 'degree')->textInput()?></td></tr>
                     <tr><td><p>Кафедра:</p></td><td><select name="RegistrationForm[department]" id="lecturer_department" class="sel">
                         <?php foreach(Department::find()->all() as $department) {?>
                         <option selected="selected" value="<?=$department->id?>"><?=$department->name;?></option>
@@ -60,6 +63,7 @@ $this->title = 'Регистрация';
         <br><br>
         <input type="submit" name="Submit" value="Зарегистрироваться" class="action-button"/>
         <?php ActiveForm::end(); ?>
+        <br><br>
     </div>
     </center>
 </div>
