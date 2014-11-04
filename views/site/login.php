@@ -10,12 +10,13 @@ $this->title = 'Авторизация';
 <div class="wrapper2"><div id="page_name"><?= Html::encode($this->title) ?></div>
     <div class="site-login" style='margin-top:70px'>
           <?php $form = ActiveForm::begin([
-                'id' => 'login-form',
-                'options' => ['class' => 'form-horizontal'],
-                'fieldConfig' => [
-                'template' => "<div class=\"col-lg-12\">{input}{error}</div>\n"
-            ],
-        ]); ?>
+        'id' => 'login-form',
+        'options' => ['class' => 'form-horizontal'],
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"col-lg-9\">{input}</div>\n<div class=\"col-lg-10\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-3 control-label'],
+        ],
+    ]); ?>
 
         <?= $form->field($model, 'email')->textInput(['placeholder'=>'Ваш email'])?>
 
@@ -24,7 +25,7 @@ $this->title = 'Авторизация';
         <div class="form-group">
             <div class="col-lg-12">
                 <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block btn-lg', 'name' => 'login-button']) ?>
-                <?= Html::label('Забыли пароль?', 0, ['style' => "text-decoration:underline;  cursor: pointer;", 'onclick' =>"openModal()", 'class'=>'reg-message']) ?>
+                <?= Html::label('Забыли пароль?', 0, ['style' => "text-decoration:underline;  color: #003366; cursor: pointer;", 'onclick' =>"openModal()", 'class'=>'reg-message']) ?>
             </div>
         </div>      
      </div>
