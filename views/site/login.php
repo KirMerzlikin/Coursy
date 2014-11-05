@@ -9,14 +9,13 @@ $this->title = 'Авторизация';
 ?>
 <div class="wrapper2"><div id="page_name"><?= Html::encode($this->title) ?></div>
     <div class="site-login" style='margin-top:70px'>
-         <?php $form = ActiveForm::begin([
-            'id' => 'registration-form',
-            'options' => ['class' => 'form-horizontal'],
-            'fieldConfig' => [
-            'template' => "<div class=\"col-lg-12\">{input}{error}</div>\n"
+          <?php $form = ActiveForm::begin([
+                'id' => 'login-form',
+                'options' => ['class' => 'form-horizontal'],
+                'fieldConfig' => [
+                'template' => "<div class=\"col-lg-12\">{input}{error}</div>\n"
             ],
-            ]);
-        ?>
+        ]); ?>
 
        <?= Html::label('Ваш email') ?> <?= $form->field($model, 'email')->textInput(['placeholder'=>'Ваш email'])?>
 
