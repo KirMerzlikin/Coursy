@@ -36,7 +36,7 @@ $this->title = 'Регистрация';
                                                         ['value' => 'student', 'label' => 'студент','onclick'=>'show(lecturer, student)']], 'value', 'label'),['name'=>'RegistrationForm[role]']) ?>
            
        -->
-        <?=Html::label('Кем Вы <br>хотите быть?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;','',['style'=>'align:left'])?>
+        <?=Html::label('Кем Вы <br>хотите быть?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;','',['style'=>'align:left'])?>
          <input id="lecturer_role" type="radio" name="RegistrationForm[role]"  value="lecturer" onclick="show('lecturer', 'student')"/> <?=Html::label('лектор')?>
             <input id="student_role" type="radio" name="RegistrationForm[role]" value="student" onclick="show('student', 'lecturer')"/>  <?=Html::label('студент')?>
            
