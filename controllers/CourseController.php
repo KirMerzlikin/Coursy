@@ -175,7 +175,7 @@ class CourseController extends Controller
     {
         $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
-        $courses = Course::find();
+        $courses = Course::find()->orderBy('name');
         if($courses == null)
         {
             return $this->render('fail');
@@ -201,7 +201,7 @@ class CourseController extends Controller
     {
         $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
-        $courses = Course::find()->where(['like', 'name', $key]);
+        $courses = Course::find()->where(['like', 'name', $key])->orderBy('name');
         if($courses == null)
         {
             return $this->render('fail');

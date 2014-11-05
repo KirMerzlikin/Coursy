@@ -80,6 +80,7 @@ var optionsBar = {
         <?php
             $items = [];
             $scripts = "";
+            $courses = $model->getCourses()->orderBy('name')->all();
             for($i = 0; $i < $model->getCourses()->count(); $i++)
             {
                 $content = "";
@@ -87,12 +88,12 @@ var optionsBar = {
                 //echo Html::beginTag('div', ['class' => 'panel panel-default']);
                 //echo Html::tag('div', Html::tag('span', $model->getCourses()->all()[$i]->name, ['class' => 'panel-title', 'style' => 'float:left; width:80%;']), ['class' => 'panel-heading clearfix']);
                 //echo Html::beginTag('div', ['class' => 'panel-body']);
-                $label = $model->getCourses()->all()[$i]->name;
+                $label = $courses[$i]->name;
                 $content.="<div class='col-lg-12' style='padding-bottom:5px;'>";
-                $content.= "Всего подписок: ".$model->getCourses()->all()[$i]->getSubscriptions()->count()."<br>";
-                $content.= "Одобрено подписок: ".$model->getCourses()->all()[$i]->getSubscriptions()->where(['active' => 1])->count()."<br>";
+                $content.= "Всего подписок: ".$courses[$i]->getSubscriptions()->count()."<br>";
+                $content.= "Одобрено подписок: ".$courses[$i]->getSubscriptions()->where(['active' => 1])->count()."<br>";
                 $content.= "</div>";
-                $lessons = $model->getCourses()->all()[$i]->getLessons()->all();
+                $lessons = $courses[$i]->getLessons()->all();
                 $lesson_counter = 0;
                 $avg_mark = array();
                 $avg_tryNumber = array();
@@ -139,7 +140,7 @@ var optionsBar = {
                         $lesson_passed=false;
                         if ($passed[$lesson_counter] > $count_students[$lesson_counter]/2)
                             $lesson_passed = true;
-                        $content.= "<h4><b>Лекция \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройдена)":"(не пройдена)")."</small></h4>";
+                        $content.= "<h4><b>Лекция №".($lesson_counter+1)." \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройдена)":"(не пройдена)")."</small></h4>";
                         $content.= "<div class='col-lg-12' style='border-top:1px solid #ccc;'>";
                         //$content.= "<h4><b>Урок \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройден)":"(не пройден)")."</small></h4>";
                         $content.= "<div class='col-lg-6 panel-body'><h5 style='font-size:15px;'><b>Общая статистика</b></h5>";

@@ -17,17 +17,17 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
     </div>
     <div style="position:relative; width: 73%; float:left;">
         <?php
-
+            $courses = $model->getCourses()->orderBy('name')->all();
             for($i = 0; $i < $model->getCourses()->count(); $i++)
             {
                 echo Html::beginTag('div', ['class' => 'panel panel-default']);
-                echo Html::tag('div', Html::tag('span', $model->getCourses()->all()[$i]->name .
-                    ' (' . $model->getCourses()->all()[$i]->getLessons()->count() . ' лекц.)', ['class' => 'panel-title', 'style' => 'float:left; width:80%;']) .
-                    Html::a('Редактировать', '../course/edit?id=' . $model->getCourses()->all()[$i]->id,['class' => 'btn btn-xs btn-primary', 'style' => 'float: right;margin-left: 20px;']),
+                echo Html::tag('div', Html::tag('span', $courses[$i]->name .
+                    ' (' . $courses[$i]->getLessons()->orderBy('name')->count() . ' лекц.)', ['class' => 'panel-title', 'style' => 'float:left; width:80%;']) .
+                    Html::a('Редактировать', '../course/edit?id=' . $courses[$i]->id,['class' => 'btn btn-xs btn-primary', 'style' => 'float: right;margin-left: 20px;']),
                     ['class' => 'panel-heading clearfix']);
                 echo Html::beginTag('div', ['class' => 'panel-body']);
                 echo Html::img('h', ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px; background-image:url("http://placehold.it/75x75")']);
-                echo Html::tag('div', $model->getCourses()->all()[$i]->description);
+                echo Html::tag('div', $courses[$i]->description);
                 echo Html::endTag('div');
                 echo Html::endTag('div');
             }
