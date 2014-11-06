@@ -23,6 +23,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 
 	<div style="position:relative; width: 73%; float:left;">
 		<?php
+			$active = false;
 		    for($i = 0; $i < $model->getSubscriptions()->count(); $i++)
 		    {
 		    	if($model->getSubscriptions()->all()[$i]->active == 1)
@@ -39,7 +40,12 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 				    echo Html::button('Отписаться', ['class' => 'btn btn-x btn-danger', 'style' => 'float: right; margin-right:10px; padding: 6px 16px;', 'onclick' => 'askUnsubscribeConfirmation(\''.$model->getSubscriptions()->all()[$i]->id.'\')']);
 				    echo Html::endTag('div');
 				    echo Html::endTag('div');
+				    $active = true;
 				}
+		    }
+		    if(!$active)
+		    {
+		    	echo Html::tag('div', "<center>Вы не подписаны ни на один курс.</center>", ['class' => "reg-message"]);
 		    }
 		?>
 	</div>
