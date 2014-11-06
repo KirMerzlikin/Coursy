@@ -41,9 +41,21 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 		    {
 		    	echo Html::a('Подписаться', '../course/subscribe?id='.$courses->all()[$i]->id ,['class' => 'btn btn-x btn-success', 'style' => 'float: right; margin-right:10px;']);
 			}
-		    echo Html::endTag('div'); 
+			if($stModel->getSubscriptions()->where(['idCourse' => $courses->all()[$i]->id])->one() != null)
+		    {
+		    	if($stModel->getSubscriptions()->where(['idCourse' => $courses->all()[$i]->id])->one()->active == 0)
+		    	{
+		    		echo Html::a('Отписаться', '../course/unsubscribe?id='.$courses->all()[$i]->id ,['class' => 'disabled btn btn-x btn-danger', 'style' => 'float: right; margin-right:10px;', 'disabled']);
+		    		/*echo Html::tag('div','<b><i><span style="color:grey; text-align: center; display: inline-block;padding: 8px 12px; margin-bottom: 0; vertical-align: middle;">Запрос на  подписку  находится  на рассмотрении у  лектора.</span></i></b>', ['style' => 'float:right;']);*/
+		    	}
+		    	else
+		    	{
+		    		echo Html::a('Отписаться', '../course/unsubscribe?id='.$courses->all()[$i]->id ,['class' => 'btn btn-x btn-danger', 'style' => 'float: right; margin-right:10px;']);
+		    	}
+			}
 		    echo Html::endTag('div');
-		} 
+		    echo Html::endTag('div');
+		}
     }
 ?>
 </div>
