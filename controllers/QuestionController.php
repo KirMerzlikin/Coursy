@@ -68,7 +68,7 @@ class QuestionController extends Controller
         $model = new Question();
         $model->idLesson = $id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['lesson/edit', 'id' => $id]);
+            return $this->redirect(['lesson/edit', 'id' => $id, '#' => 'w4']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -84,42 +84,14 @@ class QuestionController extends Controller
      */
     public function actionUpdate($id)
     {
-        /*$this->validateAccess(self::LECTURER);
+        $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['lesson/edit', 'id' => $model->idLesson]);
+            return $this->redirect(['lesson/edit', 'id' => $model->idLesson, '#' => 'w4']);
         } else {
             return $this->render('update', [
                 'model' => $model,
-            ]);
-        }*/
-
-        $this->layout = "main_layout";
-        $this->validateAccess(self::LECTURER);
-
-        $qsModel = $this->findModel($id);
-        $lsModel = $this->findModel($id)->getIdLesson()->one();
-        $lsId = $lsModel->id;
-
-        $searchModelAttachment = new AttachmentSearch();
-        $dataProviderAttachment = $searchModelAttachment->search(['AttachmentSearch' => ['idLesson' => $lsId]]);
-        $dataProviderAttachment->setPagination(['pageSize' => 5]);
-
-        $searchModelQuestion = new QuestionSearch();
-        $dataProviderQuestion = $searchModelQuestion->search(['QuestionSearch' => ['idLesson' => $lsId]]);
-        $dataProviderQuestion->setPagination(['pageSize' => 10]);
-
-        if ($qsModel->load(Yii::$app->request->post()) && $qsModel->save()) {
-            return $this->redirect('../lesson/edit?id=' . $lsModel->id);
-        } else {
-            return $this->render('../lesson/edit', [
-                'lsModel' => $lsModel,
-                'lcModel' => Yii::$app->user->identity,
-                'dataProviderAttachment' => $dataProviderAttachment,
-                'dataProviderQuestion' => $dataProviderQuestion,
-                'qsUpdate' => true,
-                'qsModel' => $qsModel
             ]);
         }
     }
