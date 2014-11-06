@@ -10,7 +10,8 @@ use app\models\Question;
 
 ?>
 <div class="wrapper2 clearfix">
-    <?php echo Html::tag('div','Лекции', ['id'=>'page_name']);?>
+    <?php echo Html::tag('div','Лекции', ['id'=>'page_name']);
+    $this->title = "Лекция\"" . $lsModel->name ."\""?>
     <div style="width: 26%; float:left;">
         <?=
             $this->render('..\lecturer\menu_left', ['current' => 'courses', 'model' => $lcModel]);
@@ -29,7 +30,7 @@ use app\models\Question;
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading"><b>Материалы</b></div>
+            <div class="panel-heading"><b>Материалы к лекции</b></div>
             <div class="panel-body">
                 <?= GridView::widget([
                     'dataProvider' => $dataProviderAttachment,
@@ -65,7 +66,7 @@ use app\models\Question;
         </div>
 
         <div class="panel panel-default">
-            <div class="panel-heading"><b>Тестовые задания</b></div>
+            <div class="panel-heading"><b>Тестовые задания к лекции</b></div>
             <div class="panel-body">
                 <?= GridView::widget([
                     'dataProvider' => $dataProviderQuestion,

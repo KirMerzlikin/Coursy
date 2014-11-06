@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Tabs;
 use yii\helpers\ArrayHelper;
+use yii\bootstrap\Collapse;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 ?>
 <script src="<?=Yii::$app->request->BaseUrl?>/js/Chart.js"></script>
@@ -77,17 +78,22 @@ var optionsBar = {
     </div>
     <div style="position:relative; width: 73%; float:left;">
         <?php
-
+            $items = [];
+            $scripts = "";
+            $courses = $model->getCourses()->orderBy('name')->all();
             for($i = 0; $i < $model->getCourses()->count(); $i++)
             {
-                echo Html::beginTag('div', ['class' => 'panel panel-default']);
-                echo Html::tag('div', Html::tag('span', $model->getCourses()->all()[$i]->name, ['class' => 'panel-title', 'style' => 'float:left; width:80%;']), ['class' => 'panel-heading clearfix']);
-                echo Html::beginTag('div', ['class' => 'panel-body']);
-                echo "<div class='col-lg-12' style='padding-bottom:5px;'>";
-                echo "Всего подписок: ".$model->getCourses()->all()[$i]->getSubscriptions()->count()."<br>";
-                echo "Одобрено подписок: ".$model->getCourses()->all()[$i]->getSubscriptions()->where(['active' => 1])->count()."<br>";
-                echo "</div>";
-                $lessons = $model->getCourses()->all()[$i]->getLessons()->all();
+                $content = "";
+                
+                //echo Html::beginTag('div', ['class' => 'panel panel-default']);
+                //echo Html::tag('div', Html::tag('span', $model->getCourses()->all()[$i]->name, ['class' => 'panel-title', 'style' => 'float:left; width:80%;']), ['class' => 'panel-heading clearfix']);
+                //echo Html::beginTag('div', ['class' => 'panel-body']);
+                $label = $courses[$i]->name;
+                $content.="<div class='col-lg-12' style='padding-bottom:5px;'>";
+                $content.= "Всего подписок: ".$courses[$i]->getSubscriptions()->count()."<br>";
+                $content.= "Одобрено подписок: ".$courses[$i]->getSubscriptions()->where(['active' => 1])->count()."<br>";
+                $content.= "</div>";
+                $lessons = $courses[$i]->getLessons()->all();
                 $lesson_counter = 0;
                 $avg_mark = array();
                 $avg_tryNumber = array();
@@ -134,64 +140,69 @@ var optionsBar = {
                         $lesson_passed=false;
                         if ($passed[$lesson_counter] > $count_students[$lesson_counter]/2)
                             $lesson_passed = true;
-                        echo "<div class='col-lg-12' style='border-top:1px solid #ccc; border-bottom:1px solid #ccc;'>";
-                        echo "<h4><b>Урок \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройден)":"(не пройден)")."</small></h4>";
-                        echo "<div class='col-lg-6 panel-body'><h5 style='font-size:15px;'><b>Общая статистика</b></h5>";
+                        $content.= "<h4><b>Лекция №".($lesson_counter+1)." \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройдена)":"(не пройдена)")."</small></h4>";
+                        $content.= "<div class='col-lg-12' style='border-top:1px solid #ccc;'>";
+                        //$content.= "<h4><b>Урок \"".$lesson->name."\"</b> <small>".(($lesson_passed)?"(пройден)":"(не пройден)")."</small></h4>";
+                        $content.= "<div class='col-lg-6 panel-body'><h5 style='font-size:15px;'><b>Общая статистика</b></h5>";
                         
                         //echo  "Ср.оценка: {$avg_mark[$lesson_counter]}<br>";
-                        echo  "Ср.кол-во попыток: {$avg_tryNumber[$lesson_counter]}<br>";
-                        echo  "Успешно прошли тест: {$passed[$lesson_counter]} <small>студента(ов)</small><br>";
-                        echo  "Не прошли тест: {$not_passed[$lesson_counter]} <small>студента(ов)</small><br>";
-                        echo "</div>";
-                        ?>
-                        <div class='col-lg-6 panel-body'><div class='col-lg-12'><h5 style='font-size:15px; padding-bottom:0px;'><b>Статистика оценок</b></h5></div><div class='col-lg-12'><canvas id="myChart<?=$lesson_counter?>" width="100" height="100"></canvas></div></div></div>
-                        <script>
-                            var ctx<?=$lesson_counter?> = document.getElementById("myChart<?=$lesson_counter?>").getContext("2d");
-                            var data<?=$lesson_counter?> = [
+                        $content.=  "Ср.кол-во попыток: {$avg_tryNumber[$lesson_counter]}<br>";
+                        $content.=  "Успешно прошли тест: {$passed[$lesson_counter]} <small>студента(ов)</small><br>";
+                        $content.=  "Не прошли тест: {$not_passed[$lesson_counter]} <small>студента(ов)</small><br>";
+                        $content.= "</div>";
+                        
+                        $content.= "<div class='col-lg-6 panel-body'><div class='col-lg-12'><h5 style='font-size:15px; padding-bottom:0px;'><b>Статистика оценок</b></h5></div><div class='col-lg-12'><canvas id='myChart{$lesson_counter}' width='100' height='100'></canvas></div></div></div>";
+                        
+                        $scripts .= '<script>
+                            var ctx'.$lesson_counter.' = document.getElementById("myChart'.$lesson_counter.'").getContext("2d");
+                            var data'.$lesson_counter.' = [
                                 {
-                                    value: <?=$count_2[$lesson_counter]?>,
+                                    value: '.$count_2[$lesson_counter].',
                                     color:"#F7464A",
                                     highlight: "#FF5A5E",
                                     label: "Двоек"
                                 },
                                 {
-                                    value: <?=$count_3[$lesson_counter]?>,
+                                    value: '.$count_3[$lesson_counter].',
                                     color: "#46BFBD",
                                     highlight: "#5AD3D1",
                                     label: "Троек"
                                 },
                                 {
-                                    value: <?=$count_4[$lesson_counter]?>,
+                                    value: '.$count_4[$lesson_counter].',
                                     color: "#FDB45C",
                                     highlight: "#FFC870",
                                     label: "Четверок"
                                 },
                                 {
-                                    value: <?=$count_5[$lesson_counter]?>,
+                                    value: '.$count_5[$lesson_counter].',
                                     color: "#64BD28",
                                     highlight: "#64BD28",
                                     label: "Пятерок"
                                 }
                             ];
 
-                            var myPieChart<?=$lesson_counter?> = new Chart(ctx<?=$lesson_counter?>).Pie(data<?=$lesson_counter?>,optionsPie);
-                        </script>
-                        <?php
+                            var myPieChart'.$lesson_counter.' = new Chart(ctx'.$lesson_counter.').Pie(data'.$lesson_counter.',optionsPie);
+                        </script>';
+                        
                     }
 
                     $lesson_counter++;
                 }
                 if ($graph_avg_marks)
                 {
-                ?>
-                <div class='col-lg-12'>
-                <h5 style='font-size:16px; padding-bottom: 10px;'><b>Средние оценки по лекциям</b></h5>
-                <div class='col-lg-12'><canvas id="myChartBar<?=$i?>" width="650" height="400"></canvas></div><br>
-                </div>
-                <script>
-                    var ctxBar<?=$i?> = document.getElementById("myChartBar<?=$i?>").getContext("2d");
-                    var dataBar<?=$i?> = {
-                        labels: [<?php for($j = 0; $j<count($lessons)-1;$j++) {echo '"Урок №'.$lessons[$j]->lessonNumber.'", ';} echo '"Урок №'.$lessons[count($lessons)-1]->lessonNumber.'"';?>],
+                
+                $content.= "<div class='col-lg-12' style='border-top:1px solid #ccc;'>";
+                $content.= "<h5 style='font-size:16px; padding-bottom: 10px;'><b>Средние оценки по лекциям</b></h5>";
+                $content.= "<div class='col-lg-12'><canvas id='myChartBar{$i}' width='650' height='400'></canvas></div><br>";
+                $content.= "</div>";
+                
+                $scripts.= '<script>
+                    var ctxBar'.$i.' = document.getElementById("myChartBar'.$i.'").getContext("2d");
+                    var dataBar'.$i.' = {
+                        labels: [';
+                        for($j = 0; $j<count($lessons)-1;$j++) {$scripts .= '"Урок №'.$lessons[$j]->lessonNumber.'", ';} $scripts .= '"Урок №'.$lessons[count($lessons)-1]->lessonNumber.'"';
+                            $scripts.='],
                         datasets: [
                             {
                                 label: "Средние оценки для лекций",
@@ -199,18 +210,27 @@ var optionsBar = {
                                 strokeColor: "rgba(151,187,205,0.8)",
                                 highlightFill: "rgba(151,187,205,0.75)",
                                 highlightStroke: "rgba(151,187,205,1)",
-                                data: [<?php for($j = 0; $j<count($avg_mark)-1;$j++) {echo $avg_mark[$j].', ';} echo $avg_mark[count($lessons)-1];?>]
+                                data: [';
+                                    for($j = 0; $j<count($avg_mark)-1;$j++) {$scripts.= $avg_mark[$j].', ';} $scripts .= $avg_mark[count($lessons)-1];
+                                $scripts .=']
                             }
                         ]
                     };
 
-                    var myChartBar<?=$i?> = new Chart(ctxBar<?=$i?>).Bar(dataBar<?=$i?>,optionsBar);
-                </script>
-                <?php
+                    var myChartBar'.$i.' = new Chart(ctxBar'.$i.').Bar(dataBar'.$i.',optionsBar);
+                </script>';
+                
                 }
-                echo Html::endTag('div');
-                echo Html::endTag('div');
+                //echo $content;
+                $items[$label] = ['content'=>$content];
+                
+                //echo Html::endTag('div');
+                //echo Html::endTag('div');
             }
+            echo Collapse::widget([
+                    'items'=>$items,    
+                ]);
+            echo $scripts;
         ?>
     </div>
 </div>

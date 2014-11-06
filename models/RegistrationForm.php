@@ -44,12 +44,12 @@ class RegistrationForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'Имя',
-            'second_name' => 'Фамилия',
-            'email' => 'Email',
+            'name' => 'Ваше имя',
+            'second_name' => 'Ваша фамилия',
+            'email' => 'Ваш Email',
             'password' => 'Пароль',
-            'confirmation' => 'Подтверждение пароля',
-            'role' => 'Роль',
+            'confirmation' => 'Повторите пароль',
+            'role' => 'Кем Вы хотите быть?',
             'degree' => 'Ученая степень',
             'department' => 'Кафедра',
             'group' => 'Группа',

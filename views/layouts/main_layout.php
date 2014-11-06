@@ -16,6 +16,7 @@ AppAsset::register($this);?>
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<?= Html::csrfMetaTags() ?>	
 		<link rel="stylesheet" type="text/css" href="../css/main_site.css" />
+		<link rel="shortcut icon" href="../images/favicon.ico" />
 		<title><?= Html::encode($this->title) ?></title>
 	    <?php $this->head() ?>
 	</head>
@@ -24,7 +25,8 @@ AppAsset::register($this);?>
 		<?php $this->beginBody() ?>
 		<div class="wrap">
 			<div class="wrapper">
-				<div width="500px"><img src="../images/logo.png" alt="Coursey" title="Coursey"/></div>
+				<div width="500px"><img src="../images/logo.png" alt="Coursey" title="Coursey"/></div><br>
+				<div style="position:absolute; margin: -51px 0 0 15px;"><img src="../images/fold.png"/></div>
 				<?= $content ?>
 			</div>
 			<div><p class="credit" align="center">Copyright by Khnure Students. 2014<br></p></div>

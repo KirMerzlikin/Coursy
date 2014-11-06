@@ -43,7 +43,10 @@ use app\models\Lecturer;
             $.ajax({
                 type     :'POST',
                 url  : 'delete?id=' + window.location.search.substring(1).split('=')[1],
-                success: function(){window.location = "../lecturer/courses";}
+                success: function(){window.location = "../lecturer/courses";},
+                statusCode: {
+                    406: function(data){alert('Вы не можете удалить курс, пока он опубликован');}
+                }
             });            
         }
     }

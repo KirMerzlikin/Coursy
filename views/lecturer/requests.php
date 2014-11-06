@@ -9,7 +9,8 @@ use yii\helpers\ArrayHelper;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 ?>
 <div class="wrapper2 clearfix">
-	<?php echo Html::tag('div','Запросы', ['id'=>'page_name']);?>
+	<?php echo Html::tag('div','Запросы', ['id'=>'page_name']);
+  $this->title = "Запросы на подписку"?>
 	<div style="width: 26%; float:left;">
 		<?=
 		    $this->render('menu_left', ['current' => 'requests', 'model' => $model]);

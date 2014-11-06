@@ -17,14 +17,14 @@ $this->title = 'Авторизация';
             ],
         ]); ?>
 
-        <?= $form->field($model, 'email')->textInput(['placeholder'=>'Ваш email'])?>
+       <?= Html::label('Ваш email') ?> <?= $form->field($model, 'email')->textInput(['placeholder'=>'Ваш email'])?>
 
-        <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'Ваш пароль']) ?>
+        <?= Html::label('Ваш пароль') ?> <?= $form->field($model, 'password')->passwordInput(['placeholder'=>'Ваш пароль']) ?>
 
         <div class="form-group">
             <div class="col-lg-12">
                 <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block btn-lg', 'name' => 'login-button']) ?>
-                <?= Html::label('Забыли пароль?', 0, ['style' => "text-decoration:underline;  cursor: pointer;", 'onclick' =>"openModal()", 'class'=>'reg-message']) ?>
+                <?= Html::label('Забыли пароль?', 0, ['style' => "text-decoration:underline;  color: #003366; cursor: pointer;", 'onclick' =>"openModal()", 'class'=>'reg-message']) ?>
             </div>
         </div>      
      </div>

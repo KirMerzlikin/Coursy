@@ -9,7 +9,8 @@ use app\models\Group;
 use yii\helpers\ArrayHelper;
 Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 <div class="wrapper2 clearfix">
-	<?php echo Html::tag('div','Курсы', ['id'=>'page_name']);?>
+	<?php echo Html::tag('div','Курсы', ['id'=>'page_name']);
+	$this->title = "Курс\"" . $model->name . "\""?>
 	<div style="width: 26%; float:left;">
 		<?=
 		    $this->render('..\student\menu_left', ['current' => $current, 'model' => $stModel]);
@@ -26,7 +27,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 			echo Html::beginTag('div', ['class' => 'panel-body']);
 			echo Html::tag('div', Html::tag('div', $model->description));
 			echo Html::tag('br');
-			echo Html::tag('div', 'Лекции: ');
+			echo Html::tag('div', 'Лекции курса: ');
 
 			if($subscribed == 1){
 				echo Html::ul($model->getLessons()->where(['published' => 1])->orderBy('lessonNumber')->all(), [

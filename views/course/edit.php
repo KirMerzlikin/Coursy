@@ -5,7 +5,8 @@ use yii\widgets\ListView;
 
 ?>
 <div class="wrapper2 clearfix">
-    <?php echo Html::tag('div','Курсы', ['id'=>'page_name']);?>
+    <?php echo Html::tag('div','Курсы', ['id'=>'page_name']);
+    $this->title = "Курс\"" . $crModel->name . "\""?>
     <div style="width: 26%; float:left;">
         <?=
             $this->render('..\lecturer\menu_left', ['current' => 'courses', 'model' => $lcModel]);
@@ -26,7 +27,7 @@ use yii\widgets\ListView;
         </div>
 
         <div class="panel panel-default">
-           	<div class="panel-heading"><b>Лекции</b></div>
+           	<div class="panel-heading"><b>Лекции курса</b></div>
             <div class="panel-body">
                 <?php
                   	echo Html::ul($crModel->getLessons()->orderBy('lessonNumber')->all(), [
@@ -52,7 +53,7 @@ use yii\widgets\ListView;
           		if (confirm('Вы действительно хотите удалить данную лекцию?'))
           		{
           			$.post('../lesson/delete?id=' + id);
-          			$('#'+id).hide('slow');
+                $('#'+id).hide('slow');
           		}
           	}
         </script>

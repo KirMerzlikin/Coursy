@@ -8,6 +8,7 @@ use app\models\Subscription;
 use app\models\CourseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\HttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -122,13 +123,16 @@ class CourseController extends Controller
 
     /**
      * Deletes an existing Course model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $course = $this->findModel($id);
+        if($course->published != true)
+            $course->delete();
+        else
+            throw new HttpException(406, 'Published course can not be deleted.');
     }
 
     /**
@@ -171,7 +175,7 @@ class CourseController extends Controller
     {
         $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
-        $courses = Course::find();
+        $courses = Course::find()->orderBy('name');
         if($courses == null)
         {
             return $this->render('fail');
@@ -197,7 +201,7 @@ class CourseController extends Controller
     {
         $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
-        $courses = Course::find()->where(['like', 'name', $key]);
+        $courses = Course::find()->where(['like', 'name', $key])->orderBy('name');
         if($courses == null)
         {
             return $this->render('fail');
