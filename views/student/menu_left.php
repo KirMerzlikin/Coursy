@@ -65,7 +65,7 @@ echo Nav::widget([
     });
  }
 
- function openModal(email)
+ function openModal()
  {
     $('#modalLabel').text('Письмо администратору');
     $('#problem').val('');

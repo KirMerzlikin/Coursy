@@ -36,6 +36,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 				    echo Html::tag('div', mb_substr($model->getSubscriptions()->all()[$i]->getCourse()->one()->description, 0, 1000).'...');
 				    echo Html::tag('br');
 				    echo Html::a('Перейти', '../course/view-course?id=' . $model->getSubscriptions()->all()[$i]->getCourse()->one()->id,['class' => 'btn btn-x btn-primary', 'style' => 'float: right;']);
+				    echo Html::button('Отписаться', ['class' => 'btn btn-x btn-danger', 'style' => 'float: right; margin-right:10px; padding: 6px 16px;', 'onclick' => 'askUnsubscribeConfirmation(\''.$model->getSubscriptions()->all()[$i]->id.'\')']);
 				    echo Html::endTag('div');
 				    echo Html::endTag('div');
 				}
@@ -43,3 +44,21 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 		?>
 	</div>
 </div>
+<script>
+function askUnsubscribeConfirmation(id)
+{
+    if (confirm('Вы уверены, что хотите отписаться?'))
+    {
+    	$.ajax({
+      		type     :'POST',
+      		cache    : false,
+      		url  : '../course/unsubscribe',
+      		data: {'id':id},
+      		statusCode: {
+        	500: function(data){alert('Error!\n'+data.responseText);},
+        	200: function(){$('#'+id).hide('slow');}
+      	}
+    	});
+    }
+}
+</script>
