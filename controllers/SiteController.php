@@ -56,10 +56,19 @@ class SiteController extends Controller
 
 	public function actionMain()
 	{
-		 $this->layout='main_page';
-		 return $this->render('main');
+        if(Yii::$app->user->identity != null)
+        {
+            if(Yii::$app->user->identity->tableName() == 'admin')
+                return $this->redirect('admin');
+            if(Yii::$app->user->identity->tableName() == 'student')
+                return $this->redirect('student/profile');
+            if(Yii::$app->user->identity->tableName() == 'lecturer')
+                return $this->redirect('lecturer/profile');
+        }
+        $this->layout='main_page';
+		return $this->render('main');
 	}
-	
+
     public function actionLogin()
     {
         $this->layout='main_layout';
@@ -114,7 +123,7 @@ class SiteController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
+            $this->layout = "main_alternative";
             if($model->register())
                 return $this->render('success_registration');
             else
@@ -146,13 +155,13 @@ class SiteController extends Controller
 
     public function actionFailRecovery()
     {
-        $this->layout='main_layout';
+        $this->layout='main_alternative';
         return $this->render('fail_recovery');
     }
 
     public function actionSuccessRecovery()
     {
-        $this->layout='main_layout';
+        $this->layout='main_alternative';
         return $this->render('success_recovery');
     }
 

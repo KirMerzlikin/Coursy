@@ -26,7 +26,6 @@ AppAsset::register($this);?>
 		<div class="wrap">
 			<div class="wrapper">
 				<div width="500px"><img src="../images/logo.png" alt="Coursey" title="Coursey"/></div><br>
-				
 				<?= $content ?>
 			</div>
 			<div><p class="credit" align="center">Copyright by Khnure Students. 2014<br></p></div>
