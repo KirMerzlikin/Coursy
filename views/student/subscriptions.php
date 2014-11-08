@@ -33,7 +33,10 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 				    	Html::tag('span', 'Лектор: '.$model->getSubscriptions()->all()[$i]->getCourse()->one()->getIdLecturer()->one()->name, ['style' => 'float:right; width:20%;']),
 				    	['class' => 'panel-heading clearfix']);
 				    echo Html::beginTag('div', ['class' => 'panel-body']);
-				    echo Html::img('h', ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px; background-image:url("http://placehold.it/75x75")']);
+				    $image = 'https://api.fnkr.net/testimg/75x75/cccccc/FFF/?text=No+image';
+	                if ($model->getSubscriptions()->all()[$i]->getCourse()->one()->image!="")
+	                    $image = Yii::$app->request->BaseUrl.'/'.$model->getSubscriptions()->all()[$i]->getCourse()->one()->image;
+	                echo Html::img($image, ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px;']);
 				    echo Html::tag('div', mb_substr($model->getSubscriptions()->all()[$i]->getCourse()->one()->description, 0, 1000).'...');
 				    echo Html::tag('br');
 				    echo Html::a('Перейти', '../course/view-course?id=' . $model->getSubscriptions()->all()[$i]->getCourse()->one()->id,['class' => 'btn btn-x btn-primary', 'style' => 'float: right;']);

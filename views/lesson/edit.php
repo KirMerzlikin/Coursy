@@ -88,29 +88,49 @@ use app\models\Question;
                 ]); ?>
 
                 <?php
-                    if(!$qsUpdate)
-                    {
-                        $qsModel = new Question();
-                        $qsModel->idLesson = $lsModel->id; 
-                        $form = ActiveForm::begin(['action' => ['question/create?id=' . $lsModel->id], 'options' => ['id'=>'createForm']]);
-                        echo Html::activeHiddenInput($model, 'idLesson');
-                        echo $form->field($qsModel, 'text')->textInput(['maxlength' => 255]);
-                        echo $form->field($qsModel, 'answer')->textInput(['maxlength' => 255]);
-                        echo Html::submitButton('Добавить', ['class' => 'btn btn-primary pull-right']);
-                        ActiveForm::end();
-                    }
-                    else
-                    {
-                        $form = ActiveForm::begin(['action' => ['question/update?id=' . $qsModel->id], 
-                            'options' => ['id'=>'updateForm']]);
-                        echo Html::activeHiddenInput($qsModel, 'idLesson');
-                        echo $form->field($qsModel, 'text')->textInput(['maxlength' => 255]);
-                        echo $form->field($qsModel, 'answer')->textInput(['maxlength' => 255]);
-                        echo Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right']);
-                        ActiveForm::end();
-                    }
+                    $qsModel = new Question();
+                    $qsModel->idLesson = $lsModel->id; 
+                    $form = ActiveForm::begin(['action' => ['question/create?id=' . $lsModel->id], 'options' => ['id'=>'createForm']]);
+                    echo Html::activeHiddenInput($model, 'idLesson');
+                    echo $form->field($qsModel, 'text')->textInput(['maxlength' => 255]);
+                    echo $form->field($qsModel, 'answer')->textInput(['maxlength' => 255]);
+                    echo Html::submitButton('Добавить', ['class' => 'btn btn-primary pull-right']);
+                    ActiveForm::end();
+
+                    $form = ActiveForm::begin(['action' => ['question/update?id='], 
+                        'options' => ['id'=>'updateForm', 'hidden' => 'true']]);
+                    echo Html::activeHiddenInput($qsModel, 'idLesson');
+                    echo $form->field($qsModel, 'text')->textInput(['maxlength' => 255]);
+                    echo $form->field($qsModel, 'answer')->textInput(['maxlength' => 255]);
+                    echo Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right']);
+                    ActiveForm::end();
                 ?>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+window.onload= function()
+{
+    $('td>a>.glyphicon-pencil').each(function(index)
+        {
+            var id = $(this).parents('tr').attr('data-key');
+            var text = $(this).parents('td').prev().prev().text();
+            var answer = $(this).parents('td').prev().text();
+
+            $(this).parent('a').attr('href', '#w4');
+            $(this).click(function()
+            {
+                $('#createForm').attr('hidden', true);
+                $('#updateForm').attr('hidden', false);
+                var curAction = $('#updateForm').attr('action');
+                var newAction = curAction.indexOf('=') == -1 ? curAction + id : curAction.split('=')[0] + "=" + id;
+                $('#updateForm').attr('action', newAction);
+                $("#updateForm #question-text").val(text);
+                $("#updateForm #question-answer").val(answer);
+            });
+        });
+
+};
+</script>

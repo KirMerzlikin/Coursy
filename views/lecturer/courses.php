@@ -26,7 +26,10 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
                     Html::a('Редактировать', '../course/edit?id=' . $courses[$i]->id,['class' => 'btn btn-xs btn-primary', 'style' => 'float: right;margin-left: 20px;']),
                     ['class' => 'panel-heading clearfix']);
                 echo Html::beginTag('div', ['class' => 'panel-body']);
-                echo Html::img('h', ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px; background-image:url("http://placehold.it/75x75")']);
+                $image = 'https://api.fnkr.net/testimg/75x75/cccccc/FFF/?text=No+image';
+                if ($courses[$i]->image!="")
+                    $image = Yii::$app->request->BaseUrl.'/'.$courses[$i]->image;
+                echo Html::img($image, ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px;']);
                 echo Html::tag('div', $courses[$i]->description);
                 echo Html::endTag('div');
                 echo Html::endTag('div');

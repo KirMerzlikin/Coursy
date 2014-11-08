@@ -12,6 +12,7 @@ use Yii;
  * @property string $description
  * @property integer $idLecturer
  * @property integer $published
+ * @property string $image
  *
  * @property Lecturer $idLecturer0
  * @property Lesson[] $lessons
@@ -49,6 +50,7 @@ class Course extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Название курса',
             'description' => 'Описание курса',
+            'image' => 'Изображение курса',
             'idLecturer' => 'Лектор',
             'published' => 'Опубликован',
         ];

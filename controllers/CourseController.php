@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\HttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CourseController implements the CRUD actions for Course model.
@@ -72,6 +73,14 @@ class CourseController extends Controller
         $model = new Course();
         $model->idLecturer =  $user->id;
 
+        if (isset($_FILES['Course'])) {
+            $rnd = rand(0,9999);
+            $uploadedFile = UploadedFile::getInstance($model,'image');
+            $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
+            $model->image = $fileName;
+            $uploadedFile->saveAs($fileName);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['lecturer/courses']);
         } else {
@@ -94,6 +103,16 @@ class CourseController extends Controller
 		$this->validateAccess(self::ADMIN);
         $model = $this->findModel($id);
 
+        if (isset($_FILES['Course'])) {
+            if ($model->image != "")
+                unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->image);
+            $rnd = rand(0,9999);
+            $uploadedFile = UploadedFile::getInstance($model,'image');
+            $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
+            $model->image = $fileName;
+            $uploadedFile->saveAs($fileName);
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->user->returnUrl);
         } else {
@@ -109,6 +128,16 @@ class CourseController extends Controller
         $this->layout = "main_layout";
         $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
+
+        if (isset($_FILES['Course'])) {
+            if ($model->image != "")
+                unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->image);
+            $rnd = rand(0,9999);
+            $uploadedFile = UploadedFile::getInstance($model,'image');
+            $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
+            $model->image = $fileName;
+            $uploadedFile->saveAs($fileName);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(Yii::$app->user->returnUrl);

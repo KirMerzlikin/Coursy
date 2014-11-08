@@ -34,7 +34,10 @@ $this->title = 'Поиск по курсам'?>
 		    	Html::tag('span', 'Лектор: '.$courses->all()[$i]->getIdLecturer()->one()->name, ['style' => 'float:right; width:20%;']), 
 		    	['class' => 'panel-heading clearfix']);
 		    echo Html::beginTag('div', ['class' => 'panel-body']);
-		    echo Html::img('h', ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px; background-image:url("http://placehold.it/75x75")']);
+		    $image = 'https://api.fnkr.net/testimg/75x75/cccccc/FFF/?text=No+image';
+		    if ($courses->all()[$i]->image!="")
+		    	$image = Yii::$app->request->BaseUrl.'/'.$courses->all()[$i]->image;
+		    echo Html::img($image, ['style'=>'width: 75px; height: 75px; float:left; margin-right: 10px;']);
 		    echo Html::tag('div', mb_substr($courses->all()[$i]->description, 0, 1000).'...');
 		    echo Html::tag('br');
 		    echo Html::a('Перейти', '../course/view-course?id=' . $courses->all()[$i]->id,['class' => 'btn btn-x btn-primary', 'style' => 'float: right;']);
