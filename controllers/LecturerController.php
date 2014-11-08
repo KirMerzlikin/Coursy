@@ -8,6 +8,7 @@ use app\models\LecturerSearch;
 use app\models\SubscriptionSearch;
 use app\models\Subscription;
 use app\models\Course;
+use app\models\Admin;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -187,6 +188,7 @@ class LecturerController extends Controller
 
     public function actionProfileUpdate()
     {
+        $this->validateAccess(self::LECTURER);
         $this->layout = "main_layout";
         $model = Yii::$app->user->getIdentity();
 
@@ -215,6 +217,7 @@ class LecturerController extends Controller
 
     public function actionStatistics()
     {
+        $this->validateAccess(self::LECTURER);
         $this->layout = "main_layout";
         $user = Yii::$app->user->getIdentity();
 
@@ -231,37 +234,34 @@ class LecturerController extends Controller
         $response = $_POST['response'];
         $reason = $_POST['reason'];
         $id = $_POST['id'];
+        $subscription = Subscription::find()->where(['id' => $id])->one();
+        $courseName = $subscription->getCourse()->one()->name;
 
         if($response == 'true')
         {
-            $subscription = Subscription::find()->where(['id' => $id])->one();
             $subscription->active = 1;
             $subscription->save();
         }
         else
         {
-            $subscription = Subscription::find()->where(['id' => $id])->one();
             $subscription->delete();
         }
 
-        $this->sendMailNotification($id, $email, $response == 'true' ? true : false, $reason);
+        $this->sendMailNotification($id, $email, $response == 'true' ? true : false, $reason, $courseName);
     }
 
-    private function sendMailNotification($idSubscription, $email, $result, $reason)
+    private function sendMailNotification($idSubscription, $email, $result, $reason, $courseName)
     {
-        $subject = ($result ? "Подтверждение" : "Отклонение") . " подписки на  курс ".Subscription::find()->where(['id' => $idSubscription])->one()->getCourse()->one()->name.". Coursey.it-team.in.ua";
+        $this->validateAccess(self::LECTURER);
+        $subject = ($result ? "Подтверждение" : "Отклонение") . " подписки на  курс ".$courseName.". Coursey.it-team.in.ua";
         $body = "Ваша заявка на подписку курса на сайте Coursey была "
             . ($result ? "подтверждена" : "отклонена.\nПричина: " . $reason) . ". Не отвечайте на это письмо.";
-        Yii::$app->mailer->compose()
-                ->setFrom('noreply@coursey.it-team.in.ua')
-                ->setTo($email)
-                ->setSubject($subject)
-                ->setTextBody($body)
-                ->send();
+        $this->sendMail($email, 'noreply@coursey.it-team.in.ua', $subject, $body);
     }
 
-    public function actionSendMail()
+    public function actionSendMailToStudent()
     {
+        $this->validateAccess(self::LECTURER);
         $this->layout='main_layout';
         $this->validateAccess(self::LECTURER);
 
@@ -269,9 +269,19 @@ class LecturerController extends Controller
         $subject = 'Письмо от лектора coursey.it-team.ua '.Yii::$app->user->getIdentity()->name. '. Курс: '.$_POST['course'].'. Лекция: '.$_POST['lesson'];
         $body = $_POST['text'];
 
+        $this->sendMail($email, Yii::$app->user->getIdentity()->email, $subject, $body);
+    }
+
+    public function actionMailAdmin(){
+        $this->validateAccess(self::LECTURER);
+        $this->sendMail(Admin::find()->one()->email,  Yii::$app->user->getIdentity()->email, "Письом от лектора ".Yii::$app->user->getIdentity()->name.".", $_POST['problem']);
+    }
+
+    public function sendMail($emailTo, $emailFrom, $subject, $body){
+        $this->validateAccess(self::LECTURER);
         Yii::$app->mailer->compose()
-                ->setFrom(Yii::$app->user->getIdentity()->email)
-                ->setTo($email)
+                ->setFrom($emailFrom)
+                ->setTo($emailTo)
                 ->setSubject($subject)
                 ->setTextBody($body)
                 ->send();

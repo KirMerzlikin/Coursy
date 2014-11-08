@@ -76,14 +76,14 @@ class LoginForm extends Model
     //to-do set from mail
     public function recovery($email)
     {
-        $user = User::findByEmail($this->email);
+        $user = User::findByEmail($email);
         if($user != null && ($user->tableName() == 'admin' || $user->active == 1))
         {
             $newPass = $this->generatePassword();
             $user->passHash = md5($newPass);
             $subject = "New password for service Coursey.it-team.in.ua.";
             $body = "There was request for new  password  for your account. Here it is: $newPass.\n This is automatic made letter. Don't replay.";
-
+            Yii::info($user->passHash);
             if(Yii::$app->mailer->compose()
                     ->setTo($this->email)
                     ->setSubject($subject)

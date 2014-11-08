@@ -81,7 +81,7 @@ function sendMail(email, lesson, course, text)
 	$.ajax({
 	  	type     :'POST',
 	  	cache    : false,
-	  	url  : '../lecturer/send-mail',
+	  	url  : '../lecturer/send-mail-to-student',
 	  	data: {'email':email, 'lesson':lesson, 'course':course,'text':text},
 	  	statusCode: {
 			500: function(data){alert('Error!\n'+data.responseText);}

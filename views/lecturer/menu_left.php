@@ -59,20 +59,20 @@ echo Nav::widget([
     if (confirm('Вы уверены, что хотите выйти?'))
         $('#logout_href').click();
  }
- function mailAdmin(email, problem)
+ function mailAdmin(problem)
  {
     $.ajax({
       type     :'POST',
       cache    : false,
       url  : '../lecturer/mail-admin',
-      data: {'email':email, 'problem':problem},
+      data: {'problem':problem},
       statusCode: {
         500: function(data){alert('Error!\n'+data.responseText);}
       }
     });
  }
 
- function openModal(email)
+ function openModal()
  {
     $('#modalLabel').text('Письмо администратору');
     $('#problem').val('');
@@ -82,7 +82,7 @@ echo Nav::widget([
         var problem = $('#problem').val();
         if(! (problem.length == 0))
         {
-            mailAdmin(email, problem);
+            mailAdmin(problem);
             $('#myModal').modal('hide');
         }
     });

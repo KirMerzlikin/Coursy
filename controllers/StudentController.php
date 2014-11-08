@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Student;
 use app\models\StudentSearch;
+use app\models\Admin;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -184,6 +185,11 @@ class StudentController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionMailAdmin(){
+        $this->validateAccess(self::STUDENT);
+        $this->actionSendMail(Admin::find()->one()->email,  $_POST['problem']);
     }
 
     public function actionSendMail($email="", $body="")

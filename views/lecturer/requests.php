@@ -28,9 +28,9 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
                 			" хочет подписаться на курс \"" . $rqProvider[$i]->getCourse()->one()->name . "\".",
                 			['id' => 'request_'.$rqProvider[$i]->id]);
        		echo Html::tag('span', "<br/>".Html::button('Подтвердить',
-                    			['class' => 'btn btn-success btn-xs', 'style' => 'margin-right:10px;', 'onClick' => 'sendResponse(\''.$rqProvider[$i]->id.'\',\'' . $rqProvider[$i]->getIdStudent()->one()->email . '\', true)']) .
+                    			['class' => 'btn btn-success btn-xs', 'style' => 'margin-right:10px;', 'onClick' => 'sendResponseL(\''.$rqProvider[$i]->id.'\',\'' . $rqProvider[$i]->getIdStudent()->one()->email . '\', true)']) .
                  			Html::button('Отклонить',
-                   				['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\''.$rqProvider[$i]->id.'\',\'' . $rqProvider[$i]->getIdStudent()->one()->name . '\',\'' . $rqProvider[$i]->getIdStudent()->one()->email . '\')']), 
+                   				['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModalL(\''.$rqProvider[$i]->id.'\',\'' . $rqProvider[$i]->getIdStudent()->one()->name . '\',\'' . $rqProvider[$i]->getIdStudent()->one()->email . '\')']), 
                   			['style' => 'float:right;']);
 			echo Html::endTag('div');
 			echo Html::endTag('div');
@@ -61,7 +61,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
 </div>
 
  <script>
- function sendResponse(id, email, response, reason)
+ function sendResponseL(id, email, response, reason)
  {
     if($.trim(reason).length == 0)
        	reason = 'Не указана';
@@ -76,7 +76,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
       	}
     });
  }
- function openModal(id,name, email)
+ function openModalL(id,name, email)
  {
     $('#modalLabelL').text('Кому: ' + name + " (" + email + ")");
     $('#reasonL').val('');
@@ -86,7 +86,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
     	var reason = $('#reasonL').val();
       	if(! (reason.length == 0))
      	{
-            sendResponse(id,email, false, reason);
+            sendResponseL(id,email, false, reason);
 	    	$('#myModalL').modal('hide');
         }
     });

@@ -52,13 +52,13 @@ echo Nav::widget([
     if (confirm('Вы уверены, что хотите выйти?'))
         $('#logout_href').click();
  }
- function mailAdmin(email, problem)
+ function mailAdmin(problem)
  {
     $.ajax({
       type     :'POST',
       cache    : false,
       url  : '../student/mail-admin',
-      data: {'email':email, 'problem':problem},
+      data: {'problem':problem},
       statusCode: {
         500: function(data){alert('Error!\n'+data.responseText);}
       }
@@ -73,9 +73,9 @@ echo Nav::widget([
     $('#sendMailButton').click(function()
     {
         var problem = $('#problem').val();
-        if(! ($.trim(problem).length == 0))
+        if(! (problem.length == 0))
         {
-            mailAdmin(email, problem);
+            mailAdmin(problem);
             $('#myModal').modal('hide');
         }
     });
