@@ -146,5 +146,9 @@ class AttachmentController extends Controller
             readfile($file);
             exit;
         }
+        else{
+            $this->layout = 'main_alternative';
+            return $this->render('fail');
+        }
     }
 }
