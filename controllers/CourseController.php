@@ -226,6 +226,16 @@ class CourseController extends Controller
         return $this->redirect(Yii::$app->user->returnUrl);
     }
 
+    public function actionUnsubscribe()
+    {
+        $this->validateAccess(self::STUDENT);
+        $subscription = Subscription::find()->where(['id' => $_POST["id"]])->one();
+        list($controller) = Yii::$app->createController('student');
+        $controller->actionSendMail($subscription->getCourse()->one()->getIdLecturer()->one()->email, "Отписка от курса \"".$subscription->getCourse()->one()->name."\".");
+        $subscription->delete();
+        return $this->redirect(Yii::$app->user->returnUrl);
+    }
+
     public function actionSearch($key)
     {
         $this->layout='main_layout';

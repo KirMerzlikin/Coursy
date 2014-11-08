@@ -100,9 +100,8 @@ a.desc:after {
     border: 1px solid #333; 
     width: 910px; 
     padding: 5px; 
-    margin: 10px 5px 20px 5px; 
-    
-   }
+    margin: 10px 5px 20px 5px;
+}
 
 textarea.form-control{
     max-width:100%;
@@ -120,6 +119,11 @@ textarea.form-control{
 
 .form-group > input{
     margin-left: 0px;
+}
+
+.btn-danger{
+    background-color: #CB4844;
+    border-color: #C84440;
 }
 
 

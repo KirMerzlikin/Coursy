@@ -59,7 +59,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
 				}
 				else
 				{
-					echo Html::tag('div','<b>Запрос на  подписку  находится  на рассмотрении у  лектора.</b>', ['style' => 'float:right;']);
+					echo Html::tag('div','<b><i style="color: grey;">Запрос на  подписку  находится  на рассмотрении у  лектора.</i></b>', ['style' => 'float:right;']);
 				}
 			}
 			else
@@ -89,9 +89,9 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
   	</div>
 </div>
 
- <script>
- function sendMail(email, text)
- {
+<script>
+function sendMail(email, text)
+{
     $.ajax({
       type     :'POST',
       cache    : false,
@@ -101,10 +101,10 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
         500: function(data){alert('Error!\n'+data.responseText);}
       }
     });
- }
+}
 
- function openModalL(email)
- {
+function openModalL(email)
+{
     $('#modalLabelL').text('Связаться с лектором.');
     $('#textL').val('');
 
@@ -119,5 +119,5 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
     });
 
     $('#myModalL').modal('show');
- }
- </script>
+}
+</script>

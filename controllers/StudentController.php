@@ -186,15 +186,18 @@ class StudentController extends Controller
         }
     }
 
-    public function actionSendMail()
+    public function actionSendMail($email="", $body="")
     {
         $this->layout='main_layout';
         $this->validateAccess(self::STUDENT);
 
-        $email = $_POST['email'];
-        $subject = 'Письмо от студента coursey.it-team.ua '.Yii::$app->user->getIdentity()->name;
-        $body = $_POST['text'];
+        if($email == "" && $body == "")
+        {
+            $email = $_POST['email'];
+            $body = $_POST['text'];
+        }
 
+        $subject = 'Письмо от студента coursey.it-team.ua '.Yii::$app->user->getIdentity()->name;
         Yii::$app->mailer->compose()
                 ->setFrom(Yii::$app->user->getIdentity()->email)
                 ->setTo($email)
@@ -202,5 +205,6 @@ class StudentController extends Controller
                 ->setTextBody($body)
                 ->send();
     }
+
 }
 
