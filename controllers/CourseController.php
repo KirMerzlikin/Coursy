@@ -53,10 +53,9 @@ class CourseController extends Controller
      */
     public function actionView($id)
     {
-        $this->layout = "main_layout";
+        $this->layout = "main";
         return $this->render('view', [
-            'crModel' => $this->findModel($id),
-            'lcModel' => $this->findModel($id)->getIdLecturer()->one(),
+            'model' => $this->findModel($id),
         ]);
     }
 
