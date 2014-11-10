@@ -24,7 +24,8 @@ $this->title = 'Авторизация';
         <div class="form-group">
             <div class="col-lg-12">
                 <?= Html::submitButton('Войти', ['class' => 'btn btn-primary btn-block btn-lg', 'name' => 'login-button']) ?>
-                <?= Html::label('Забыли пароль?', 0, ['style' => "text-decoration:underline;  color: #003366; cursor: pointer;", 'onclick' =>"openModal()", 'class'=>'reg-message']) ?>
+                <br>
+                <?= Html::label('Забыли пароль?', 0, ['style' => "text-decoration:underline;  color: #333; cursor: pointer; font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif; font-weight:bold;", 'onclick' =>"openModal()", 'class'=>'reg-message']) ?>
             </div>
         </div>      
      </div>

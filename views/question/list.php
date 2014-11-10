@@ -10,7 +10,7 @@ use yii\grid\GridView;
     $this->title = "Тестирование"?>
     <div style="width: 26%; float:left;">
         <?=
-            $this->render('..\student\menu_left', ['current' => 'subscriptions', 'model' => $stModel]);
+            $this->render('../student/menu_left', ['current' => 'subscriptions', 'model' => $stModel]);
         ?>
     </div>
 
