@@ -59,7 +59,7 @@ $this->title = 'Регистрация';
     </div>
     <div class="clearfix" style="float:left; margin:70px 0px 0px 70px; width:49%;">
       <div >
-        <center><?=Html::img('../images/placeit.jpg',['style'=>'width: 200px; height: 150px;   src: images/placeit.jpg;']);?></center><br></br>
+        <center><?=Html::img('../images/placeit_r.jpg',['style'=>'width: 200px; height: 150px;   src: images/placeit.jpg;']);?></center><br></br>
         
         <p class="parag">Рады приветствовать вас на нашем ресурсе!</p> <p class="parag">Данный сайт предназначен для студентов и преподавателей 
         для ведения курса, контроля знаний и распространения материалов. После прохождения регистрации Ваша 
