@@ -13,7 +13,7 @@ $this->title = 'Регистрация';
 ?>
 
 
-<div class="wrapper2 clearfix" style="overflow:auto;"><div id="page_name">Registration</div>
+<div class="wrapper2 clearfix" style="overflow:auto;"><div id="page_name">Регистрация</div>
      <div class="site-login" style='margin:70px 70px 0px 0px; float:right; width:49%;'>
      <?php $form = ActiveForm::begin([
         'id' => 'login-form',
