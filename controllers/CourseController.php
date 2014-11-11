@@ -21,6 +21,7 @@ class CourseController extends Controller
     const LECTURER = 1;
     const ADMIN = 2;
     const STUDENT = 3;
+    private $image_array = ['image/gif, image/jpeg, image/png'];
 
     public function behaviors()
     {
@@ -73,11 +74,16 @@ class CourseController extends Controller
         $model->idLecturer =  $user->id;
 
         if (isset($_FILES['Course']) && $_FILES['Course']['name']['image']!="") {
-            $rnd = rand(0,9999);
-            $uploadedFile = UploadedFile::getInstance($model,'image');
-            $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
-            $model->image = $fileName;
-            $uploadedFile->saveAs($fileName);
+            if (!in_array($_FILES['Course']['type']['image'],$this->image_array))
+                $model->addError('image','Доступные расширения для файла: jpg, gif, png.');
+            else
+            {
+                $rnd = rand(0,9999);
+                $uploadedFile = UploadedFile::getInstance($model,'image');
+                $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
+                $model->image = $fileName;
+                $uploadedFile->saveAs($fileName);
+            }
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -103,13 +109,18 @@ class CourseController extends Controller
         $model = $this->findModel($id);
         
         if (isset($_FILES['Course']) && $_FILES['Course']['name']['image']!="") {
-            if ($model->image != "")
-                unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->image);
-            $rnd = rand(0,9999);
-            $uploadedFile = UploadedFile::getInstance($model,'image');
-            $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
-            $model->image = $fileName;
-            $uploadedFile->saveAs($fileName);
+            if (!in_array($_FILES['Course']['type']['image'],$this->image_array))
+                $model->addError('image','Доступные расширения для файла: jpg, gif, png.');
+            else
+            {
+                if ($model->image != "")
+                    unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->image);
+                $rnd = rand(0,9999);
+                $uploadedFile = UploadedFile::getInstance($model,'image');
+                $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
+                $model->image = $fileName;
+                $uploadedFile->saveAs($fileName);
+            }
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -129,13 +140,18 @@ class CourseController extends Controller
         $model = $this->findModel($id);
         
         if (isset($_FILES['Course']) && $_FILES['Course']['name']['image']!="") {
-            if ($model->image != "")
-                unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->image);
-            $rnd = rand(0,9999);
-            $uploadedFile = UploadedFile::getInstance($model,'image');
-            $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
-            $model->image = $fileName;
-            $uploadedFile->saveAs($fileName);
+            if (!in_array($_FILES['Course']['type']['image'],$this->image_array))
+                $model->addError('image','Доступные расширения для файла: jpg, gif, png.');
+            else
+            {
+                if ($model->image != "")
+                    unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->image);
+                $rnd = rand(0,9999);
+                $uploadedFile = UploadedFile::getInstance($model,'image');
+                $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
+                $model->image = $fileName;
+                $uploadedFile->saveAs($fileName);
+            }
         }
 
         if ($model->load(Yii::$app->request->post())) {
