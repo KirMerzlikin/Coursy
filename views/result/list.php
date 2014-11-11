@@ -10,7 +10,7 @@ use yii\bootstrap\Collapse;
 $this->title = 'Проверка тестов'?>
 <div style="width: 26%; float:left;">
 <?=
-		$this->render('..\lecturer\menu_left', ['current' => 'results', 'model' => $lcModel]);
+		$this->render('../lecturer/menu_left', ['current' => 'results', 'model' => $lcModel]);
 ?>
 </div>
 
