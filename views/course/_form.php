@@ -25,13 +25,12 @@ use app\models\Lecturer;
 			echo $form->field($model, 'idLecturer')->dropDownList(ArrayHelper::map(Lecturer::find()->all(), 'id', 'name'))	
 	?>    
 
-   	<?= $form->field($model, 'published')->radioList(ArrayHelper::map([['value' => '1', 'label' => 'да'],
-    													['value' => '0', 'label' => 'нет']], 'value', 'label'),
-                                                        ['style' => 'margin-bottom:5px']) ?>
-    
     <?= $form->field($model, 'image')->fileInput() ?>
     <?php if ($model->image!="") echo "<img src='".Yii::$app->request->BaseUrl."/{$model->image}' width='100px' />"?>
 
+   	<?= $form->field($model, 'published')->radioList(ArrayHelper::map([['value' => '1', 'label' => 'да'],
+    													['value' => '0', 'label' => 'нет']], 'value', 'label'),
+                                                        ['style' => 'margin-bottom:5px']) ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить', ['class' => ($model->isNewRecord ? 'btn btn-success' : 'btn btn-primary') . ' pull-right']) ?>
         <?php if($is_lecturer && Yii::$app->controller->action->id != 'create')
