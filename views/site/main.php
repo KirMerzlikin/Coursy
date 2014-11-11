@@ -1,6 +1,8 @@
 
 <?php
-use yii\helpers\Html;?>
+use yii\helpers\Html;
+
+$this->title = 'Coursey | Главная';?>
 
 <center>
 	<div class="smallpanel clearfix">
