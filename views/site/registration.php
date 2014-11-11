@@ -13,9 +13,8 @@ $this->title = 'Регистрация';
 ?>
 
 
-<div class="wrapper2" style="overflow:auto;"><div id="page_name">Registration</div><center>
-
-     <div class="site-login" style='margin-top:70px '>
+<div class="wrapper2 clearfix" style="overflow:auto;"><div id="page_name">Registration</div>
+     <div class="site-login" style='margin:70px 70px 0px 0px; float:right; width:49%;'>
      <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'options' => ['class' => 'form-horizontal '],
@@ -58,7 +57,20 @@ $this->title = 'Регистрация';
         <?php ActiveForm::end(); ?>
         <br><br>
     </div>
-    </center>
+    <div class="clearfix" style="float:left; margin:70px 0px 0px 70px; width:49%;">
+      <div >
+        <center><?=Html::img('../images/placeit.jpg',['style'=>'width: 200px; height: 150px;   src: images/placeit.jpg;']);?></center><br></br>
+        
+        <p class="parag">Рады приветствовать вас на нашем ресурсе!</p> <p class="parag">Данный сайт предназначен для студентов и преподавателей 
+        для ведения курса, контроля знаний и распространения материалов. После прохождения регистрации Ваша 
+        заявка будет отправлена на рассмотрение к администратору сайта. Письмо с подтверждением будет отправлено
+        на e-mail, указанный при регистрации, поэтому указывайте действующий адрес электронной почты. После 
+        подтверждения регистрации Вам станут доступны все функции сайта и Вы сможете с лёгкостью делиться своими
+        знаниями или приобретать новые.</p>
+         
+      </div>
+      <br>
+    </div>
 </div>
 <script>
 $(document).ready(function(){
@@ -76,3 +88,14 @@ function show(id, id2)
     }
 }
 </script>
+
+<style>
+.parag{
+  text-align: justify !important;
+  text-indent: 20px !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  color:#333 !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+</style>
