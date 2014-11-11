@@ -39,16 +39,16 @@ $lcProvider =  $lcSearchModel->search(['LecturerSearch' => ['active' => '0']]);
               'item' => function($student, $index)
               {
                 return Html::tag('li',
-                "Студент <b>" . $student->name . "</b> " . 
+                Html::tag('span' ,"Студент <b>" . $student->name . "</b> " . 
                 "(email:" .  $student->email . ") " .
-                "из группы " . $student->getIdGroup()->one()->name .
+                "из группы " . $student->getIdGroup()->one()->name, ['class' => 'col-lg-9']) .
                   Html::tag('span',
                   Html::button('Подтвердить',
                     ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'student_'.$student->id.'\',\'' . $student->email . '\', true)']) .
                   Html::button('Отклонить',
                     ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'student_'.$student->id.'\',\'' . $student->name . '\', \'' . $student->email .'\')']), 
                   ['class' => 'pull-right']),
-                ['class' => 'list-group-item','id' => 'student_'.$student->id]);
+                ['class' => 'list-group-item clearfix','id' => 'student_'.$student->id]);
               }
             ]),
 
@@ -62,16 +62,16 @@ $lcProvider =  $lcSearchModel->search(['LecturerSearch' => ['active' => '0']]);
               'item' => function($lecturer, $index)
               {
                 return Html::tag('li',
-                "Лектор <b>" . $lecturer->name . "</b> " . 
+                Html::tag('span', "Лектор <b>" . $lecturer->name . "</b> " . 
                 "(email:" .  $lecturer->email . ") " .
-                "кафедры " . $lecturer->getIdDepartment0()->one()->name .
+                "кафедры \"" . $lecturer->getIdDepartment()->one()->name . "\"", ['class' => 'col-lg-9']) .
                   Html::tag('span',
                   Html::button('Подтвердить',
                     ['class' => 'btn btn-success btn-xs', 'onClick' => 'sendResponse(\'lecturer_'.$lecturer->id.'\',\'' . $lecturer->email . '\', true)']) .
                   Html::button('Отклонить',
                     ['class' => 'btn btn-danger btn-xs', 'onClick' => 'openModal(\'lecturer_'.$lecturer->id.'\',\'' . $lecturer->name . '\',\'' . $lecturer->email . '\')']), 
                   ['class' => 'pull-right']),
-                ['class' => 'list-group-item','id' => 'lecturer_'.$lecturer->id]);
+                ['class' => 'list-group-item clearfix','id' => 'lecturer_'.$lecturer->id]);
               }
             ]),
         ],
