@@ -254,7 +254,7 @@ class LecturerController extends Controller
     {
         $this->validateAccess(self::LECTURER);
         $subject = ($result ? "Подтверждение" : "Отклонение") . " подписки на  курс ".$courseName.". Coursey.it-team.in.ua";
-        $body = "Ваша заявка на подписку курса на сайте Coursey была "
+        $body = "Ваша заявка на подписку курса на сайте coursey.it-team.in.ua была "
             . ($result ? "подтверждена" : "отклонена.\nПричина: " . $reason) . ". Не отвечайте на это письмо.";
         $this->sendMail($email, 'noreply@coursey.it-team.in.ua', $subject, $body);
     }
@@ -266,7 +266,7 @@ class LecturerController extends Controller
         $this->validateAccess(self::LECTURER);
 
         $email = $_POST['email'];
-        $subject = 'Письмо от лектора coursey.it-team.ua '.Yii::$app->user->getIdentity()->name. '. Курс: '.$_POST['course'].'. Лекция: '.$_POST['lesson'];
+        $subject = 'Письмо от лектора coursey.it-team.in.ua '.Yii::$app->user->getIdentity()->name. '. Курс: '.$_POST['course'].'. Лекция: '.$_POST['lesson'];
         $body = $_POST['text'];
 
         $this->sendMail($email, Yii::$app->user->getIdentity()->email, $subject, $body);
@@ -274,7 +274,7 @@ class LecturerController extends Controller
 
     public function actionMailAdmin(){
         $this->validateAccess(self::LECTURER);
-        $this->sendMail(Admin::find()->one()->email,  Yii::$app->user->getIdentity()->email, "Письом от лектора ".Yii::$app->user->getIdentity()->name.".", $_POST['problem']);
+        $this->sendMail(Admin::find()->one()->email,  Yii::$app->user->getIdentity()->email, "Письмo от лектора ".Yii::$app->user->getIdentity()->name.".", $_POST['problem']);
     }
 
     public function sendMail($emailTo, $emailFrom, $subject, $body){

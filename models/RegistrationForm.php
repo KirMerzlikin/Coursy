@@ -34,8 +34,8 @@ class RegistrationForm extends Model
             [['name','second_name','email', 'password','confirmation','role'], 'required', 'message' => 'Пожалуйста, заполните это поле'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
             // password is validated by validatePassword()
-            ['name', 'validateString'],
-            ['second_name', 'validateString'],
+            ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]*$/', 'message' => 'Пожалуйста, введите корректное имя.'],
+            ['second_name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]*$/', 'message' => 'Пожалуйста, введите корректную фамилию.'],
             ['password', 'validatePassword'],
             ['email', 'validateEmail'],
         ];
@@ -73,19 +73,6 @@ class RegistrationForm extends Model
 
         if ($user!=0)
             $this->addError('email','Данный email уже используется.');
-    }
-
-    public function validateString($attribute, $params)
-    {
-        if(!(preg_match('/[^a-z]/i', $this->name) xor preg_match('/[^а-яё]/i', $this->name)))
-        {
-          $this->addError('name','Имя может содержать только буквы.');
-        }
-
-        if(!(preg_match('/[^a-z\-]/i', $this->second_name) xor preg_match('/[^а-яё\-]/i', $this->second_name)))
-        {
-          $this->addError('second_name','Фамилия может содержать только буквы и символ "-".');
-        }
     }
 
     /**

@@ -9,7 +9,7 @@ use yii\widgets\ListView;
     $this->title = "Курс\"" . $crModel->name . "\""?>
     <div style="width: 26%; float:left;">
         <?=
-            $this->render('..\lecturer\menu_left', ['current' => 'courses', 'model' => $lcModel]);
+            $this->render('../lecturer/menu_left', ['current' => 'courses', 'model' => $lcModel]);
         ?>
     </div>
 
