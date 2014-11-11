@@ -138,8 +138,20 @@ class CourseController extends Controller
             $uploadedFile->saveAs($fileName);
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(Yii::$app->user->returnUrl);
+        if ($model->load(Yii::$app->request->post())) {
+            $wasSetUnpublished = false;
+            if($this->findModel($id)->published == 1 && $model->published == 0)
+            {
+                $wasSetUnpublished = true;
+            }
+            if($model->save())
+            {
+                if($wasSetUnpublished)
+                {
+                    $this->notifyStudentAboutCourseConstraint($id, "Закрытие публичного доступа к курсу.", "Закрытие публичного доступа к курсу \"".$model->name."\"");
+                }
+                return $this->redirect(Yii::$app->user->returnUrl);
+            }
         } else {
 
             return $this->render('edit', [
@@ -158,7 +170,10 @@ class CourseController extends Controller
     {
         $course = $this->findModel($id);
         if($course->published != true)
+        {
+            $this->notifyStudentAboutCourseConstraint($id, "Удаление курса.", "Курс \"".$course->name."\" был удален.");
             $course->delete();
+        }
         else
             throw new HttpException(406, 'Published course can not be deleted.');
     }
@@ -248,5 +263,24 @@ class CourseController extends Controller
         {
             return $this->render('all', ['courses' => $courses, 'stModel' => Yii::$app->user->identity]);
         }
+    }
+
+    public function notifyStudentAboutCourseConstraint($id, $reason, $body)
+    {
+        $subscription = Course::find()->where(['id' => $id])->one()->getSubscriptions()->all();
+        for($i = 0; $i < count($subscription); $i++)
+        {
+            $this->sendMail($subscription[$i]->getIdStudent()->one()->email, Yii::$app->user->getIdentity()->email, $reason, $body);
+        }
+    }
+
+    public function sendMail($emailTo, $emailFrom, $subject, $body){
+        $this->validateAccess(self::LECTURER);
+        Yii::$app->mailer->compose()
+                ->setFrom($emailFrom)
+                ->setTo($emailTo)
+                ->setSubject($subject)
+                ->setTextBody($body)
+                ->send();
     }
 }
