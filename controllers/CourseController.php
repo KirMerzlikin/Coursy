@@ -72,7 +72,7 @@ class CourseController extends Controller
         $model = new Course();
         $model->idLecturer =  $user->id;
 
-        if ($_FILES['Course']['name']['image']!="") {
+        if (isset($_FILES['Course']) && $_FILES['Course']['name']['image']!="") {
             $rnd = rand(0,9999);
             $uploadedFile = UploadedFile::getInstance($model,'image');
             $fileName = 'files/'.$rnd.'_'.$uploadedFile->name;
@@ -102,7 +102,7 @@ class CourseController extends Controller
 		$this->validateAccess(self::ADMIN);
         $model = $this->findModel($id);
         
-        if ($_FILES['Course']['name']['image']!="") {
+        if (isset($_FILES['Course']) && $_FILES['Course']['name']['image']!="") {
             if ($model->image != "")
                 unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->image);
             $rnd = rand(0,9999);
@@ -128,7 +128,7 @@ class CourseController extends Controller
         $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
         
-        if ($_FILES['Course']['name']['image']!="") {
+        if (isset($_FILES['Course']) && $_FILES['Course']['name']['image']!="") {
             if ($model->image != "")
                 unlink(Yii::getAlias('@app').Yii::getAlias('@web').'/'.$model->image);
             $rnd = rand(0,9999);
