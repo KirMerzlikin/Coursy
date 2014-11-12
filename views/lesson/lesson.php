@@ -13,7 +13,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();?>
     $this->title = "Лекция\"" . $model->name ."\""?>
 <div style="width: 26%; float:left;">
 <?=
-    $this->render('..\student\menu_left', ['current' => 'subscriptions', 'model' => $stModel]);
+    $this->render('../student/menu_left', ['current' => 'subscriptions', 'model' => $stModel]);
 ?>
 </div>
 

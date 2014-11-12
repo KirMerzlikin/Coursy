@@ -13,7 +13,7 @@ $this->title = 'Новый курс';
 $this->title = 'Новый курс'?>
 	<div style="width: 26%; float:left;">
 		<?=
-		    $this->render('..\lecturer\menu_left', ['current' => 'courses', 'model' => $lcModel]);
+		    $this->render('../lecturer/menu_left', ['current' => 'courses', 'model' => $lcModel]);
 		?>
 	</div>
 	<div style="position:relative; width: 73%; float:left;">
