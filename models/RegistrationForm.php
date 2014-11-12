@@ -34,8 +34,8 @@ class RegistrationForm extends Model
             [['name','second_name','email', 'password','confirmation','role'], 'required', 'message' => 'Пожалуйста, заполните это поле'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
             // password is validated by validatePassword()
-            ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]*$/', 'message' => 'Пожалуйста, введите корректное имя.'],
-            ['second_name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]*$/', 'message' => 'Пожалуйста, введите корректную фамилию.'],
+            ['name', 'match', 'pattern'=>'/^[a-zA-ZйцукенгшщёзхъэждлорпавыфячсмитьбюЙЦУКЕНГШЁЩЗХЪЖЭДЛОРПАВЫФЯЧСМИТЬБЮ-]+$/', 'message' => 'Пожалуйста, введите корректное имя.'],
+            ['second_name', 'match', 'pattern'=>'/^[a-zA-ZйцукенгшщёзхъэждлорпавыфячсмитьбюЙЦУКЕНГШЁЩЗХЪЖЭДЛОРПАВЫФЯЧСМИТЬБЮ-]+$/', 'message' => 'Пожалуйста, введите корректную фамилию.'],
             ['password', 'validatePassword'],
             ['email', 'validateEmail'],
         ];
@@ -66,6 +66,8 @@ class RegistrationForm extends Model
         if ($this->confirmation!=$this->password)
             $this->addError('confirmation','Подтверждение пароля не совпадает с паролем.');
     }
+
+   
 
     public function validateEmail($attribute, $params)
     {

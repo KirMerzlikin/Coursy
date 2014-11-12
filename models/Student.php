@@ -46,7 +46,7 @@ class Student extends \yii\db\ActiveRecord implements IdentityInterface
             [['name', 'email', 'passHash', 'idGroup', 'active'], 'required', 'message'=>'Поле "{attribute}" не может быть пустым.'],
             [['idGroup', 'active'], 'integer'],
             [['name', 'email', 'passHash'], 'string', 'max' => 255],
-            ['name', 'match', 'pattern'=>'/[a-zA-Zа-яёА-Я][a-zA-Zа-яёА-Я\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],
+            ['name', 'match', 'pattern'=>'/^[a-zA-ZйцукенгшщёзхъэждлорпавыфячсмитьбюЙЦУКЕНГШЁЩЗХЪЖЭДЛОРПАВЫФЯЧСМИТЬБЮ\\s-]+$/', 'message' => 'Пожалуйста, введите корректное имя'],
             ['email', 'email', 'message' => 'Пожалуйста, введите корректный email'],
             ['email', 'validateEmail'],
             ['confirmation', 'compare', 'compareAttribute'=>'password', 'message'=>"Подтверждение пароля не совпадает с паролем."]
