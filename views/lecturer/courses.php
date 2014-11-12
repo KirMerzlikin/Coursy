@@ -18,7 +18,7 @@ Yii::$app->user->returnUrl = Yii::$app->request->getAbsoluteUrl();
     <div style="position:relative; width: 73%; float:left;">
         <?php
             if ($model->getCourses()->count() == 0)
-                echo Html::tag('h2','К сожалению, Вы пока не создали ни одного курса.');
+                echo '<br>'.Html::tag('h4','К сожалению, Вы пока не создали ни одного курса.');
             $courses = $model->getCourses()->orderBy('name')->all();
             for($i = 0; $i < $model->getCourses()->count(); $i++)
             {

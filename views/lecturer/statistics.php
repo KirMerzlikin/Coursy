@@ -78,6 +78,8 @@ var optionsBar = {
     </div>
     <div style="position:relative; width: 73%; float:left;">
         <?php
+        if ($model->getCourses()->count() == 0)
+            echo '<br>'.Html::tag('h4','К сожалению, у Вас пока нет ни одного курса.');
             $items = [];
             $scripts = "";
             $courses = $model->getCourses()->orderBy('name')->all();
