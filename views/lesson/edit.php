@@ -37,7 +37,15 @@ use app\models\Question;
                     'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         'name',
-                        'resource',
+                        [
+                            'attribute'=>'resource',
+                            'format'=>'html',
+                            'value'=> function ($model, $key, $index, $column) {
+                                $attachment = Attachment::findOne($key);
+                                return Html::a($attachment->resource,'../attachment/file-force-download?id='.$attachment->id);
+                            }
+
+                        ],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{delete}',
