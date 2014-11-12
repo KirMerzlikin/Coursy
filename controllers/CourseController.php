@@ -21,7 +21,7 @@ class CourseController extends Controller
     const LECTURER = 1;
     const ADMIN = 2;
     const STUDENT = 3;
-    private $image_array = ['image/gif, image/jpeg, image/png'];
+    private $image_array = ['image/gif', 'image/jpeg', 'image/png', 'images/jpg'];
 
     public function behaviors()
     {
@@ -138,10 +138,11 @@ class CourseController extends Controller
         $this->layout = "main_layout";
         $this->validateAccess(self::LECTURER);
         $model = $this->findModel($id);
-        
+
         if (isset($_FILES['Course']) && $_FILES['Course']['name']['image']!="") {
-            if (!in_array($_FILES['Course']['type']['image'],$this->image_array))
+            if (!in_array($_FILES['Course']['type']['image'],$this->image_array)){
                 $model->addError('image','Доступные расширения для файла: jpg, gif, png.');
+            }
             else
             {
                 if ($model->image != "")
@@ -153,7 +154,6 @@ class CourseController extends Controller
                 $uploadedFile->saveAs($fileName);
             }
         }
-
         if ($model->load(Yii::$app->request->post())) {
             $wasSetUnpublished = false;
             if($this->findModel($id)->published == 1 && $model->published == 0)

@@ -78,6 +78,8 @@ var optionsBar = {
     </div>
     <div style="position:relative; width: 73%; float:left;">
         <?php
+        if ($model->getCourses()->count() == 0)
+            echo '<br>'.Html::tag('h4','К сожалению, у Вас пока нет ни одного курса.');
             $items = [];
             $scripts = "";
             $courses = $model->getCourses()->orderBy('name')->all();
@@ -119,8 +121,8 @@ var optionsBar = {
                     $count_5[$lesson_counter] = 0;
                     foreach ($results[$lesson_counter] as $result)
                     {
-                        $avg_mark[$lesson_counter] = ($avg_mark[$lesson_counter] * $count_students[$lesson_counter] + $result->points) / ($count_students[$lesson_counter] + 1);
-                        $avg_tryNumber[$lesson_counter] = ($avg_tryNumber[$lesson_counter] * $count_students[$lesson_counter] + $result->tryNumber) / ($count_students[$lesson_counter] + 1);
+                        $avg_mark[$lesson_counter] = round(($avg_mark[$lesson_counter] * $count_students[$lesson_counter] + $result->points) / ($count_students[$lesson_counter] + 1),2);
+                        $avg_tryNumber[$lesson_counter] = round(($avg_tryNumber[$lesson_counter] * $count_students[$lesson_counter] + $result->tryNumber) / ($count_students[$lesson_counter] + 1),2);
                         if ($result->points >= 90)
                             $count_5[$lesson_counter]++;
                         else if ($result->points >= 75)
