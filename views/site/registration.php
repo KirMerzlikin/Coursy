@@ -44,7 +44,7 @@ $this->title = 'Регистрация';
         </div>
         <div id="student" style="display:none;">
 
-                 <?= $form->field($model, 'group')->dropDownList(ArrayHelper::map(Group::find()->all(), 'id', 'name'))?>
+                 <?= $form->field($model, 'group')->dropDownList(ArrayHelper::map(Group::find()->orderBy('name')->all(), 'id', 'name'))?>
 
         </div>
 
