@@ -84,7 +84,7 @@ class RegistrationForm extends Model
         if ($this->role == 'lecturer')
         {
             $lecturer = new Lecturer();
-            $lecturer->name = $this->second_name." ".$this->name;
+            $lecturer->name = $this->name." ".$this->second_name;
             $lecturer->email = $this->email;
             $lecturer->passHash = md5($this->password);
             //$info = $_POST['RegistrationForm'];

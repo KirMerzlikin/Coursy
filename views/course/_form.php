@@ -25,7 +25,7 @@ use app\models\Lecturer;
 			echo $form->field($model, 'idLecturer')->dropDownList(ArrayHelper::map(Lecturer::find()->all(), 'id', 'name'))	
 	?>    
 
-    <?= $form->field($model, 'image')->fileInput() ?>
+    <?= $form->field($model, 'image')->fileInput(['accept'=>"image/gif, image/jpeg, image/png"]) ?>
     <?php if ($model->image!="") echo "<img src='".Yii::$app->request->BaseUrl."/{$model->image}' width='100px' />"?>
 
    	<?= $form->field($model, 'published')->radioList(ArrayHelper::map([['value' => '1', 'label' => 'да'],

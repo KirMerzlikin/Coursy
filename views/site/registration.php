@@ -13,7 +13,7 @@ $this->title = 'Регистрация';
 ?>
 
 
-<div class="wrapper2 clearfix" style="overflow:auto;"><div id="page_name">Registration</div>
+<div class="wrapper2 clearfix" style="overflow:auto;"><div id="page_name">Регистрация</div>
      <div class="site-login" style='margin:70px 70px 0px 0px; float:right; width:49%;'>
      <?php $form = ActiveForm::begin([
         'id' => 'login-form',
@@ -29,10 +29,11 @@ $this->title = 'Регистрация';
             <?= $form->field($model, 'confirmation')->passwordInput()?>
 
           
-        <?=Html::label('Кем Вы хотите быть?','',['style'=>'float:left'])?>
-         <input id="lecturer_role" type="radio" name="RegistrationForm[role]"  value="lecturer" onclick="show('lecturer', 'student')"/> <?=Html::label('Лектор')?>
-            <input id="student_role" type="radio" name="RegistrationForm[role]" value="student" onclick="show('student', 'lecturer')"/>  <?=Html::label('Студент')?>
-
+        <div><?=Html::label('Кем Вы хотите быть?','',['style'=>'float:left'])?><div style="float:none;clear:both;"></div></div>
+        <div style="margin-bottom:10px; margin-top:5px;">
+	        <input id="student_role" type="radio" name="RegistrationForm[role]" value="student" onclick="show('student', 'lecturer')"/>  <?=Html::label('Студент')?>
+	        <input id="lecturer_role" type="radio" name="RegistrationForm[role]"  value="lecturer" onclick="show('lecturer', 'student')"/> <?=Html::label('Лектор')?>
+        </div>
 
         <div id="lecturer" style="display:none;">
 
@@ -47,7 +48,7 @@ $this->title = 'Регистрация';
 
         </div>
 
-        <br><br>
+        <br>
 
         <div class="form-group ">
           <div class="col-lg-12">
@@ -72,9 +73,12 @@ $this->title = 'Регистрация';
       <br>
     </div>
 </div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
+if ('<?=$model->role?>'=='')
+	$('#student_role').click();
 $('#<?=$model->role?>_role').click();
+$(document).ready(function(){
 $('#lecturer_department').val('<?=$model->department?>');
 $('#student_group').val('<?=$model->group?>');
     });
