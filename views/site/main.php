@@ -6,11 +6,12 @@ $this->title = 'Coursey | Главная';?>
 
 <center>
 	<div class="smallpanel clearfix">
-		<div style="text-align: center;  font-weight: bold; font-size: 14px; color:#1e2349;">
+		<div style="text-align: center; font-size: 14px; color:#1e2349;">
 			<div style="font-size:24px">Добро пожаловать на наш веб-портал!</div> <br />
-			 <?=Html::img('images/placeit.jpg',['style'=>'width: 200px; height: 150px;   src: images/placeit.jpg;']);?><br></br>
-			У нас есть курсы с различной информацией, которые помогают людям получать новые знания.<br>
-			Присоединяйся к нам и улучши свои знания с Coursey.
+			 <?=Html::img('images/placeit.png',['style'=>'width: 270px; height: 170px;   src: images/placeit.jpg;']);?><br></br>
+			Данный сайт предназначен для студентов и преподавателей </br>для ведения курса,
+			контроля знаний и распространения материалов.</br>
+			Присоединяйтесь к нам и улучшите свои знания с Coursey.
 		</div>
 		<br>
 		<?php echo Html::a("Войти", Yii::$app->request->BaseUrl."/site/login",
