@@ -42,7 +42,8 @@ class Lesson extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 255],
             ['lessonNumber', function ($attribute, $params)
                 {
-                    if(Lesson::find()->where(['idCourse' => $this->idCourse, 'lessonNumber' => $this->lessonNumber])->count() != 0)
+                    if(Lesson::find()->where(['idCourse' => $this->idCourse, 'lessonNumber' => $this->lessonNumber, 
+                        ['not' => ['id' => $this->id]]])->count() != 0)
                         $this->addError($attribute, 'У лекций не может быть одинаковых порядковых номеров');
                 }],
             ['lessonNumber', function ($attribute, $params)
